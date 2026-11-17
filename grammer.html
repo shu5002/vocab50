@@ -1,0 +1,1225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2775.2">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ja" class="dark"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="apple-mobile-web-app-capable" content="yes" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="apple-mobile-web-app-title" content="GRAMMAR ∞" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Grammar Sprint ∞ - 無限1問1答英文法&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>* { -webkit-tap-highlight-color: transparent; user-select: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #090d16;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #f8fafc;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding-top: env(safe-area-inset-top);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding-bottom: calc(env(safe-area-inset-bottom) + 74px);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>overflow-x: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.no-scrollbar::-webkit-scrollbar { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>@keyframes pop-in {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>0% { opacity: 0; transform: translateY(6px); }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>100% { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.animate-pop { animation: pop-in 0.16s ease-out forwards; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>@keyframes pulse-ring {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>0% { transform: scale(0.95); opacity: 0.85; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>50% { transform: scale(1.05); opacity: 0.45; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>100% { transform: scale(0.95); opacity: 0.85; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.speaking-active { animation: pulse-ring 1s infinite; background-color: #10b981 !important; color: #fff !important; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="min-h-screen flex flex-col justify-between"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Top Header --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;header class="sticky top-0 z-30 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-2.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-md mx-auto flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex items-center gap-2.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-black text-slate-950 shadow-lg shadow-emerald-500/20 text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>∞</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center gap-1.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="font-bold text-sm tracking-tight text-white"&gt;GRAMMAR SPRINT ∞&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="header-mode-pill" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"&gt;無限ランダム&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[10px] text-slate-400"&gt;API不要・数万通り動的生成・無限1問1答&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-full flex items-center gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-[10px] text-slate-400"&gt;累計&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span id="header-total-solved" class="text-xs font-black text-emerald-400"&gt;0&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-[10px] text-slate-500"&gt;問&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="switchTab('settings')" class="p-1.5 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/60" title="設定"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>⚙️</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Main Content --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;main class="flex-1 max-w-md w-full mx-auto px-4 py-3.5 space-y-3.5"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- VIEW: SPRINT (即1問1答メイン画面) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="view-sprint" class="space-y-3.5"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Category Horizontal Filter Strip --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5" id="category-pills"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Question Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-2xl space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Top Meta Row --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center gap-1.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="q-category-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>時制・完了形</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="q-pattern-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-emerald-300"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>∞ 動的生成</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button id="btn-q-speak" onclick="speakCurrentSentence()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 flex items-center justify-center text-sm transition" title="英文を読み上げ"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>🔊</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- English Sentence Prompt --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="py-2 space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p id="q-sentence" class="text-lg sm:text-xl font-bold text-white leading-relaxed tracking-wide"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p id="q-hint-ja" class="text-xs text-slate-400 hidden"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- 4 Choices --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="q-choices" class="space-y-2"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Quick Utility Row (Before Answering) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="q-pre-actions" class="flex items-center justify-between pt-1 text-[11px] text-slate-400"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button onclick="togglePreHint()" class="hover:text-indigo-300 underline"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>💡 日本語訳ヒントを見る</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button onclick="loadNextQuestion()" class="hover:text-slate-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>スキップして次の1問 →</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Instant Explanation Box (Shown After Answering) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="q-explanation-box" class="hidden pt-3.5 border-t border-slate-800 space-y-3 animate-pop"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="q-result-banner" class="text-sm font-black text-emerald-400"&gt;⭕ 正解！&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="speakCurrentSentence()" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>🔊 完成文を聴く</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;!-- Translation of Complete Sentence --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="bg-slate-950/90 rounded-2xl p-3 border border-slate-800/90 space-y-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="q-complete-en" class="text-xs font-bold text-slate-100 leading-relaxed"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="q-complete-ja" class="text-[11px] text-slate-400"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;!-- Core Rule Summary --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="bg-indigo-950/40 rounded-2xl p-3.5 border border-indigo-500/30 space-y-1.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-[11px] font-black text-indigo-300" id="q-rule-title"&gt;📌 核心ポイント&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs text-slate-200 leading-relaxed" id="q-rule-detail"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;!-- Next Question Big Button --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button onclick="loadNextQuestion()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm shadow-lg active:scale-[0.99] transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>次の1問へ（無限生成）→</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- VIEW: WEAKNESS REVENGE --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="view-weak" class="hidden space-y-3.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-base font-black text-white"&gt;🔥 弱点リベンジリスト&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs text-slate-400"&gt;間違えた問題がここに保存され、正解するまで再挑戦できます&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button onclick="startWeaknessMode()" class="px-3.5 py-2 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-black text-xs shrink-0 shadow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>弱点だけ解く</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="weak-empty" class="py-10 text-center space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="text-3xl"&gt;✨&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-sm font-bold text-slate-200"&gt;現在、未克服の弱点問題はありません！&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-xs text-slate-400"&gt;無限1問1答でどんどん新しい問題を解きましょう。&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="weak-list" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- VIEW: STATS &amp; CATEGORY MASTERY --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="view-stats" class="hidden space-y-3.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="grid grid-cols-3 gap-2.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[11px] text-slate-400"&gt;累計解答数&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p id="stat-total-attempts" class="text-xl font-black text-white mt-0.5"&gt;0&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[10px] text-slate-500"&gt;積み上げ問題数&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[11px] text-slate-400"&gt;トータル正答率&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p id="stat-accuracy" class="text-xl font-black text-emerald-400 mt-0.5"&gt;0%&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[10px] text-slate-500"&gt;累計精度&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[11px] text-slate-400"&gt;出題バリエーション&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-xl font-black text-indigo-400 mt-0.5"&gt;∞&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[10px] text-indigo-300/80"&gt;10,000+パターン&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Category Breakdown --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h3 class="text-xs font-bold text-slate-200"&gt;📊 単元別の演習実績（タップでその単元を無限出題）&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="category-stats-list" class="space-y-2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- VIEW: SETTINGS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="view-settings" class="hidden space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 class="text-sm font-black text-white"&gt;⚙️ 学習・音声オプション&lt;/h2&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label class="flex items-center justify-between p-3 rounded-2xl bg-slate-950 border border-slate-800 cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs font-bold text-slate-200"&gt;解答後に自動で英文を読み上げ&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-[10px] text-slate-400"&gt;耳からも文法の語順を定着させます&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="checkbox" id="setting-auto-speak" checked onchange="saveSettings()" class="w-4 h-4 rounded bg-slate-800 border-slate-600 text-emerald-500" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/label&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-2 gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label class="text-[11px] text-slate-400 block mb-1"&gt;英語アクセント&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="setting-accent" onchange="saveSettings()" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="en-US"&gt;🇺🇸 アメリカ英語 (US)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="en-GB"&gt;🇬🇧 イギリス英語 (UK)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label class="text-[11px] text-slate-400 block mb-1"&gt;読み上げ速度&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="setting-speed" onchange="saveSettings()" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="1.0"&gt;1.0x (標準)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value="0.85"&gt;0.85x (ゆっくり)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3 class="text-sm font-black text-white"&gt;💾 学習記録のバックアップ・復元&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-2 gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button onclick="exportBackup()" class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs"&gt;📤 JSON書き出し&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs text-center cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>📥 JSON読み込み</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="file" accept=".json" onchange="importBackup(event)" class="hidden" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- Bottom Tab Navigation --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;nav class="fixed bottom-0 inset-x-0 z-40 bg-[#090d16]/95 backdrop-blur-lg border-t border-slate-800/80 pb-[env(safe-area-inset-bottom)]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-md mx-auto grid grid-cols-3 py-1.5 px-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="switchTab('sprint')" id="nav-sprint" class="flex flex-col items-center py-1.5 rounded-xl text-emerald-400 font-bold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-lg"&gt;⚡&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-[10px] mt-0.5"&gt;無限1問1答&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="switchTab('weak')" id="nav-weak" class="flex flex-col items-center py-1.5 rounded-xl text-slate-400 font-bold relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-lg"&gt;🔥&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-[10px] mt-0.5"&gt;弱点克服&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span id="nav-weak-badge" class="hidden absolute top-1 right-9 w-4 h-4 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center"&gt;0&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button onclick="switchTab('stats')" id="nav-stats" class="flex flex-col items-center py-1.5 rounded-xl text-slate-400 font-bold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-lg"&gt;📊&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-[10px] mt-0.5"&gt;単元・成績&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/nav&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>/*************************************************************************</p>
+<p class="p1"><span class="Apple-converted-space">     </span>* 1. 無限パラメトリック英文法生成エンジン（Procedural Grammar Generator）</p>
+<p class="p1"><span class="Apple-converted-space">     </span>* 全12単元 × 語彙・状況・時制・構文パーツの組み合わせにより数万通りの問題を</p>
+<p class="p1"><span class="Apple-converted-space">     </span>* API通信ゼロ・オフライン単体で瞬時に生成するエンジン</p>
+<p class="p1"><span class="Apple-converted-space">     </span>*************************************************************************/</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const CATEGORIES = [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"時制・完了形",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"仮定法",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"不定詞・動名詞",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"分詞・分詞構文",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"関係詞",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"助動詞",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"比較",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"接続詞・前置詞",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"受動態",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"倒置・一致",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"語法・コロケーション",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"会話・実務表現"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const SUBJECTS = [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "I", ja: "私", is3sg: false, bePast: "was", havePres: "have", doPres: "do" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "she", ja: "彼女", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "he", ja: "彼", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "our team", ja: "私たちのチーム", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "the engineer", ja: "そのエンジニア", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "the vocalist", ja: "そのボーカリスト", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "we", ja: "私たち", is3sg: false, bePast: "were", havePres: "have", doPres: "do" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "they", ja: "彼ら", is3sg: false, bePast: "were", havePres: "have", doPres: "do" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ en: "many students", ja: "多くの学生たち", is3sg: false, bePast: "were", havePres: "have", doPres: "do" }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const TASKS = [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "finish", past: "finished", pp: "finished", ing: "finishing", obj: "the vocal recording", objJa: "ボーカル録音を" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "complete", past: "completed", pp: "completed", ing: "completing", obj: "the data analysis", objJa: "データ分析を" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "submit", past: "submitted", pp: "submitted", ing: "submitting", obj: "the research paper", objJa: "研究論文を" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "deploy", past: "deployed", pp: "deployed", ing: "deploying", obj: "the web application", objJa: "Webアプリを" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "master", past: "mastered", pp: "mastered", ing: "mastering", obj: "the guitar riff", objJa: "ギターリフを" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "prepare", past: "prepared", pp: "prepared", ing: "preparing", obj: "the presentation slides", objJa: "プレゼン資料を" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "book", past: "booked", pp: "booked", ing: "booking", obj: "the flight tickets", objJa: "航空券を" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "clean", past: "cleaned", pp: "cleaned", ing: "cleaning", obj: "the review dataset", objJa: "レビューデータセットを" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "arrange", past: "arranged", pp: "arranged", ing: "arranging", obj: "the string section", objJa: "ストリングスパートを" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ base: "check", past: "checked", pp: "checked", ing: "checking", obj: "the audio cables", objJa: "オーディオケーブルを" }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function pick(arr) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return arr[Math.floor(Math.random() * arr.length)];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function cap(str) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return str.charAt(0).toUpperCase() + str.slice(1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function shuffleChoices(correctText, distractors) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const uniqueWrong = Array.from(new Set(distractors.filter(d =&gt; d !== correctText))).slice(0, 3);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const combined = [correctText, ...uniqueWrong];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>for (let i = combined.length - 1; i &gt; 0; i--) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const j = Math.floor(Math.random() * (i + 1));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>[combined[i], combined[j]] = [combined[j], combined[i]];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>choices: combined,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>ans: combined.indexOf(correctText)</p>
+<p class="p1"><span class="Apple-converted-space">      </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// 12単元それぞれの動的問題ジェネレーター</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const GENERATORS = {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"時制・完了形": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const mode = Math.floor(Math.random() * 4);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const s = pick(SUBJECTS);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const t = pick(TASKS);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (mode === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 過去完了形（By the time + 過去形, S had already + p.p.）</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const c = `had already ${t.pp}`;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(c, [`has already ${t.pp}`, `will already ${t.base}`, `already ${t.past}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "時制・完了形",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `By the time the producer arrived, ${s.en} (<span class="Apple-converted-space">      </span>) ${t.obj}.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `プロデューサーが到着した頃には、${s.ja}はすでに${t.objJa}終えていた。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "過去完了形（had + 過去分詞）の「完了」",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `基準となる過去の時点（arrived）よりもさらに前の時点で動作が完了していたことを表すため、過去完了形「had + 過去分詞（${c}）」を選びます。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 1) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 時・条件の副詞節（as soon as / once + 現在形）</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const vPres = s.is3sg ? (t.base.endsWith("h") ? t.base + "es" : t.base + "s") : t.base;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(vPres, [`will ${t.base}`, `would ${t.base}`, `${t.ing}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "時制・完了形",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `Please send me a message as soon as ${s.en} (<span class="Apple-converted-space">      </span>) ${t.obj}.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `${s.ja}が${t.objJa}終えたらすぐにメッセージを送ってください。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "時・条件を表す副詞節では未来のことも現在形",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `as soon as（〜するとすぐに）や when, if が導く副詞節の中では、未来のことであっても will を使わず現在形（${vPres}）で表します。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 2) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 現在完了進行形（for + 期間）</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const dur = pick(["two hours", "three weeks", "all morning", "five days"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const durJa = { "two hours": "2時間", "three weeks": "3週間", "all morning": "午前中ずっと", "five days": "5日間" }[dur];</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const c = `${s.havePres} been ${t.ing}`;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(c, [`is ${t.ing}`, `was ${t.base}`, `${s.havePres} ${t.ing}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "時制・完了形",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `${cap(s.en)} (<span class="Apple-converted-space">      </span>) ${t.obj} for ${dur} without a break.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `${s.ja}は休憩なしで${durJa}ずっと${t.objJa}作業し続けている。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "現在完了進行形（have/has been -ing）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `過去から現在まで動作が途切れず継続していることを強調するため、${s.havePres} been + 現在分詞（${c}）を使います。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 未来完了形（By next month / By tomorrow）</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const timeRef = pick(["By next Friday", "By the end of this month", "By tomorrow noon"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const timeJa = { "By next Friday": "来週の金曜日までには", "By the end of this month": "今月末までには", "By tomorrow noon": "明日の正午までには" }[timeRef];</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const c = `will have ${t.pp}`;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(c, [`has ${t.pp}`, `had ${t.pp}`, `will be ${t.pp}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "時制・完了形",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `${timeRef}, ${s.en} (<span class="Apple-converted-space">      </span>) ${t.obj} completely.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `${timeJa}、${s.ja}は${t.objJa}完全に終えているだろう。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "未来完了形（will have + 過去分詞）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `${timeRef} のように未来の特定期限までの完了を表すときは、未来完了形「will have + 過去分詞（${c}）」を用います。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"仮定法": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const mode = Math.floor(Math.random() * 4);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const s = pick(SUBJECTS);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const t = pick(TASKS);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (mode === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 仮定法過去</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices("had", ["have", "will have", "would have"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "仮定法",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `If ${s.en} (<span class="Apple-converted-space">      </span>) more time today, ${s.en} would ${t.base} ${t.obj}.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `もし今日もっと時間があれば、${s.ja}は${t.objJa}終えるのに。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "仮定法過去（現在の事実と反対の仮定）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: "「もし今〜なら…するのに」という現在の事実に反する仮定では、If節に過去形（had）、主節に would + 動詞の原形を使います。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 1) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 仮定法過去完了</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const c = `would have ${t.pp}`;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(c, [`would ${t.base}`, `${t.past}`, `had ${t.pp}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "仮定法",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `If ${s.en} had started earlier, ${s.en} (<span class="Apple-converted-space">      </span>) ${t.obj} on time.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `もしもっと早く始めていたら、${s.ja}は時間通りに${t.objJa}終えていただろうに。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "仮定法過去完了（過去の事実と反対の仮定）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: "If節が had + 過去分詞（had started）なので過去の仮定です。主節もそれに合わせて「would have + 過去分詞」にします。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 2) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 提案・要求動詞 + that節内の原形（仮定法現在）</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const verb = pick(["suggested", "recommended", "insisted", "demanded"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const verbJa = { suggested: "提案した", recommended: "勧めた", insisted: "強く主張した", demanded: "要求した" }[verb];</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(t.base, [t.past, `${t.base}s`, `${t.ing}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "仮定法",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `The advisor ${verb} that ${s.en} (<span class="Apple-converted-space">      </span>) ${t.obj} right away.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `指導教員は${s.ja}がすぐに${t.objJa}行うよう${verbJa}。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "提案・要求動詞 + that節内の動詞の原形",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `${verb} の後ろの that節では「（should）+ 動詞の原形」を使うため、主語が三人称単数や過去時制でも原形（${t.base}）が正解です。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// Were it not for / Had it not been for</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const noun = pick(["your advice", "this backup tool", "offline support", "daily practice"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const nounJa = { "your advice": "あなたの助言", "this backup tool": "このバックアップ機能", "offline support": "オフライン対応", "daily practice": "日々の練習" }[noun];</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices("Were", ["Was", "Is", "Has"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "仮定法",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `(<span class="Apple-converted-space">      </span>) it not for ${noun}, we could not ${t.base} ${t.obj}.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `もし${nounJa}がなければ、私たちは${t.objJa}成し遂げられないだろう。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "If省略の倒置構文（Were it not for 〜）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: "If it were not for 〜（もし今〜がなければ）から If を省略すると、Were と it が倒置して Were it not for 〜 になります。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"不定詞・動名詞": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const mode = Math.floor(Math.random() * 4);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const s = pick(SUBJECTS);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const t = pick(TASKS);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (mode === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 動名詞のみ目的語にとる動詞 (MEGAFEPS)</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const v = pick([</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "finished", ja: "終えた" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "avoided", ja: "避けた" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "put off", ja: "先延ばしにした" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "kept", ja: "〜し続けた" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(t.ing, [`to ${t.base}`, t.past, t.base]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "不定詞・動名詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `${cap(s.en)} finally ${v.en} (<span class="Apple-converted-space">      </span>) ${t.obj} before midnight.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `${s.ja}は真夜中前にようやく${t.objJa}行うことを${v.ja}。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: `動名詞（-ing）のみを目的語にとる動詞（${v.en}）`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `finish, avoid, put off, keep, enjoy, mind などは to不定詞をとれず、必ず動名詞（${t.ing}）を目的語にとります。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 1) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// look forward to + -ing / be used to + -ing</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const idiom = pick([</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "is looking forward to", ja: "〜することを楽しみにしている" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "is accustomed to", ja: "〜することに慣れている" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "is dedicated to", ja: "〜することに専念している" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(t.ing, [t.base, t.past, `be ${t.pp}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "不定詞・動名詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `The team ${idiom.en} (<span class="Apple-converted-space">      </span>) ${t.obj} next week.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `チームは来週${t.objJa}行うこと（${idiom.ja}）。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "前置詞の to + 動名詞（-ing）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `このフレーズの to は不定詞ではなく「前置詞」であるため、後ろには動詞の原形ではなく動名詞（${t.ing}）を置きます。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 2) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// remember / forget to do vs -ing</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(`to ${t.base}`, [t.ing, t.past, t.base]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "不定詞・動名詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `Please don't forget (<span class="Apple-converted-space">      </span>) ${t.obj} before turning off the Mac.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `Macの電源を切る前に、忘れずに${t.objJa}行ってください。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "forget / remember + to不定詞（これから〜すること）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `forget / remember は、to不定詞をとると「これから〜すること（未来志向）」、動名詞をとると「過去に〜したこと」を意味します。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// It is + 形容詞 + for 人 + to不定詞</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const adj = pick([</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "essential", ja: "不可欠だ" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "important", ja: "重要だ" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ en: "helpful", ja: "役に立つ" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(`to ${t.base}`, [t.ing, t.base, t.past]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "不定詞・動名詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `It is ${adj.en} for ${s.en === "I" ? "me" : s.en} (<span class="Apple-converted-space">      </span>) ${t.obj} carefully.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `慎重に${t.objJa}行うことは${adj.ja}。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "形式主語 It ... for 人 + to不定詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `形式主語 It の真主語として to不定詞（to ${t.base}）を置く基本構文です。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"分詞・分詞構文": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const mode = Math.floor(Math.random() * 3);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const t = pick(TASKS);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (mode === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 感情分詞（モノ主語 -ing vs 人主語 -ed）</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const pair = pick([</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ ing: "encouraging", ed: "encouraged", ja: "勇気づけられる" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ ing: "surprising", ed: "surprised", ja: "驚くべき" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ ing: "satisfying", ed: "satisfied", ja: "満足のいく" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ ing: "exhausting", ed: "exhausted", ja: "疲れ果てさせる" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(pair.ing, [pair.ed, "encourage", "surprise"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "分詞・分詞構文",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `The feedback from the audience was truly (<span class="Apple-converted-space">      </span>).`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `観客からのフィードバックは本当に${pair.ja}ものだった。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "感情分詞：モノ・コトが主語なら現在分詞（-ing）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `主語（The feedback）が人に感情を与える側なので現在分詞（${pair.ing}）を選びます。人が主語なら過去分詞（${pair.ed}）になります。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 1) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// have + O + 過去分詞</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(t.pp, [t.base, t.ing, `to ${t.base}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "分詞・分詞構文",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `We had ${t.obj} (<span class="Apple-converted-space">      </span>) by an experienced specialist.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `私たちは経験豊富な専門家に${t.objJa}完了してもらった。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "have + 目的語 + 過去分詞（〜してもらう）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `目的語（${t.obj}）は「〜される（受動）」側なので、過去分詞（${t.pp}）を補語に置きます。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>// 受動の分詞構文（Seen / Written / Built）</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const starter = pick([</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ pp: "Seen", ing: "Seeing", base: "See", ja: "見られると", rest: "from the top floor, the night view is breathtaking." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ pp: "Written", ing: "Writing", base: "Write", ja: "書かれているので", rest: "in plain English, the manual is easy to follow." },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ pp: "Recorded", ing: "Recording", base: "Record", ja: "録音されたので", rest: "in a treated studio, the vocals sound crystal clear." }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices(starter.pp, [starter.ing, starter.base, `To ${starter.base.toLowerCase()}`]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "分詞・分詞構文",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `(<span class="Apple-converted-space">      </span>) ${starter.rest}`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `（${starter.ja}）${starter.rest}`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "受動の分詞構文（過去分詞で始まる形）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `主節の主語が「〜される（受動）」関係にあるため、Being が省略された過去分詞（${starter.pp}）から文を始めます。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"関係詞": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const mode = Math.floor(Math.random() * 3);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (mode === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const place = pick([</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "recording studio", ja: "レコーディングスタジオ" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "historic hotel", ja: "歴史あるホテル" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ n: "university lab", ja: "大学の研究室" }</p>
+<p class="p1"><span class="Apple-converted-space">          </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices("where", ["which", "who", "what"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "関係詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `This is the ${place.n} (<span class="Apple-converted-space">      </span>) we worked together last year.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `ここが昨年私たちが一緒に作業した${place.ja}だ。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "関係副詞 where（後ろに完全な文が続く）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `後ろの文（we worked together）が完全な文であり、場所（in the ${place.n}）を表すため関係副詞 where を選びます。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else if (mode === 1) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices("what", ["that", "which", "whom"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "関係詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `(<span class="Apple-converted-space">      </span>) matters most in language learning is daily consistency.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `語学学習において最も重要なことは、毎日の継続だ。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "先行詞を含む関係代名詞 what（〜すること・もの）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `前に先行詞がなく、後ろの動詞 matters の主語が欠けているため、「〜すること（the thing which）」を表す what が正解です。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const { choices, ans } = shuffleChoices("whose", ["which", "who", "whom"]);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cat: "関係詞",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>sentence: `I bought an acoustic guitar (<span class="Apple-converted-space">      </span>) sound is remarkably rich.`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: `私はその音色が驚くほど豊かなアコースティックギターを買った。`,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleTitle: "所有格の関係代名詞 whose（先行詞がモノでも使える）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ruleDetail: `「そのギターの音色（its sound）」という所有関係を表すため、先行詞がモノ（guitar）でも所有格 whose を使います。`</p>
+<p class="p1"><span class="Apple-converted-space">          </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"助動詞": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const item = pick([</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "The ground is completely wet; it (<span class="Apple-converted-space">      </span>) have rained heavily last night.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "must", w: ["should", "cannot", "would"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "地面が完全に濡れている。昨夜激しい雨が降ったに違いない。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "must have + 過去分詞（〜したに違いない：過去の強い推量）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "明確な根拠（地面が濡れている）をもとに過去の出来事を強く確信して推量するときは must have + 過去分詞を使います。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "I (<span class="Apple-converted-space">      </span>) have checked the train timetable before leaving the hotel.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "should", w: ["must", "may", "cannot"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "ホテルを出る前に電車の時刻表を確認しておくべきだった。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "should have + 過去分詞（〜すべきだったのに：過去の後悔）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "実際にはしなかったことへの後悔・反省を表す定番表現が should have + 過去分詞です。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "She (<span class="Apple-converted-space">      </span>) have forgotten the meeting—she confirmed it ten minutes ago.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "cannot", w: ["must", "should", "may"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "10分前に確認したばかりなのだから、彼女が会議を忘れたはずがない。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "cannot have + 過去分詞（〜したはずがない）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "過去の事実に対する強い否定の推量（「〜だったはずがない」）には cannot have + 過去分詞を用います。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { choices, ans } = shuffleChoices(item.c, item.w);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return { cat: "助動詞", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"比較": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const item = pick([</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "The more frequently you review, (<span class="Apple-converted-space">      </span>) you will remember the words.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "the better", w: ["better", "the best", "best"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "頻繁に復習すればするほど、単語をよりよく覚えられるだろう。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "The + 比較級 〜, the + 比較級 …（〜すればするほどますます…）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "比例関係を表す重要構文で、前半と後半の両方に「the + 比較級」を置きます。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "This solid-state drive is four times (<span class="Apple-converted-space">      </span>) than my old hard disk.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "faster", w: ["fast", "fastest", "more fast"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "このSSDは古いハードディスクの4倍速い。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "倍数表現（〜 times + 比較級 + than）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "「4倍速い」は four times faster than 〜 または four times as fast as 〜 で表します。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "In terms of audio latency, a wired connection is superior (<span class="Apple-converted-space">      </span>) Bluetooth.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "to", w: ["than", "from", "over"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "音声遅延の点では、有線接続はBluetoothより優れている。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "ラテン語由来の比較級（superior / inferior / prior + to）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "-ior で終わる比較級（superior, inferior, senior, junior, prior）は than ではなく前置詞 to と結びつきます。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { choices, ans } = shuffleChoices(item.c, item.w);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return { cat: "比較", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"接続詞・前置詞": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const item = pick([</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "(<span class="Apple-converted-space">      </span>) the heavy traffic, we arrived at the stadium on time.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "Despite", w: ["Although", "Even though", "While"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "激しい渋滞にもかかわらず、私たちは時間通りにスタジアムに到着した。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "前置詞 Despite（後ろは名詞句）vs 接続詞 Although（後ろはS+V）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "空所の後ろが the heavy traffic という名詞句だけなので、前置詞の Despite（= In spite of）を選びます。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "Please finish uploading the stems (<span class="Apple-converted-space">      </span>) tomorrow at 6:00 PM.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "by", w: ["until", "during", "for"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "明日の午後6時までにステムデータのアップロードを終えてください。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "期限の by（〜までに完了）vs 継続の until（〜までずっと）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "「終える（finish）」という1回完了する動作の締め切りを示すときは by を使います。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "We visited several museums (<span class="Apple-converted-space">      </span>) our ten-day trip to Italy.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "during", w: ["while", "for", "since"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "10日間のイタリア旅行の間、いくつかの美術館を訪れた。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "前置詞 during（特定期間の名詞）vs 接続詞 while（S+V）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "our ten-day trip は名詞句であり、特定の期間を指すため during を使います。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { choices, ans } = shuffleChoices(item.c, item.w);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return { cat: "接続詞・前置詞", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"受動態": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const t = pick(TASKS);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { choices, ans } = shuffleChoices(`to be ${t.pp}`, [`to ${t.base}`, t.ing, t.base]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>cat: "受動態",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>sentence: `The project is expected (<span class="Apple-converted-space">      </span>) before the end of this quarter.`,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>choices, ans,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>ja: `そのプロジェクトは今期末までに完了されると見込まれている。`,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>ruleTitle: "be expected to be + 過去分詞（〜されると見込まれている）",</p>
+<p class="p1"><span class="Apple-converted-space">          </span>ruleDetail: `主語 The project は「〜される（受動）」側なので、不定詞も受動態 to be ${t.pp} の形にします。`</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"倒置・一致": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const item = pick([</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "Never (<span class="Apple-converted-space">      </span>) experienced such an inspiring live performance.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "have I", w: ["I have", "I had", "did I have"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "これほど感動的なライブパフォーマンスは今まで一度も経験したことがない。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "否定語句（Never / Rarely / Seldom）が文頭に出たときの倒置",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "否定の副詞 Never が強調のため文頭に出ると、後ろは疑問文と同じ語順（have I）に倒置します。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "A number of researchers (<span class="Apple-converted-space">      </span>) using large language models for clustering.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "are", w: ["is", "was", "has"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "多くの研究者がクラスタリングに大規模言語モデルを使用している。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "A number of + 複数名詞（複数扱い）vs The number of（単数扱い）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "A number of 〜 は「多くの〜（＝ many）」という意味なので複数扱い（are）になります。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { choices, ans } = shuffleChoices(item.c, item.w);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return { cat: "倒置・一致", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"語法・コロケーション": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const item = pick([</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "Heavy snow prevented the train (<span class="Apple-converted-space">      </span>) departing on schedule.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "from", w: ["to", "for", "against"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "大雪のせいで電車は定刻通りに出発できなかった。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "prevent / stop / keep + O + from -ing（Oが〜するのを妨げる）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "無生物主語構文の超頻出パターン「prevent O from -ing」です。前置詞 from を必ず伴います。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "The platform provides learners (<span class="Apple-converted-space">      </span>) instant audio pronunciation.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "with", w: ["for", "to", "by"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "そのプラットフォームは学習者に即座の音声発音を提供する。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "provide 人 with モノ（人にモノを提供する）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "「人（learners）」が先に、「モノ」が後ろに来る語順では前置詞 with を使います。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "This song always reminds me (<span class="Apple-converted-space">      </span>) our summer road trip.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "of", w: ["from", "about", "to"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "この曲はいつも私たちに夏のロードトリップを思い出させる。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "remind A of B（AにBを思い出させる）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "「AにBを想起させる」は remind A of B の形をとります。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { choices, ans } = shuffleChoices(item.c, item.w);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return { cat: "語法・コロケーション", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>"会話・実務表現": () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const item = pick([</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "Would you mind (<span class="Apple-converted-space">      </span>) the vocal volume slightly in my headphones?",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "turning up", w: ["to turn up", "turn up", "turned up"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "ヘッドホンのボーカルの音量を少し上げていただいても構いませんか？",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "Would you mind + -ing?（〜していただけませんか？）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "mind は動名詞のみをとる動詞です。承諾するときは No, not at all. と答えます。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>},</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>s: "I'd rather (<span class="Apple-converted-space">      </span>) offline so I can study on the subway without signal.",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>c: "work", w: ["to work", "working", "worked"],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>ja: "電波のない地下鉄でも勉強できるように、むしろオフラインで動かしたい。",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>t: "would rather + 動詞の原形（むしろ〜したい）",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>d: "would rather は助動詞と同じ働きをするため、後ろには to なしの動詞の原形を置きます。"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const { choices, ans } = shuffleChoices(item.c, item.w);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return { cat: "会話・実務表現", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function generateQuestion(categoryFilter = "ALL") {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let targetCat = categoryFilter;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (targetCat === "ALL" || !GENERATORS[targetCat]) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>targetCat = pick(CATEGORIES);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const q = GENERATORS[targetCat]();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q.uid = `${targetCat}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return q;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/*************************************************************************</p>
+<p class="p1"><span class="Apple-converted-space">     </span>* 2. 状態管理・ストレージ永続化 (LocalStorage)</p>
+<p class="p1"><span class="Apple-converted-space">     </span>*************************************************************************/</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const STORAGE_KEY = "GRAMMAR_SPRINT_INFINITE_V2";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>let state = {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>selectedCategory: "ALL", // 'ALL' | 'WEAK' | 単元名</p>
+<p class="p1"><span class="Apple-converted-space">      </span>autoSpeak: true,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>accent: "en-US",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>speed: 1.0,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>totalAttempts: 0,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>totalCorrect: 0,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>catStats: {},<span class="Apple-converted-space">    </span>// { catName: { attempts: 0, correct: 0 } }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>weakQueue: [], <span class="Apple-converted-space">  </span>// 間違えた問題オブジェクトの保存リスト</p>
+<p class="p1"><span class="Apple-converted-space">      </span>currentQ: null,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>answeredCurrent: false,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>lastChoiceIdx: null</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/*************************************************************************</p>
+<p class="p1"><span class="Apple-converted-space">     </span>* 3. 音声再生エンジン (iPhoneマナーモード / Safari対応)</p>
+<p class="p1"><span class="Apple-converted-space">     </span>*************************************************************************/</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let audioCtxUnlocked = false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function unlockAudio() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (audioCtxUnlocked) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const AC = window.AudioContext || window.webkitAudioContext;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (AC) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const ctx = new AC();</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const buf = ctx.createBuffer(1, 1, 22050);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const src = ctx.createBufferSource();</p>
+<p class="p1"><span class="Apple-converted-space">          </span>src.buffer = buf;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>src.connect(ctx.destination);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>src.start(0);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>audioCtxUnlocked = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) {}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.addEventListener("touchstart", unlockAudio, { once: true });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.addEventListener("click", unlockAudio, { once: true });</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function speakEnglishSentence(text) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!text || !("speechSynthesis" in window)) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const btn = document.getElementById("btn-q-speak");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (btn) btn.classList.add("speaking-active");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const done = () =&gt; { if (btn) btn.classList.remove("speaking-active"); };</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.speechSynthesis.cancel();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const utter = new SpeechSynthesisUtterance(text);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>utter.lang = state.accent || "en-US";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>utter.rate = Number(state.speed) || 1.0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const voices = window.speechSynthesis.getVoices();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (voices &amp;&amp; voices.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>const pref = voices.find(v =&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>v.lang.replace("_", "-") === utter.lang &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>(v.name.includes("Samantha") || v.name.includes("Daniel") || v.name.includes("Google") || v.localService)</p>
+<p class="p1"><span class="Apple-converted-space">          </span>) || voices.find(v =&gt; v.lang.startsWith("en"));</p>
+<p class="p1"><span class="Apple-converted-space">          </span>if (pref) utter.voice = pref;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>utter.onend = done;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>utter.onerror = done;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.speechSynthesis.speak(utter);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(done, 4000);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>done();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function getCompleteSentence(q) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const answerWord = q.choices[q.ans];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return q.sentence.replace(/\(\s*\)/, answerWord);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function speakCurrentSentence() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const q = state.currentQ;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!q) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const text = state.answeredCurrent</p>
+<p class="p1"><span class="Apple-converted-space">        </span>? getCompleteSentence(q)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>: q.sentence.replace(/\(\s*\)/, " ... ");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>speakEnglishSentence(text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/*************************************************************************</p>
+<p class="p1"><span class="Apple-converted-space">     </span>* 4. 問題進行・弱点キュー管理</p>
+<p class="p1"><span class="Apple-converted-space">     </span>*************************************************************************/</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function loadNextQuestion() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (state.selectedCategory === "WEAK" &amp;&amp; state.weakQueue.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const idx = Math.floor(Math.random() * state.weakQueue.length);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>state.currentQ = { ...state.weakQueue[idx], isFromWeak: true };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (state.selectedCategory === "WEAK") {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>state.selectedCategory = "ALL";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>state.currentQ = generateQuestion(state.selectedCategory);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.answeredCurrent = false;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.lastChoiceIdx = null;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>saveState();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function handleAnswer(choiceIdx) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (state.answeredCurrent) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const q = state.currentQ;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const isCorrect = choiceIdx === q.ans;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.answeredCurrent = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.lastChoiceIdx = choiceIdx;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.totalAttempts = (state.totalAttempts || 0) + 1;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!state.catStats[q.cat]) state.catStats[q.cat] = { attempts: 0, correct: 0 };</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.catStats[q.cat].attempts++;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (isCorrect) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>state.totalCorrect = (state.totalCorrect || 0) + 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>state.catStats[q.cat].correct++;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 弱点キューに同じ文があれば卒業（削除）</p>
+<p class="p1"><span class="Apple-converted-space">        </span>state.weakQueue = state.weakQueue.filter(item =&gt; item.sentence !== q.sentence);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// 間違えた問題を弱点キューに保存</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!state.weakQueue.some(item =&gt; item.sentence === q.sentence)) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>state.weakQueue.push(q);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>saveState();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderAll();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (state.autoSpeak) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>speakEnglishSentence(getCompleteSentence(q));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function togglePreHint() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("q-hint-ja").classList.toggle("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function selectCategory(cat) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.selectedCategory = cat;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>switchTab("sprint");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>loadNextQuestion();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function startWeaknessMode() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (state.weakQueue.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>alert("現在、未克服の弱点問題はありません！");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.selectedCategory = "WEAK";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>switchTab("sprint");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>loadNextQuestion();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>/*************************************************************************</p>
+<p class="p1"><span class="Apple-converted-space">     </span>* 5. UI 描画</p>
+<p class="p1"><span class="Apple-converted-space">     </span>*************************************************************************/</p>
+<p class="p1"><span class="Apple-converted-space">    </span>function renderAll() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!state.currentQ) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>state.currentQ = generateQuestion("ALL");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const q = state.currentQ;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Header stats</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("header-total-solved").textContent = (state.totalAttempts || 0).toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const modePill = document.getElementById("header-mode-pill");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (state.selectedCategory === "WEAK") {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modePill.textContent = `🔥 弱点集中 (${state.weakQueue.length}問)`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else if (state.selectedCategory === "ALL") {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modePill.textContent = "無限ランダム";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modePill.textContent = `${state.selectedCategory} (∞)`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Weak badge</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const weakBadge = document.getElementById("nav-weak-badge");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (state.weakQueue.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>weakBadge.classList.remove("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>weakBadge.textContent = state.weakQueue.length;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>weakBadge.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Category Pills</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const pillsEl = document.getElementById("category-pills");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>pillsEl.innerHTML = "";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const pillItems = [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{ key: "ALL", label: "∞ 全単元ランダム" },</p>
+<p class="p1"><span class="Apple-converted-space">        </span>...(state.weakQueue.length &gt; 0 ? [{ key: "WEAK", label: `🔥 弱点のみ(${state.weakQueue.length})` }] : []),</p>
+<p class="p1"><span class="Apple-converted-space">        </span>...CATEGORIES.map(c =&gt; ({ key: c, label: c }))</p>
+<p class="p1"><span class="Apple-converted-space">      </span>];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>pillItems.forEach(p =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const active = state.selectedCategory === p.key;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const btn = document.createElement("button");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn.className = `px-3 py-1.5 rounded-full text-[11px] font-bold shrink-0 border transition ${</p>
+<p class="p1"><span class="Apple-converted-space">          </span>active</p>
+<p class="p1"><span class="Apple-converted-space">            </span>? "bg-emerald-500 text-slate-950 border-emerald-400 shadow"</p>
+<p class="p1"><span class="Apple-converted-space">            </span>: "bg-slate-900 text-slate-400 border-slate-800 hover:text-white"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn.textContent = p.label;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn.onclick = () =&gt; selectCategory(p.key);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>pillsEl.appendChild(btn);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Question Card</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("q-category-badge").textContent = q.cat;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("q-pattern-badge").textContent = q.isFromWeak ? "🔥 弱点リベンジ" : "∞ 動的生成";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const sentenceEl = document.getElementById("q-sentence");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!state.answeredCurrent) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>sentenceEl.innerHTML = q.sentence.replace(</p>
+<p class="p1"><span class="Apple-converted-space">          </span>/\(\s*\)/,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>`&lt;span class="inline-block px-3 py-0.5 mx-1 rounded-lg bg-slate-800 border border-dashed border-indigo-400/60 text-indigo-300 text-base"&gt;（ ？ ）&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ansWord = q.choices[q.ans];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>sentenceEl.innerHTML = q.sentence.replace(</p>
+<p class="p1"><span class="Apple-converted-space">          </span>/\(\s*\)/,</p>
+<p class="p1"><span class="Apple-converted-space">          </span>`&lt;span class="inline-block px-2.5 py-0.5 mx-0.5 rounded-lg bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 underline decoration-emerald-400"&gt;${ansWord}&lt;/span&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const hintEl = document.getElementById("q-hint-ja");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>hintEl.textContent = `ヒント訳: ${q.ja}`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!state.answeredCurrent) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hintEl.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>// 4 Choices</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const choicesEl = document.getElementById("q-choices");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>choicesEl.innerHTML = "";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q.choices.forEach((choiceText, idx) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const btn = document.createElement("button");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn.disabled = state.answeredCurrent;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let styleClass = "w-full p-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800/90 border border-slate-800 text-sm font-bold text-slate-100 text-left flex items-center gap-3 transition active:scale-[0.99]";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (state.answeredCurrent) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>if (idx === q.ans) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>styleClass = "w-full p-3.5 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-sm font-black text-emerald-200 text-left flex items-center gap-3";</p>
+<p class="p1"><span class="Apple-converted-space">          </span>} else if (idx === state.lastChoiceIdx) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>styleClass = "w-full p-3.5 rounded-2xl bg-rose-500/20 border-2 border-rose-500 text-sm font-bold text-rose-300 text-left flex items-center gap-3";</p>
+<p class="p1"><span class="Apple-converted-space">          </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>styleClass = "w-full p-3.5 rounded-2xl bg-slate-950/50 border border-slate-800/50 text-sm font-medium text-slate-500 text-left flex items-center gap-3";</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const badgeLabels = ["A", "B", "C", "D"];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn.className = styleClass;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center text-xs font-extrabold shrink-0"&gt;${badgeLabels[idx]}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span&gt;${choiceText}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>btn.onclick = () =&gt; handleAnswer(idx);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>choicesEl.appendChild(btn);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const preActions = document.getElementById("q-pre-actions");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const expBox = document.getElementById("q-explanation-box");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!state.answeredCurrent) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>preActions.classList.remove("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>expBox.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>preActions.classList.add("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>expBox.classList.remove("hidden");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const isCorrect = state.lastChoiceIdx === q.ans;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const resBanner = document.getElementById("q-result-banner");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>resBanner.textContent = isCorrect</p>
+<p class="p1"><span class="Apple-converted-space">          </span>? "⭕ 正解！ナイス判断！"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>: `❌ 不正解（正解は ${["A","B","C","D"][q.ans]}: ${q.choices[q.ans]}）`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>resBanner.className = isCorrect</p>
+<p class="p1"><span class="Apple-converted-space">          </span>? "text-sm font-black text-emerald-400"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>: "text-sm font-black text-rose-400";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("q-complete-en").textContent = getCompleteSentence(q);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("q-complete-ja").textContent = q.ja;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("q-rule-title").textContent = `📌 ${q.ruleTitle}`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById("q-rule-detail").textContent = q.ruleDetail;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderWeaknessView();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderStatsView();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>syncSettingsUI();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function renderWeaknessView() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const emptyEl = document.getElementById("weak-empty");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const listEl = document.getElementById("weak-list");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>listEl.innerHTML = "";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (state.weakQueue.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>emptyEl.classList.remove("hidden");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>emptyEl.classList.add("hidden");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.weakQueue.forEach(wq =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const div = document.createElement("div");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>div.className = "p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5 cursor-pointer hover:border-rose-500/40";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>div.onclick = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>state.currentQ = { ...wq, isFromWeak: true };</p>
+<p class="p1"><span class="Apple-converted-space">          </span>state.answeredCurrent = false;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>state.lastChoiceIdx = null;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>switchTab("sprint");</p>
+<p class="p1"><span class="Apple-converted-space">          </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>div.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300"&gt;${wq.cat}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-[11px] font-bold text-rose-400"&gt;タップして再挑戦 →&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-xs font-bold text-slate-200"&gt;${wq.sentence}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-[11px] text-slate-400"&gt;正解: &lt;span class="text-emerald-400 font-bold"&gt;${wq.choices[wq.ans]}&lt;/span&gt;（${wq.ruleTitle}）&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>listEl.appendChild(div);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function renderStatsView() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("stat-total-attempts").textContent = (state.totalAttempts || 0).toLocaleString();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const acc = state.totalAttempts &gt; 0 ? Math.round((state.totalCorrect / state.totalAttempts) * 100) : 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("stat-accuracy").textContent = `${acc}%`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>const catListEl = document.getElementById("category-stats-list");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>catListEl.innerHTML = "";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>CATEGORIES.forEach(cat =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const st = state.catStats[cat] || { attempts: 0, correct: 0 };</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const pct = st.attempts &gt; 0 ? Math.round((st.correct / st.attempts) * 100) : 0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const row = document.createElement("div");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>row.className = "p-3 rounded-2xl bg-slate-950 border border-slate-800/80 hover:border-emerald-500/40 cursor-pointer space-y-1.5";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>row.onclick = () =&gt; selectCategory(cat);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>row.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center justify-between text-xs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="font-bold text-slate-200"&gt;${cat}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="font-bold text-emerald-400"&gt;${st.correct} / ${st.attempts} 問正解 (${pct}%)&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="h-full bg-emerald-400 rounded-full" style="width: ${pct}%"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>catListEl.appendChild(row);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function switchTab(tab) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>["sprint", "weak", "stats", "settings"].forEach(t =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const el = document.getElementById(`view-${t}`);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (el) el.classList.toggle("hidden", t !== tab);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const nav = document.getElementById(`nav-${t}`);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (nav) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>nav.className = t === tab</p>
+<p class="p1"><span class="Apple-converted-space">            </span>? "flex flex-col items-center py-1.5 rounded-xl text-emerald-400 font-bold relative"</p>
+<p class="p1"><span class="Apple-converted-space">            </span>: "flex flex-col items-center py-1.5 rounded-xl text-slate-400 font-bold relative";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>window.scrollTo({ top: 0, behavior: "smooth" });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function syncSettingsUI() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("setting-auto-speak").checked = !!state.autoSpeak;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("setting-accent").value = state.accent || "en-US";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById("setting-speed").value = String(state.speed || "1.0");</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function saveSettings() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.autoSpeak = document.getElementById("setting-auto-speak").checked;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.accent = document.getElementById("setting-accent").value;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>state.speed = parseFloat(document.getElementById("setting-speed").value) || 1.0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>saveState();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function loadState() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("GRAMMAR_SPRINT_1Q_V1");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (raw) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>state = { ...state, ...JSON.parse(raw) };</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) {}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!Array.isArray(state.weakQueue)) state.weakQueue = [];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!state.catStats) state.catStats = {};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!state.currentQ) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>state.currentQ = generateQuestion("ALL");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function saveState() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>localStorage.setItem(STORAGE_KEY, JSON.stringify(state));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} catch (e) {}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function exportBackup() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const url = URL.createObjectURL(blob);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const a = document.createElement("a");</p>
+<p class="p1"><span class="Apple-converted-space">      </span>a.href = url;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>a.download = `grammar_infinite_backup_${new Date().toISOString().slice(0, 10)}.json`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>a.click();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function importBackup(e) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const file = e.target.files?.[0];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!file) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const reader = new FileReader();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>reader.onload = () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>state = { ...state, ...JSON.parse(reader.result) };</p>
+<p class="p1"><span class="Apple-converted-space">          </span>saveState();</p>
+<p class="p1"><span class="Apple-converted-space">          </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">          </span>alert("✅ バックアップを復元しました！");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} catch (err) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>alert("JSONファイルが正しくありません。");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>reader.readAsText(file);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>window.addEventListener("DOMContentLoaded", () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>loadState();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderAll();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
