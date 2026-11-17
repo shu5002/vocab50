@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="GRAMMAR ∞" />
+  <title>Grammar Sprint ∞ - 無限1問1答英文法</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { -webkit-tap-highlight-color: transparent; user-select: none; }
+    body {
+      background-color: #090d16;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: calc(env(safe-area-inset-bottom) + 74px);
+      overflow-x: hidden;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes pop-in {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-pop { animation: pop-in 0.16s ease-out forwards; }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.85; }
+      50% { transform: scale(1.05); opacity: 0.45; }
+      100% { transform: scale(0.95); opacity: 0.85; }
+    }
+    .speaking-active { animation: pulse-ring 1s infinite; background-color: #10b981 !important; color: #fff !important; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- Top Header -->
+  <header class="sticky top-0 z-30 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-2.5">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-black text-slate-950 shadow-lg shadow-emerald-500/20 text-sm">
+          ∞
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h1 class="font-bold text-sm tracking-tight text-white">GRAMMAR SPRINT ∞</h1>
+            <span id="header-mode-pill" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">無限ランダム</span>
+          </div>
+          <p class="text-[10px] text-slate-400">API不要・数万通り動的生成・無限1問1答</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <div class="bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-full flex items-center gap-1">
+          <span class="text-[10px] text-slate-400">累計</span>
+          <span id="header-total-solved" class="text-xs font-black text-emerald-400">0</span>
+          <span class="text-[10px] text-slate-500">問</span>
+        </div>
+        <button onclick="switchTab('settings')" class="p-1.5 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/60" title="設定">
+          ⚙️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-md w-full mx-auto px-4 py-3.5 space-y-3.5">
+
+    <!-- VIEW: SPRINT (即1問1答メイン画面) -->
+    <section id="view-sprint" class="space-y-3.5">
+
+      <!-- Category Horizontal Filter Strip -->
+      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5" id="category-pills"></div>
+
+      <!-- Question Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-2xl space-y-4">
+        <!-- Top Meta Row -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span id="q-category-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              時制・完了形
+            </span>
+            <span id="q-pattern-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-emerald-300">
+              ∞ 動的生成
+            </span>
+          </div>
+
+          <button id="btn-q-speak" onclick="speakCurrentSentence()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 flex items-center justify-center text-sm transition" title="英文を読み上げ">
+            🔊
+          </button>
+        </div>
+
+        <!-- English Sentence Prompt -->
+        <div class="py-2 space-y-2">
+          <p id="q-sentence" class="text-lg sm:text-xl font-bold text-white leading-relaxed tracking-wide"></p>
+          <p id="q-hint-ja" class="text-xs text-slate-400 hidden"></p>
+        </div>
+
+        <!-- 4 Choices -->
+        <div id="q-choices" class="space-y-2"></div>
+
+        <!-- Quick Utility Row (Before Answering) -->
+        <div id="q-pre-actions" class="flex items-center justify-between pt-1 text-[11px] text-slate-400">
+          <button onclick="togglePreHint()" class="hover:text-indigo-300 underline">
+            💡 日本語訳ヒントを見る
+          </button>
+          <button onclick="loadNextQuestion()" class="hover:text-slate-200">
+            スキップして次の1問 →
+          </button>
+        </div>
+
+        <!-- Instant Explanation Box (Shown After Answering) -->
+        <div id="q-explanation-box" class="hidden pt-3.5 border-t border-slate-800 space-y-3 animate-pop">
+          <div class="flex items-center justify-between">
+            <span id="q-result-banner" class="text-sm font-black text-emerald-400">⭕ 正解！</span>
+            <button onclick="speakCurrentSentence()" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              🔊 完成文を聴く
+            </button>
+          </div>
+
+          <!-- Translation of Complete Sentence -->
+          <div class="bg-slate-950/90 rounded-2xl p-3 border border-slate-800/90 space-y-1">
+            <p id="q-complete-en" class="text-xs font-bold text-slate-100 leading-relaxed"></p>
+            <p id="q-complete-ja" class="text-[11px] text-slate-400"></p>
+          </div>
+
+          <!-- Core Rule Summary -->
+          <div class="bg-indigo-950/40 rounded-2xl p-3.5 border border-indigo-500/30 space-y-1.5">
+            <p class="text-[11px] font-black text-indigo-300" id="q-rule-title">📌 核心ポイント</p>
+            <p class="text-xs text-slate-200 leading-relaxed" id="q-rule-detail"></p>
+          </div>
+
+          <!-- Next Question Big Button -->
+          <button onclick="loadNextQuestion()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm shadow-lg active:scale-[0.99] transition">
+            次の1問へ（無限生成）→
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: WEAKNESS REVENGE -->
+    <section id="view-weak" class="hidden space-y-3.5">
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-black text-white">🔥 弱点リベンジリスト</h2>
+            <p class="text-xs text-slate-400">間違えた問題がここに保存され、正解するまで再挑戦できます</p>
+          </div>
+          <button onclick="startWeaknessMode()" class="px-3.5 py-2 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-black text-xs shrink-0 shadow">
+            弱点だけ解く
+          </button>
+        </div>
+
+        <div id="weak-empty" class="py-10 text-center space-y-2">
+          <div class="text-3xl">✨</div>
+          <p class="text-sm font-bold text-slate-200">現在、未克服の弱点問題はありません！</p>
+          <p class="text-xs text-slate-400">無限1問1答でどんどん新しい問題を解きましょう。</p>
+        </div>
+
+        <div id="weak-list" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1"></div>
+      </div>
+    </section>
+
+    <!-- VIEW: STATS & CATEGORY MASTERY -->
+    <section id="view-stats" class="hidden space-y-3.5">
+      <div class="grid grid-cols-3 gap-2.5">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center">
+          <p class="text-[11px] text-slate-400">累計解答数</p>
+          <p id="stat-total-attempts" class="text-xl font-black text-white mt-0.5">0</p>
+          <p class="text-[10px] text-slate-500">積み上げ問題数</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center">
+          <p class="text-[11px] text-slate-400">トータル正答率</p>
+          <p id="stat-accuracy" class="text-xl font-black text-emerald-400 mt-0.5">0%</p>
+          <p class="text-[10px] text-slate-500">累計精度</p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center">
+          <p class="text-[11px] text-slate-400">出題バリエーション</p>
+          <p class="text-xl font-black text-indigo-400 mt-0.5">∞</p>
+          <p class="text-[10px] text-indigo-300/80">10,000+パターン</p>
+        </div>
+      </div>
+
+      <!-- Category Breakdown -->
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-slate-200">📊 単元別の演習実績（タップでその単元を無限出題）</h3>
+        </div>
+        <div id="category-stats-list" class="space-y-2"></div>
+      </div>
+    </section>
+
+    <!-- VIEW: SETTINGS -->
+    <section id="view-settings" class="hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
+        <h2 class="text-sm font-black text-white">⚙️ 学習・音声オプション</h2>
+
+        <label class="flex items-center justify-between p-3 rounded-2xl bg-slate-950 border border-slate-800 cursor-pointer">
+          <div>
+            <p class="text-xs font-bold text-slate-200">解答後に自動で英文を読み上げ</p>
+            <p class="text-[10px] text-slate-400">耳からも文法の語順を定着させます</p>
+          </div>
+          <input type="checkbox" id="setting-auto-speak" checked onchange="saveSettings()" class="w-4 h-4 rounded bg-slate-800 border-slate-600 text-emerald-500" />
+        </label>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-[11px] text-slate-400 block mb-1">英語アクセント</label>
+            <select id="setting-accent" onchange="saveSettings()" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white">
+              <option value="en-US">🇺🇸 アメリカ英語 (US)</option>
+              <option value="en-GB">🇬🇧 イギリス英語 (UK)</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-[11px] text-slate-400 block mb-1">読み上げ速度</label>
+            <select id="setting-speed" onchange="saveSettings()" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white">
+              <option value="1.0">1.0x (標準)</option>
+              <option value="0.85">0.85x (ゆっくり)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
+        <h3 class="text-sm font-black text-white">💾 学習記録のバックアップ・復元</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="exportBackup()" class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs">📤 JSON書き出し</button>
+          <label class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs text-center cursor-pointer">
+            📥 JSON読み込み
+            <input type="file" accept=".json" onchange="importBackup(event)" class="hidden" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Tab Navigation -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-[#090d16]/95 backdrop-blur-lg border-t border-slate-800/80 pb-[env(safe-area-inset-bottom)]">
+    <div class="max-w-md mx-auto grid grid-cols-3 py-1.5 px-2">
+      <button onclick="switchTab('sprint')" id="nav-sprint" class="flex flex-col items-center py-1.5 rounded-xl text-emerald-400 font-bold">
+        <span class="text-lg">⚡</span>
+        <span class="text-[10px] mt-0.5">無限1問1答</span>
+      </button>
+      <button onclick="switchTab('weak')" id="nav-weak" class="flex flex-col items-center py-1.5 rounded-xl text-slate-400 font-bold relative">
+        <span class="text-lg">🔥</span>
+        <span class="text-[10px] mt-0.5">弱点克服</span>
+        <span id="nav-weak-badge" class="hidden absolute top-1 right-9 w-4 h-4 rounded-full bg-rose-500 text-white text-[9px] font-black flex items-center justify-center">0</span>
+      </button>
+      <button onclick="switchTab('stats')" id="nav-stats" class="flex flex-col items-center py-1.5 rounded-xl text-slate-400 font-bold">
+        <span class="text-lg">📊</span>
+        <span class="text-[10px] mt-0.5">単元・成績</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    /*************************************************************************
+     * 1. 無限パラメトリック英文法生成エンジン（Procedural Grammar Generator）
+     * 全12単元 × 語彙・状況・時制・構文パーツの組み合わせにより数万通りの問題を
+     * API通信ゼロ・オフライン単体で瞬時に生成するエンジン
+     *************************************************************************/
+    const CATEGORIES = [
+      "時制・完了形",
+      "仮定法",
+      "不定詞・動名詞",
+      "分詞・分詞構文",
+      "関係詞",
+      "助動詞",
+      "比較",
+      "接続詞・前置詞",
+      "受動態",
+      "倒置・一致",
+      "語法・コロケーション",
+      "会話・実務表現"
+    ];
+
+    const SUBJECTS = [
+      { en: "I", ja: "私", is3sg: false, bePast: "was", havePres: "have", doPres: "do" },
+      { en: "she", ja: "彼女", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
+      { en: "he", ja: "彼", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
+      { en: "our team", ja: "私たちのチーム", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
+      { en: "the engineer", ja: "そのエンジニア", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
+      { en: "the vocalist", ja: "そのボーカリスト", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
+      { en: "we", ja: "私たち", is3sg: false, bePast: "were", havePres: "have", doPres: "do" },
+      { en: "they", ja: "彼ら", is3sg: false, bePast: "were", havePres: "have", doPres: "do" },
+      { en: "many students", ja: "多くの学生たち", is3sg: false, bePast: "were", havePres: "have", doPres: "do" }
+    ];
+
+    const TASKS = [
+      { base: "finish", past: "finished", pp: "finished", ing: "finishing", obj: "the vocal recording", objJa: "ボーカル録音を" },
+      { base: "complete", past: "completed", pp: "completed", ing: "completing", obj: "the data analysis", objJa: "データ分析を" },
+      { base: "submit", past: "submitted", pp: "submitted", ing: "submitting", obj: "the research paper", objJa: "研究論文を" },
+      { base: "deploy", past: "deployed", pp: "deployed", ing: "deploying", obj: "the web application", objJa: "Webアプリを" },
+      { base: "master", past: "mastered", pp: "mastered", ing: "mastering", obj: "the guitar riff", objJa: "ギターリフを" },
+      { base: "prepare", past: "prepared", pp: "prepared", ing: "preparing", obj: "the presentation slides", objJa: "プレゼン資料を" },
+      { base: "book", past: "booked", pp: "booked", ing: "booking", obj: "the flight tickets", objJa: "航空券を" },
+      { base: "clean", past: "cleaned", pp: "cleaned", ing: "cleaning", obj: "the review dataset", objJa: "レビューデータセットを" },
+      { base: "arrange", past: "arranged", pp: "arranged", ing: "arranging", obj: "the string section", objJa: "ストリングスパートを" },
+      { base: "check", past: "checked", pp: "checked", ing: "checking", obj: "the audio cables", objJa: "オーディオケーブルを" }
+    ];
+
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function cap(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function shuffleChoices(correctText, distractors) {
+      const uniqueWrong = Array.from(new Set(distractors.filter(d => d !== correctText))).slice(0, 3);
+      const combined = [correctText, ...uniqueWrong];
+      for (let i = combined.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [combined[i], combined[j]] = [combined[j], combined[i]];
+      }
+      return {
+        choices: combined,
+        ans: combined.indexOf(correctText)
+      };
+    }
+
+    // 12単元それぞれの動的問題ジェネレーター
+    const GENERATORS = {
+      "時制・完了形": () => {
+        const mode = Math.floor(Math.random() * 4);
+        const s = pick(SUBJECTS);
+        const t = pick(TASKS);
+
+        if (mode === 0) {
+          // 過去完了形（By the time + 過去形, S had already + p.p.）
+          const c = `had already ${t.pp}`;
+          const { choices, ans } = shuffleChoices(c, [`has already ${t.pp}`, `will already ${t.base}`, `already ${t.past}`]);
+          return {
+            cat: "時制・完了形",
+            sentence: `By the time the producer arrived, ${s.en} (      ) ${t.obj}.`,
+            choices, ans,
+            ja: `プロデューサーが到着した頃には、${s.ja}はすでに${t.objJa}終えていた。`,
+            ruleTitle: "過去完了形（had + 過去分詞）の「完了」",
+            ruleDetail: `基準となる過去の時点（arrived）よりもさらに前の時点で動作が完了していたことを表すため、過去完了形「had + 過去分詞（${c}）」を選びます。`
+          };
+        } else if (mode === 1) {
+          // 時・条件の副詞節（as soon as / once + 現在形）
+          const vPres = s.is3sg ? (t.base.endsWith("h") ? t.base + "es" : t.base + "s") : t.base;
+          const { choices, ans } = shuffleChoices(vPres, [`will ${t.base}`, `would ${t.base}`, `${t.ing}`]);
+          return {
+            cat: "時制・完了形",
+            sentence: `Please send me a message as soon as ${s.en} (      ) ${t.obj}.`,
+            choices, ans,
+            ja: `${s.ja}が${t.objJa}終えたらすぐにメッセージを送ってください。`,
+            ruleTitle: "時・条件を表す副詞節では未来のことも現在形",
+            ruleDetail: `as soon as（〜するとすぐに）や when, if が導く副詞節の中では、未来のことであっても will を使わず現在形（${vPres}）で表します。`
+          };
+        } else if (mode === 2) {
+          // 現在完了進行形（for + 期間）
+          const dur = pick(["two hours", "three weeks", "all morning", "five days"]);
+          const durJa = { "two hours": "2時間", "three weeks": "3週間", "all morning": "午前中ずっと", "five days": "5日間" }[dur];
+          const c = `${s.havePres} been ${t.ing}`;
+          const { choices, ans } = shuffleChoices(c, [`is ${t.ing}`, `was ${t.base}`, `${s.havePres} ${t.ing}`]);
+          return {
+            cat: "時制・完了形",
+            sentence: `${cap(s.en)} (      ) ${t.obj} for ${dur} without a break.`,
+            choices, ans,
+            ja: `${s.ja}は休憩なしで${durJa}ずっと${t.objJa}作業し続けている。`,
+            ruleTitle: "現在完了進行形（have/has been -ing）",
+            ruleDetail: `過去から現在まで動作が途切れず継続していることを強調するため、${s.havePres} been + 現在分詞（${c}）を使います。`
+          };
+        } else {
+          // 未来完了形（By next month / By tomorrow）
+          const timeRef = pick(["By next Friday", "By the end of this month", "By tomorrow noon"]);
+          const timeJa = { "By next Friday": "来週の金曜日までには", "By the end of this month": "今月末までには", "By tomorrow noon": "明日の正午までには" }[timeRef];
+          const c = `will have ${t.pp}`;
+          const { choices, ans } = shuffleChoices(c, [`has ${t.pp}`, `had ${t.pp}`, `will be ${t.pp}`]);
+          return {
+            cat: "時制・完了形",
+            sentence: `${timeRef}, ${s.en} (      ) ${t.obj} completely.`,
+            choices, ans,
+            ja: `${timeJa}、${s.ja}は${t.objJa}完全に終えているだろう。`,
+            ruleTitle: "未来完了形（will have + 過去分詞）",
+            ruleDetail: `${timeRef} のように未来の特定期限までの完了を表すときは、未来完了形「will have + 過去分詞（${c}）」を用います。`
+          };
+        }
+      },
+
+      "仮定法": () => {
+        const mode = Math.floor(Math.random() * 4);
+        const s = pick(SUBJECTS);
+        const t = pick(TASKS);
+
+        if (mode === 0) {
+          // 仮定法過去
+          const { choices, ans } = shuffleChoices("had", ["have", "will have", "would have"]);
+          return {
+            cat: "仮定法",
+            sentence: `If ${s.en} (      ) more time today, ${s.en} would ${t.base} ${t.obj}.`,
+            choices, ans,
+            ja: `もし今日もっと時間があれば、${s.ja}は${t.objJa}終えるのに。`,
+            ruleTitle: "仮定法過去（現在の事実と反対の仮定）",
+            ruleDetail: "「もし今〜なら…するのに」という現在の事実に反する仮定では、If節に過去形（had）、主節に would + 動詞の原形を使います。"
+          };
+        } else if (mode === 1) {
+          // 仮定法過去完了
+          const c = `would have ${t.pp}`;
+          const { choices, ans } = shuffleChoices(c, [`would ${t.base}`, `${t.past}`, `had ${t.pp}`]);
+          return {
+            cat: "仮定法",
+            sentence: `If ${s.en} had started earlier, ${s.en} (      ) ${t.obj} on time.`,
+            choices, ans,
+            ja: `もしもっと早く始めていたら、${s.ja}は時間通りに${t.objJa}終えていただろうに。`,
+            ruleTitle: "仮定法過去完了（過去の事実と反対の仮定）",
+            ruleDetail: "If節が had + 過去分詞（had started）なので過去の仮定です。主節もそれに合わせて「would have + 過去分詞」にします。"
+          };
+        } else if (mode === 2) {
+          // 提案・要求動詞 + that節内の原形（仮定法現在）
+          const verb = pick(["suggested", "recommended", "insisted", "demanded"]);
+          const verbJa = { suggested: "提案した", recommended: "勧めた", insisted: "強く主張した", demanded: "要求した" }[verb];
+          const { choices, ans } = shuffleChoices(t.base, [t.past, `${t.base}s`, `${t.ing}`]);
+          return {
+            cat: "仮定法",
+            sentence: `The advisor ${verb} that ${s.en} (      ) ${t.obj} right away.`,
+            choices, ans,
+            ja: `指導教員は${s.ja}がすぐに${t.objJa}行うよう${verbJa}。`,
+            ruleTitle: "提案・要求動詞 + that節内の動詞の原形",
+            ruleDetail: `${verb} の後ろの that節では「（should）+ 動詞の原形」を使うため、主語が三人称単数や過去時制でも原形（${t.base}）が正解です。`
+          };
+        } else {
+          // Were it not for / Had it not been for
+          const noun = pick(["your advice", "this backup tool", "offline support", "daily practice"]);
+          const nounJa = { "your advice": "あなたの助言", "this backup tool": "このバックアップ機能", "offline support": "オフライン対応", "daily practice": "日々の練習" }[noun];
+          const { choices, ans } = shuffleChoices("Were", ["Was", "Is", "Has"]);
+          return {
+            cat: "仮定法",
+            sentence: `(      ) it not for ${noun}, we could not ${t.base} ${t.obj}.`,
+            choices, ans,
+            ja: `もし${nounJa}がなければ、私たちは${t.objJa}成し遂げられないだろう。`,
+            ruleTitle: "If省略の倒置構文（Were it not for 〜）",
+            ruleDetail: "If it were not for 〜（もし今〜がなければ）から If を省略すると、Were と it が倒置して Were it not for 〜 になります。"
+          };
+        }
+      },
+
+      "不定詞・動名詞": () => {
+        const mode = Math.floor(Math.random() * 4);
+        const s = pick(SUBJECTS);
+        const t = pick(TASKS);
+
+        if (mode === 0) {
+          // 動名詞のみ目的語にとる動詞 (MEGAFEPS)
+          const v = pick([
+            { en: "finished", ja: "終えた" },
+            { en: "avoided", ja: "避けた" },
+            { en: "put off", ja: "先延ばしにした" },
+            { en: "kept", ja: "〜し続けた" }
+          ]);
+          const { choices, ans } = shuffleChoices(t.ing, [`to ${t.base}`, t.past, t.base]);
+          return {
+            cat: "不定詞・動名詞",
+            sentence: `${cap(s.en)} finally ${v.en} (      ) ${t.obj} before midnight.`,
+            choices, ans,
+            ja: `${s.ja}は真夜中前にようやく${t.objJa}行うことを${v.ja}。`,
+            ruleTitle: `動名詞（-ing）のみを目的語にとる動詞（${v.en}）`,
+            ruleDetail: `finish, avoid, put off, keep, enjoy, mind などは to不定詞をとれず、必ず動名詞（${t.ing}）を目的語にとります。`
+          };
+        } else if (mode === 1) {
+          // look forward to + -ing / be used to + -ing
+          const idiom = pick([
+            { en: "is looking forward to", ja: "〜することを楽しみにしている" },
+            { en: "is accustomed to", ja: "〜することに慣れている" },
+            { en: "is dedicated to", ja: "〜することに専念している" }
+          ]);
+          const { choices, ans } = shuffleChoices(t.ing, [t.base, t.past, `be ${t.pp}`]);
+          return {
+            cat: "不定詞・動名詞",
+            sentence: `The team ${idiom.en} (      ) ${t.obj} next week.`,
+            choices, ans,
+            ja: `チームは来週${t.objJa}行うこと（${idiom.ja}）。`,
+            ruleTitle: "前置詞の to + 動名詞（-ing）",
+            ruleDetail: `このフレーズの to は不定詞ではなく「前置詞」であるため、後ろには動詞の原形ではなく動名詞（${t.ing}）を置きます。`
+          };
+        } else if (mode === 2) {
+          // remember / forget to do vs -ing
+          const { choices, ans } = shuffleChoices(`to ${t.base}`, [t.ing, t.past, t.base]);
+          return {
+            cat: "不定詞・動名詞",
+            sentence: `Please don't forget (      ) ${t.obj} before turning off the Mac.`,
+            choices, ans,
+            ja: `Macの電源を切る前に、忘れずに${t.objJa}行ってください。`,
+            ruleTitle: "forget / remember + to不定詞（これから〜すること）",
+            ruleDetail: `forget / remember は、to不定詞をとると「これから〜すること（未来志向）」、動名詞をとると「過去に〜したこと」を意味します。`
+          };
+        } else {
+          // It is + 形容詞 + for 人 + to不定詞
+          const adj = pick([
+            { en: "essential", ja: "不可欠だ" },
+            { en: "important", ja: "重要だ" },
+            { en: "helpful", ja: "役に立つ" }
+          ]);
+          const { choices, ans } = shuffleChoices(`to ${t.base}`, [t.ing, t.base, t.past]);
+          return {
+            cat: "不定詞・動名詞",
+            sentence: `It is ${adj.en} for ${s.en === "I" ? "me" : s.en} (      ) ${t.obj} carefully.`,
+            choices, ans,
+            ja: `慎重に${t.objJa}行うことは${adj.ja}。`,
+            ruleTitle: "形式主語 It ... for 人 + to不定詞",
+            ruleDetail: `形式主語 It の真主語として to不定詞（to ${t.base}）を置く基本構文です。`
+          };
+        }
+      },
+
+      "分詞・分詞構文": () => {
+        const mode = Math.floor(Math.random() * 3);
+        const t = pick(TASKS);
+
+        if (mode === 0) {
+          // 感情分詞（モノ主語 -ing vs 人主語 -ed）
+          const pair = pick([
+            { ing: "encouraging", ed: "encouraged", ja: "勇気づけられる" },
+            { ing: "surprising", ed: "surprised", ja: "驚くべき" },
+            { ing: "satisfying", ed: "satisfied", ja: "満足のいく" },
+            { ing: "exhausting", ed: "exhausted", ja: "疲れ果てさせる" }
+          ]);
+          const { choices, ans } = shuffleChoices(pair.ing, [pair.ed, "encourage", "surprise"]);
+          return {
+            cat: "分詞・分詞構文",
+            sentence: `The feedback from the audience was truly (      ).`,
+            choices, ans,
+            ja: `観客からのフィードバックは本当に${pair.ja}ものだった。`,
+            ruleTitle: "感情分詞：モノ・コトが主語なら現在分詞（-ing）",
+            ruleDetail: `主語（The feedback）が人に感情を与える側なので現在分詞（${pair.ing}）を選びます。人が主語なら過去分詞（${pair.ed}）になります。`
+          };
+        } else if (mode === 1) {
+          // have + O + 過去分詞
+          const { choices, ans } = shuffleChoices(t.pp, [t.base, t.ing, `to ${t.base}`]);
+          return {
+            cat: "分詞・分詞構文",
+            sentence: `We had ${t.obj} (      ) by an experienced specialist.`,
+            choices, ans,
+            ja: `私たちは経験豊富な専門家に${t.objJa}完了してもらった。`,
+            ruleTitle: "have + 目的語 + 過去分詞（〜してもらう）",
+            ruleDetail: `目的語（${t.obj}）は「〜される（受動）」側なので、過去分詞（${t.pp}）を補語に置きます。`
+          };
+        } else {
+          // 受動の分詞構文（Seen / Written / Built）
+          const starter = pick([
+            { pp: "Seen", ing: "Seeing", base: "See", ja: "見られると", rest: "from the top floor, the night view is breathtaking." },
+            { pp: "Written", ing: "Writing", base: "Write", ja: "書かれているので", rest: "in plain English, the manual is easy to follow." },
+            { pp: "Recorded", ing: "Recording", base: "Record", ja: "録音されたので", rest: "in a treated studio, the vocals sound crystal clear." }
+          ]);
+          const { choices, ans } = shuffleChoices(starter.pp, [starter.ing, starter.base, `To ${starter.base.toLowerCase()}`]);
+          return {
+            cat: "分詞・分詞構文",
+            sentence: `(      ) ${starter.rest}`,
+            choices, ans,
+            ja: `（${starter.ja}）${starter.rest}`,
+            ruleTitle: "受動の分詞構文（過去分詞で始まる形）",
+            ruleDetail: `主節の主語が「〜される（受動）」関係にあるため、Being が省略された過去分詞（${starter.pp}）から文を始めます。`
+          };
+        }
+      },
+
+      "関係詞": () => {
+        const mode = Math.floor(Math.random() * 3);
+        if (mode === 0) {
+          const place = pick([
+            { n: "recording studio", ja: "レコーディングスタジオ" },
+            { n: "historic hotel", ja: "歴史あるホテル" },
+            { n: "university lab", ja: "大学の研究室" }
+          ]);
+          const { choices, ans } = shuffleChoices("where", ["which", "who", "what"]);
+          return {
+            cat: "関係詞",
+            sentence: `This is the ${place.n} (      ) we worked together last year.`,
+            choices, ans,
+            ja: `ここが昨年私たちが一緒に作業した${place.ja}だ。`,
+            ruleTitle: "関係副詞 where（後ろに完全な文が続く）",
+            ruleDetail: `後ろの文（we worked together）が完全な文であり、場所（in the ${place.n}）を表すため関係副詞 where を選びます。`
+          };
+        } else if (mode === 1) {
+          const { choices, ans } = shuffleChoices("what", ["that", "which", "whom"]);
+          return {
+            cat: "関係詞",
+            sentence: `(      ) matters most in language learning is daily consistency.`,
+            choices, ans,
+            ja: `語学学習において最も重要なことは、毎日の継続だ。`,
+            ruleTitle: "先行詞を含む関係代名詞 what（〜すること・もの）",
+            ruleDetail: `前に先行詞がなく、後ろの動詞 matters の主語が欠けているため、「〜すること（the thing which）」を表す what が正解です。`
+          };
+        } else {
+          const { choices, ans } = shuffleChoices("whose", ["which", "who", "whom"]);
+          return {
+            cat: "関係詞",
+            sentence: `I bought an acoustic guitar (      ) sound is remarkably rich.`,
+            choices, ans,
+            ja: `私はその音色が驚くほど豊かなアコースティックギターを買った。`,
+            ruleTitle: "所有格の関係代名詞 whose（先行詞がモノでも使える）",
+            ruleDetail: `「そのギターの音色（its sound）」という所有関係を表すため、先行詞がモノ（guitar）でも所有格 whose を使います。`
+          };
+        }
+      },
+
+      "助動詞": () => {
+        const item = pick([
+          {
+            s: "The ground is completely wet; it (      ) have rained heavily last night.",
+            c: "must", w: ["should", "cannot", "would"],
+            ja: "地面が完全に濡れている。昨夜激しい雨が降ったに違いない。",
+            t: "must have + 過去分詞（〜したに違いない：過去の強い推量）",
+            d: "明確な根拠（地面が濡れている）をもとに過去の出来事を強く確信して推量するときは must have + 過去分詞を使います。"
+          },
+          {
+            s: "I (      ) have checked the train timetable before leaving the hotel.",
+            c: "should", w: ["must", "may", "cannot"],
+            ja: "ホテルを出る前に電車の時刻表を確認しておくべきだった。",
+            t: "should have + 過去分詞（〜すべきだったのに：過去の後悔）",
+            d: "実際にはしなかったことへの後悔・反省を表す定番表現が should have + 過去分詞です。"
+          },
+          {
+            s: "She (      ) have forgotten the meeting—she confirmed it ten minutes ago.",
+            c: "cannot", w: ["must", "should", "may"],
+            ja: "10分前に確認したばかりなのだから、彼女が会議を忘れたはずがない。",
+            t: "cannot have + 過去分詞（〜したはずがない）",
+            d: "過去の事実に対する強い否定の推量（「〜だったはずがない」）には cannot have + 過去分詞を用います。"
+          }
+        ]);
+        const { choices, ans } = shuffleChoices(item.c, item.w);
+        return { cat: "助動詞", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };
+      },
+
+      "比較": () => {
+        const item = pick([
+          {
+            s: "The more frequently you review, (      ) you will remember the words.",
+            c: "the better", w: ["better", "the best", "best"],
+            ja: "頻繁に復習すればするほど、単語をよりよく覚えられるだろう。",
+            t: "The + 比較級 〜, the + 比較級 …（〜すればするほどますます…）",
+            d: "比例関係を表す重要構文で、前半と後半の両方に「the + 比較級」を置きます。"
+          },
+          {
+            s: "This solid-state drive is four times (      ) than my old hard disk.",
+            c: "faster", w: ["fast", "fastest", "more fast"],
+            ja: "このSSDは古いハードディスクの4倍速い。",
+            t: "倍数表現（〜 times + 比較級 + than）",
+            d: "「4倍速い」は four times faster than 〜 または four times as fast as 〜 で表します。"
+          },
+          {
+            s: "In terms of audio latency, a wired connection is superior (      ) Bluetooth.",
+            c: "to", w: ["than", "from", "over"],
+            ja: "音声遅延の点では、有線接続はBluetoothより優れている。",
+            t: "ラテン語由来の比較級（superior / inferior / prior + to）",
+            d: "-ior で終わる比較級（superior, inferior, senior, junior, prior）は than ではなく前置詞 to と結びつきます。"
+          }
+        ]);
+        const { choices, ans } = shuffleChoices(item.c, item.w);
+        return { cat: "比較", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };
+      },
+
+      "接続詞・前置詞": () => {
+        const item = pick([
+          {
+            s: "(      ) the heavy traffic, we arrived at the stadium on time.",
+            c: "Despite", w: ["Although", "Even though", "While"],
+            ja: "激しい渋滞にもかかわらず、私たちは時間通りにスタジアムに到着した。",
+            t: "前置詞 Despite（後ろは名詞句）vs 接続詞 Although（後ろはS+V）",
+            d: "空所の後ろが the heavy traffic という名詞句だけなので、前置詞の Despite（= In spite of）を選びます。"
+          },
+          {
+            s: "Please finish uploading the stems (      ) tomorrow at 6:00 PM.",
+            c: "by", w: ["until", "during", "for"],
+            ja: "明日の午後6時までにステムデータのアップロードを終えてください。",
+            t: "期限の by（〜までに完了）vs 継続の until（〜までずっと）",
+            d: "「終える（finish）」という1回完了する動作の締め切りを示すときは by を使います。"
+          },
+          {
+            s: "We visited several museums (      ) our ten-day trip to Italy.",
+            c: "during", w: ["while", "for", "since"],
+            ja: "10日間のイタリア旅行の間、いくつかの美術館を訪れた。",
+            t: "前置詞 during（特定期間の名詞）vs 接続詞 while（S+V）",
+            d: "our ten-day trip は名詞句であり、特定の期間を指すため during を使います。"
+          }
+        ]);
+        const { choices, ans } = shuffleChoices(item.c, item.w);
+        return { cat: "接続詞・前置詞", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };
+      },
+
+      "受動態": () => {
+        const t = pick(TASKS);
+        const { choices, ans } = shuffleChoices(`to be ${t.pp}`, [`to ${t.base}`, t.ing, t.base]);
+        return {
+          cat: "受動態",
+          sentence: `The project is expected (      ) before the end of this quarter.`,
+          choices, ans,
+          ja: `そのプロジェクトは今期末までに完了されると見込まれている。`,
+          ruleTitle: "be expected to be + 過去分詞（〜されると見込まれている）",
+          ruleDetail: `主語 The project は「〜される（受動）」側なので、不定詞も受動態 to be ${t.pp} の形にします。`
+        };
+      },
+
+      "倒置・一致": () => {
+        const item = pick([
+          {
+            s: "Never (      ) experienced such an inspiring live performance.",
+            c: "have I", w: ["I have", "I had", "did I have"],
+            ja: "これほど感動的なライブパフォーマンスは今まで一度も経験したことがない。",
+            t: "否定語句（Never / Rarely / Seldom）が文頭に出たときの倒置",
+            d: "否定の副詞 Never が強調のため文頭に出ると、後ろは疑問文と同じ語順（have I）に倒置します。"
+          },
+          {
+            s: "A number of researchers (      ) using large language models for clustering.",
+            c: "are", w: ["is", "was", "has"],
+            ja: "多くの研究者がクラスタリングに大規模言語モデルを使用している。",
+            t: "A number of + 複数名詞（複数扱い）vs The number of（単数扱い）",
+            d: "A number of 〜 は「多くの〜（＝ many）」という意味なので複数扱い（are）になります。"
+          }
+        ]);
+        const { choices, ans } = shuffleChoices(item.c, item.w);
+        return { cat: "倒置・一致", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };
+      },
+
+      "語法・コロケーション": () => {
+        const item = pick([
+          {
+            s: "Heavy snow prevented the train (      ) departing on schedule.",
+            c: "from", w: ["to", "for", "against"],
+            ja: "大雪のせいで電車は定刻通りに出発できなかった。",
+            t: "prevent / stop / keep + O + from -ing（Oが〜するのを妨げる）",
+            d: "無生物主語構文の超頻出パターン「prevent O from -ing」です。前置詞 from を必ず伴います。"
+          },
+          {
+            s: "The platform provides learners (      ) instant audio pronunciation.",
+            c: "with", w: ["for", "to", "by"],
+            ja: "そのプラットフォームは学習者に即座の音声発音を提供する。",
+            t: "provide 人 with モノ（人にモノを提供する）",
+            d: "「人（learners）」が先に、「モノ」が後ろに来る語順では前置詞 with を使います。"
+          },
+          {
+            s: "This song always reminds me (      ) our summer road trip.",
+            c: "of", w: ["from", "about", "to"],
+            ja: "この曲はいつも私たちに夏のロードトリップを思い出させる。",
+            t: "remind A of B（AにBを思い出させる）",
+            d: "「AにBを想起させる」は remind A of B の形をとります。"
+          }
+        ]);
+        const { choices, ans } = shuffleChoices(item.c, item.w);
+        return { cat: "語法・コロケーション", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };
+      },
+
+      "会話・実務表現": () => {
+        const item = pick([
+          {
+            s: "Would you mind (      ) the vocal volume slightly in my headphones?",
+            c: "turning up", w: ["to turn up", "turn up", "turned up"],
+            ja: "ヘッドホンのボーカルの音量を少し上げていただいても構いませんか？",
+            t: "Would you mind + -ing?（〜していただけませんか？）",
+            d: "mind は動名詞のみをとる動詞です。承諾するときは No, not at all. と答えます。"
+          },
+          {
+            s: "I'd rather (      ) offline so I can study on the subway without signal.",
+            c: "work", w: ["to work", "working", "worked"],
+            ja: "電波のない地下鉄でも勉強できるように、むしろオフラインで動かしたい。",
+            t: "would rather + 動詞の原形（むしろ〜したい）",
+            d: "would rather は助動詞と同じ働きをするため、後ろには to なしの動詞の原形を置きます。"
+          }
+        ]);
+        const { choices, ans } = shuffleChoices(item.c, item.w);
+        return { cat: "会話・実務表現", sentence: item.s, choices, ans, ja: item.ja, ruleTitle: item.t, ruleDetail: item.d };
+      }
+    };
+
+    function generateQuestion(categoryFilter = "ALL") {
+      let targetCat = categoryFilter;
+      if (targetCat === "ALL" || !GENERATORS[targetCat]) {
+        targetCat = pick(CATEGORIES);
+      }
+      const q = GENERATORS[targetCat]();
+      q.uid = `${targetCat}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+      return q;
+    }
+
+    /*************************************************************************
+     * 2. 状態管理・ストレージ永続化 (LocalStorage)
+     *************************************************************************/
+    const STORAGE_KEY = "GRAMMAR_SPRINT_INFINITE_V2";
+
+    let state = {
+      selectedCategory: "ALL", // 'ALL' | 'WEAK' | 単元名
+      autoSpeak: true,
+      accent: "en-US",
+      speed: 1.0,
+      totalAttempts: 0,
+      totalCorrect: 0,
+      catStats: {},    // { catName: { attempts: 0, correct: 0 } }
+      weakQueue: [],   // 間違えた問題オブジェクトの保存リスト
+      currentQ: null,
+      answeredCurrent: false,
+      lastChoiceIdx: null
+    };
+
+    /*************************************************************************
+     * 3. 音声再生エンジン (iPhoneマナーモード / Safari対応)
+     *************************************************************************/
+    let audioCtxUnlocked = false;
+    function unlockAudio() {
+      if (audioCtxUnlocked) return;
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) {
+          const ctx = new AC();
+          const buf = ctx.createBuffer(1, 1, 22050);
+          const src = ctx.createBufferSource();
+          src.buffer = buf;
+          src.connect(ctx.destination);
+          src.start(0);
+        }
+        audioCtxUnlocked = true;
+      } catch (e) {}
+    }
+    document.addEventListener("touchstart", unlockAudio, { once: true });
+    document.addEventListener("click", unlockAudio, { once: true });
+
+    function speakEnglishSentence(text) {
+      if (!text || !("speechSynthesis" in window)) return;
+      const btn = document.getElementById("btn-q-speak");
+      if (btn) btn.classList.add("speaking-active");
+      const done = () => { if (btn) btn.classList.remove("speaking-active"); };
+
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = state.accent || "en-US";
+        utter.rate = Number(state.speed) || 1.0;
+
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length > 0) {
+          const pref = voices.find(v =>
+            v.lang.replace("_", "-") === utter.lang &&
+            (v.name.includes("Samantha") || v.name.includes("Daniel") || v.name.includes("Google") || v.localService)
+          ) || voices.find(v => v.lang.startsWith("en"));
+          if (pref) utter.voice = pref;
+        }
+        utter.onend = done;
+        utter.onerror = done;
+        window.speechSynthesis.speak(utter);
+        setTimeout(done, 4000);
+      } catch (e) {
+        done();
+      }
+    }
+
+    function getCompleteSentence(q) {
+      const answerWord = q.choices[q.ans];
+      return q.sentence.replace(/\(\s*\)/, answerWord);
+    }
+
+    function speakCurrentSentence() {
+      const q = state.currentQ;
+      if (!q) return;
+      const text = state.answeredCurrent
+        ? getCompleteSentence(q)
+        : q.sentence.replace(/\(\s*\)/, " ... ");
+      speakEnglishSentence(text);
+    }
+
+    /*************************************************************************
+     * 4. 問題進行・弱点キュー管理
+     *************************************************************************/
+    function loadNextQuestion() {
+      if (state.selectedCategory === "WEAK" && state.weakQueue.length > 0) {
+        const idx = Math.floor(Math.random() * state.weakQueue.length);
+        state.currentQ = { ...state.weakQueue[idx], isFromWeak: true };
+      } else {
+        if (state.selectedCategory === "WEAK") {
+          state.selectedCategory = "ALL";
+        }
+        state.currentQ = generateQuestion(state.selectedCategory);
+      }
+      state.answeredCurrent = false;
+      state.lastChoiceIdx = null;
+      saveState();
+      renderAll();
+    }
+
+    function handleAnswer(choiceIdx) {
+      if (state.answeredCurrent) return;
+      const q = state.currentQ;
+      const isCorrect = choiceIdx === q.ans;
+
+      state.answeredCurrent = true;
+      state.lastChoiceIdx = choiceIdx;
+      state.totalAttempts = (state.totalAttempts || 0) + 1;
+
+      if (!state.catStats[q.cat]) state.catStats[q.cat] = { attempts: 0, correct: 0 };
+      state.catStats[q.cat].attempts++;
+
+      if (isCorrect) {
+        state.totalCorrect = (state.totalCorrect || 0) + 1;
+        state.catStats[q.cat].correct++;
+        // 弱点キューに同じ文があれば卒業（削除）
+        state.weakQueue = state.weakQueue.filter(item => item.sentence !== q.sentence);
+      } else {
+        // 間違えた問題を弱点キューに保存
+        if (!state.weakQueue.some(item => item.sentence === q.sentence)) {
+          state.weakQueue.push(q);
+        }
+      }
+
+      saveState();
+      renderAll();
+
+      if (state.autoSpeak) {
+        speakEnglishSentence(getCompleteSentence(q));
+      }
+    }
+
+    function togglePreHint() {
+      document.getElementById("q-hint-ja").classList.toggle("hidden");
+    }
+
+    function selectCategory(cat) {
+      state.selectedCategory = cat;
+      switchTab("sprint");
+      loadNextQuestion();
+    }
+
+    function startWeaknessMode() {
+      if (state.weakQueue.length === 0) {
+        alert("現在、未克服の弱点問題はありません！");
+        return;
+      }
+      state.selectedCategory = "WEAK";
+      switchTab("sprint");
+      loadNextQuestion();
+    }
+
+    /*************************************************************************
+     * 5. UI 描画
+     *************************************************************************/
+    function renderAll() {
+      if (!state.currentQ) {
+        state.currentQ = generateQuestion("ALL");
+      }
+      const q = state.currentQ;
+
+      // Header stats
+      document.getElementById("header-total-solved").textContent = (state.totalAttempts || 0).toLocaleString();
+      const modePill = document.getElementById("header-mode-pill");
+      if (state.selectedCategory === "WEAK") {
+        modePill.textContent = `🔥 弱点集中 (${state.weakQueue.length}問)`;
+        modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30";
+      } else if (state.selectedCategory === "ALL") {
+        modePill.textContent = "無限ランダム";
+        modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+      } else {
+        modePill.textContent = `${state.selectedCategory} (∞)`;
+        modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30";
+      }
+
+      // Weak badge
+      const weakBadge = document.getElementById("nav-weak-badge");
+      if (state.weakQueue.length > 0) {
+        weakBadge.classList.remove("hidden");
+        weakBadge.textContent = state.weakQueue.length;
+      } else {
+        weakBadge.classList.add("hidden");
+      }
+
+      // Category Pills
+      const pillsEl = document.getElementById("category-pills");
+      pillsEl.innerHTML = "";
+      const pillItems = [
+        { key: "ALL", label: "∞ 全単元ランダム" },
+        ...(state.weakQueue.length > 0 ? [{ key: "WEAK", label: `🔥 弱点のみ(${state.weakQueue.length})` }] : []),
+        ...CATEGORIES.map(c => ({ key: c, label: c }))
+      ];
+      pillItems.forEach(p => {
+        const active = state.selectedCategory === p.key;
+        const btn = document.createElement("button");
+        btn.className = `px-3 py-1.5 rounded-full text-[11px] font-bold shrink-0 border transition ${
+          active
+            ? "bg-emerald-500 text-slate-950 border-emerald-400 shadow"
+            : "bg-slate-900 text-slate-400 border-slate-800 hover:text-white"
+        }`;
+        btn.textContent = p.label;
+        btn.onclick = () => selectCategory(p.key);
+        pillsEl.appendChild(btn);
+      });
+
+      // Question Card
+      document.getElementById("q-category-badge").textContent = q.cat;
+      document.getElementById("q-pattern-badge").textContent = q.isFromWeak ? "🔥 弱点リベンジ" : "∞ 動的生成";
+
+      const sentenceEl = document.getElementById("q-sentence");
+      if (!state.answeredCurrent) {
+        sentenceEl.innerHTML = q.sentence.replace(
+          /\(\s*\)/,
+          `<span class="inline-block px-3 py-0.5 mx-1 rounded-lg bg-slate-800 border border-dashed border-indigo-400/60 text-indigo-300 text-base">（ ？ ）</span>`
+        );
+      } else {
+        const ansWord = q.choices[q.ans];
+        sentenceEl.innerHTML = q.sentence.replace(
+          /\(\s*\)/,
+          `<span class="inline-block px-2.5 py-0.5 mx-0.5 rounded-lg bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 underline decoration-emerald-400">${ansWord}</span>`
+        );
+      }
+
+      const hintEl = document.getElementById("q-hint-ja");
+      hintEl.textContent = `ヒント訳: ${q.ja}`;
+      if (!state.answeredCurrent) {
+        hintEl.classList.add("hidden");
+      }
+
+      // 4 Choices
+      const choicesEl = document.getElementById("q-choices");
+      choicesEl.innerHTML = "";
+      q.choices.forEach((choiceText, idx) => {
+        const btn = document.createElement("button");
+        btn.disabled = state.answeredCurrent;
+
+        let styleClass = "w-full p-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800/90 border border-slate-800 text-sm font-bold text-slate-100 text-left flex items-center gap-3 transition active:scale-[0.99]";
+        if (state.answeredCurrent) {
+          if (idx === q.ans) {
+            styleClass = "w-full p-3.5 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-sm font-black text-emerald-200 text-left flex items-center gap-3";
+          } else if (idx === state.lastChoiceIdx) {
+            styleClass = "w-full p-3.5 rounded-2xl bg-rose-500/20 border-2 border-rose-500 text-sm font-bold text-rose-300 text-left flex items-center gap-3";
+          } else {
+            styleClass = "w-full p-3.5 rounded-2xl bg-slate-950/50 border border-slate-800/50 text-sm font-medium text-slate-500 text-left flex items-center gap-3";
+          }
+        }
+
+        const badgeLabels = ["A", "B", "C", "D"];
+        btn.className = styleClass;
+        btn.innerHTML = `
+          <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center text-xs font-extrabold shrink-0">${badgeLabels[idx]}</span>
+          <span>${choiceText}</span>
+        `;
+        btn.onclick = () => handleAnswer(idx);
+        choicesEl.appendChild(btn);
+      });
+
+      const preActions = document.getElementById("q-pre-actions");
+      const expBox = document.getElementById("q-explanation-box");
+      if (!state.answeredCurrent) {
+        preActions.classList.remove("hidden");
+        expBox.classList.add("hidden");
+      } else {
+        preActions.classList.add("hidden");
+        expBox.classList.remove("hidden");
+
+        const isCorrect = state.lastChoiceIdx === q.ans;
+        const resBanner = document.getElementById("q-result-banner");
+        resBanner.textContent = isCorrect
+          ? "⭕ 正解！ナイス判断！"
+          : `❌ 不正解（正解は ${["A","B","C","D"][q.ans]}: ${q.choices[q.ans]}）`;
+        resBanner.className = isCorrect
+          ? "text-sm font-black text-emerald-400"
+          : "text-sm font-black text-rose-400";
+
+        document.getElementById("q-complete-en").textContent = getCompleteSentence(q);
+        document.getElementById("q-complete-ja").textContent = q.ja;
+        document.getElementById("q-rule-title").textContent = `📌 ${q.ruleTitle}`;
+        document.getElementById("q-rule-detail").textContent = q.ruleDetail;
+      }
+
+      renderWeaknessView();
+      renderStatsView();
+      syncSettingsUI();
+    }
+
+    function renderWeaknessView() {
+      const emptyEl = document.getElementById("weak-empty");
+      const listEl = document.getElementById("weak-list");
+      listEl.innerHTML = "";
+
+      if (state.weakQueue.length === 0) {
+        emptyEl.classList.remove("hidden");
+        return;
+      }
+      emptyEl.classList.add("hidden");
+
+      state.weakQueue.forEach(wq => {
+        const div = document.createElement("div");
+        div.className = "p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5 cursor-pointer hover:border-rose-500/40";
+        div.onclick = () => {
+          state.currentQ = { ...wq, isFromWeak: true };
+          state.answeredCurrent = false;
+          state.lastChoiceIdx = null;
+          switchTab("sprint");
+          renderAll();
+        };
+        div.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300">${wq.cat}</span>
+            <span class="text-[11px] font-bold text-rose-400">タップして再挑戦 →</span>
+          </div>
+          <p class="text-xs font-bold text-slate-200">${wq.sentence}</p>
+          <p class="text-[11px] text-slate-400">正解: <span class="text-emerald-400 font-bold">${wq.choices[wq.ans]}</span>（${wq.ruleTitle}）</p>
+        `;
+        listEl.appendChild(div);
+      });
+    }
+
+    function renderStatsView() {
+      document.getElementById("stat-total-attempts").textContent = (state.totalAttempts || 0).toLocaleString();
+      const acc = state.totalAttempts > 0 ? Math.round((state.totalCorrect / state.totalAttempts) * 100) : 0;
+      document.getElementById("stat-accuracy").textContent = `${acc}%`;
+
+      const catListEl = document.getElementById("category-stats-list");
+      catListEl.innerHTML = "";
+      CATEGORIES.forEach(cat => {
+        const st = state.catStats[cat] || { attempts: 0, correct: 0 };
+        const pct = st.attempts > 0 ? Math.round((st.correct / st.attempts) * 100) : 0;
+
+        const row = document.createElement("div");
+        row.className = "p-3 rounded-2xl bg-slate-950 border border-slate-800/80 hover:border-emerald-500/40 cursor-pointer space-y-1.5";
+        row.onclick = () => selectCategory(cat);
+        row.innerHTML = `
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-200">${cat}</span>
+            <span class="font-bold text-emerald-400">${st.correct} / ${st.attempts} 問正解 (${pct}%)</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-emerald-400 rounded-full" style="width: ${pct}%"></div>
+          </div>
+        `;
+        catListEl.appendChild(row);
+      });
+    }
+
+    function switchTab(tab) {
+      ["sprint", "weak", "stats", "settings"].forEach(t => {
+        const el = document.getElementById(`view-${t}`);
+        if (el) el.classList.toggle("hidden", t !== tab);
+        const nav = document.getElementById(`nav-${t}`);
+        if (nav) {
+          nav.className = t === tab
+            ? "flex flex-col items-center py-1.5 rounded-xl text-emerald-400 font-bold relative"
+            : "flex flex-col items-center py-1.5 rounded-xl text-slate-400 font-bold relative";
+        }
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function syncSettingsUI() {
+      document.getElementById("setting-auto-speak").checked = !!state.autoSpeak;
+      document.getElementById("setting-accent").value = state.accent || "en-US";
+      document.getElementById("setting-speed").value = String(state.speed || "1.0");
+    }
+
+    function saveSettings() {
+      state.autoSpeak = document.getElementById("setting-auto-speak").checked;
+      state.accent = document.getElementById("setting-accent").value;
+      state.speed = parseFloat(document.getElementById("setting-speed").value) || 1.0;
+      saveState();
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("GRAMMAR_SPRINT_1Q_V1");
+        if (raw) {
+          state = { ...state, ...JSON.parse(raw) };
+        }
+      } catch (e) {}
+      if (!Array.isArray(state.weakQueue)) state.weakQueue = [];
+      if (!state.catStats) state.catStats = {};
+      if (!state.currentQ) {
+        state.currentQ = generateQuestion("ALL");
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function exportBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `grammar_infinite_backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+    }
+
+    function importBackup(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          state = { ...state, ...JSON.parse(reader.result) };
+          saveState();
+          renderAll();
+          alert("✅ バックアップを復元しました！");
+        } catch (err) {
+          alert("JSONファイルが正しくありません。");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
