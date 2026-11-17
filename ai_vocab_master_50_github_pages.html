@@ -22,11 +22,16 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     @keyframes pulse-ring {
-      0% { transform: scale(0.95); opacity: 0.8; }
-      50% { transform: scale(1.05); opacity: 0.4; }
-      100% { transform: scale(0.95); opacity: 0.8; }
+      0% { transform: scale(0.95); opacity: 0.85; }
+      50% { transform: scale(1.05); opacity: 0.45; }
+      100% { transform: scale(0.95); opacity: 0.85; }
     }
     .speaking-active { animation: pulse-ring 1s infinite; background-color: #4f46e5 !important; color: #fff !important; }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spin-ai { display: inline-block; animation: spin-slow 2s linear infinite; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -43,16 +48,19 @@
             <h1 class="font-bold text-sm tracking-tight text-white">VOCAB MASTER 50</h1>
             <span id="badge-day" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Day 1</span>
           </div>
-          <p class="text-[11px] text-slate-400" id="header-subtitle">A-Zバランス配分・自動継続モード</p>
+          <p class="text-[11px] text-slate-400" id="header-subtitle">Gemini AI 無限自動補充エンジン搭載</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
+        <div id="ai-gen-indicator" class="hidden items-center gap-1 bg-indigo-500/20 border border-indigo-400/40 px-2.5 py-1 rounded-full text-[10px] font-bold text-indigo-300">
+          <span class="spin-ai">✨</span> AI補充中
+        </div>
         <div class="flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-full">
           <span class="text-xs">🔥</span>
           <span id="streak-count" class="text-xs font-extrabold text-amber-400">1</span>
         </div>
-        <button onclick="switchTab('settings')" class="p-2 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/60" title="設定・音声テスト">
+        <button onclick="switchTab('settings')" class="p-2 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/60" title="設定・AI補充・音声">
           ⚙️
         </button>
       </div>
@@ -61,6 +69,14 @@
 
   <!-- Main Content Container -->
   <main class="flex-1 max-w-md w-full mx-auto px-4 py-4 space-y-4">
+
+    <!-- AI Background Status Toast -->
+    <div id="ai-toast" class="hidden bg-indigo-950/90 border border-indigo-500/50 rounded-2xl p-3 text-xs text-indigo-200 flex items-center justify-between shadow-lg">
+      <div class="flex items-center gap-2">
+        <span class="spin-ai text-sm">🤖</span>
+        <span id="ai-toast-text">Gemini AIが新しい50単語をバックグラウンド生成中...</span>
+      </div>
+    </div>
 
     <!-- Review Due Alert Banner -->
     <div id="review-banner" class="hidden bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-rose-500/20 border border-amber-500/40 rounded-2xl p-3.5 flex items-center justify-between shadow-lg">
@@ -82,15 +98,15 @@
       <div class="bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 rounded-3xl p-5 shadow-xl shadow-indigo-950/50 border border-indigo-400/20 relative overflow-hidden">
         <div class="relative z-10 space-y-4">
           <div class="flex items-center justify-between">
-            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 text-indigo-100 backdrop-blur-sm">
-              A〜Z均等シャッフル配分済
+            <span id="home-ai-status-pill" class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 text-indigo-100 backdrop-blur-sm">
+              A〜Z均等配分 ・ 自動補充ON
             </span>
             <span id="home-day-progress-text" class="text-xs font-bold text-indigo-100">0 / 50 語完了</span>
           </div>
 
           <div>
             <h2 id="home-day-title" class="text-2xl font-black text-white tracking-tight">Day 1 の50単語</h2>
-            <p id="home-headword-preview" class="text-xs text-indigo-200 mt-1 truncate">頭文字バランス: A, B, C, D, E, F...</p>
+            <p id="home-headword-preview" class="text-xs text-indigo-200 mt-1 truncate">頭文字バランス: A, B, C, D...</p>
           </div>
 
           <!-- Progress Bar -->
@@ -107,7 +123,7 @@
               <span>⚡</span> 4択テスト
             </button>
             <button onclick="unlockNextDayManual()" class="py-2.5 px-3 rounded-xl bg-indigo-950/50 hover:bg-indigo-950/70 text-indigo-100 font-bold text-xs border border-indigo-300/20 flex items-center justify-center gap-1.5">
-              <span>➕</span> 次の50語を追加
+              <span>➕</span> 次のDayを解放
             </button>
           </div>
         </div>
@@ -116,9 +132,9 @@
       <!-- Day Selector Pills -->
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 space-y-2.5">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-300">📅 学習Day切り替え（80%達成で次Day自動追加）</span>
-          <button onclick="rebalanceAllUnlearnedDays()" class="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 underline">
-            🔄 単語の偏りを再シャッフル
+          <span class="text-xs font-bold text-slate-300">📅 学習Day一覧（残100語未満でAI自動生成）</span>
+          <button onclick="triggerManualAIGenerate()" class="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 underline">
+            ✨ AIで+50語今すぐ補充
           </button>
         </div>
         <div id="day-selector-list" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1"></div>
@@ -127,9 +143,9 @@
       <!-- Stats Overview -->
       <div class="grid grid-cols-3 gap-2.5">
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 text-center">
-          <p class="text-[11px] text-slate-400">累計学習語数</p>
+          <p class="text-[11px] text-slate-400">累計マスター</p>
           <p id="stat-learned" class="text-xl font-black text-emerald-400 mt-0.5">0</p>
-          <p class="text-[10px] text-slate-500">マスター済</p>
+          <p class="text-[10px] text-slate-500">習得済単語</p>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 text-center">
           <p class="text-[11px] text-slate-400">適時復習待ち</p>
@@ -139,7 +155,7 @@
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 text-center">
           <p class="text-[11px] text-slate-400">総収録ストック</p>
           <p id="stat-total-pool" class="text-xl font-black text-indigo-400 mt-0.5">0</p>
-          <p class="text-[10px] text-slate-500">自動拡張対応</p>
+          <p id="stat-ai-added" class="text-[10px] text-indigo-300/70">AI追加: 0語</p>
         </div>
       </div>
 
@@ -148,7 +164,7 @@
         <div class="flex items-center justify-between">
           <div>
             <h3 class="text-xs font-bold text-slate-200">📋 現在のDayの50単語一覧（タップで発音）</h3>
-            <p class="text-[10px] text-slate-400">いろんな頭文字・品詞がランダムに混ざっています</p>
+            <p class="text-[10px] text-slate-400">A〜Z・品詞バランス配分済</p>
           </div>
           <span id="list-filter-info" class="text-[11px] text-slate-400">全50語</span>
         </div>
@@ -238,7 +254,7 @@
       </div>
     </section>
 
-    <!-- VIEW: 4-CHOICE & SPELL TEST -->
+    <!-- VIEW: 4-CHOICE TEST -->
     <section id="view-test" class="hidden space-y-4">
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 flex items-center justify-between">
         <div>
@@ -298,15 +314,54 @@
       </div>
     </section>
 
-    <!-- VIEW: SETTINGS & AUDIO DIAGNOSTICS -->
+    <!-- VIEW: SETTINGS & GEMINI INFINITE GENERATOR -->
     <section id="view-settings" class="hidden space-y-4">
-      <!-- Audio Troubleshooter Card -->
-      <div class="bg-slate-900 border border-indigo-500/40 rounded-3xl p-5 space-y-4">
+      <!-- Gemini API Infinite Replenishment Card -->
+      <div class="bg-slate-900 border border-indigo-500/50 rounded-3xl p-5 space-y-3.5 shadow-xl">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-sm font-black text-white">🔊 iPhone / Mac 音声エンジン設定</h2>
-            <p class="text-[11px] text-slate-400">消音モードでも鳴る「クラウド辞書音声」と「端末内蔵音声」を切り替えられます</p>
+            <h3 class="text-sm font-black text-white">🤖 Gemini API 自動無限補充エンジン</h3>
+            <p class="text-[11px] text-slate-400">
+              未出題の単語ストックが100語（2日分）未満になると、裏側で自動的にGeminiが新しい50語（発音・例文付き）を生成してDayを追加します。
+            </p>
           </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-300 block">Gemini API キー（ブラウザ内のみに安全保存）</label>
+          <input id="setting-api-key" type="password" placeholder="AIzaSy..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs text-white font-mono" />
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-300 block">AIが自動生成する単語レベル・ジャンル</label>
+          <select id="setting-ai-theme" onchange="saveAiSettings()" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs text-white">
+            <option value="Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル、日常・ビジネス・学術バランス）">🌟 標準：Oxford 3000 / NGSL 実用バランス（B1〜C1）</option>
+            <option value="日常英会話・海外旅行（空港・ホテル・レストラン・街歩き・トラブル対応）で必須の自然な表現と単語">✈️ 日常英会話・海外旅行で使える実践語彙</option>
+            <option value="英語の歌詞・ロック・オルタナティブ音楽・感情表現・比喩でよく使われるエモーショナルな英単語">🎸 英語詞・ソングライティング・感情表現の語彙</option>
+            <option value="IT・ソフトウェア開発・データサイエンス・金融システム・ビジネス実務で頻出の英単語">💻 ITエンジニア・データ分析・ビジネス英語</option>
+            <option value="TOEIC 730〜900点・英検準1級レベルのハイレベル頻出語彙">🏆 TOEIC 800点 / 英検準1級 ハイレベル語彙</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button onclick="saveApiKey()" class="py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700">
+            💾 APIキーを保存
+          </button>
+          <button id="btn-manual-ai-gen" onclick="triggerManualAIGenerate()" class="py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg">
+            ✨ 今すぐ+50語をAI生成
+          </button>
+        </div>
+
+        <div id="ai-log-box" class="text-[11px] text-slate-300 bg-slate-950/90 p-3 rounded-xl border border-slate-800 leading-relaxed">
+          ステータス: 未出題ストックが残り <span id="stat-remaining-stock" class="font-bold text-indigo-400">0</span> 語あります（100語未満で自動生成が作動します）。
+        </div>
+      </div>
+
+      <!-- Audio Troubleshooter Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
+        <div>
+          <h2 class="text-sm font-black text-white">🔊 iPhone / Mac 音声エンジン設定</h2>
+          <p class="text-[11px] text-slate-400">AIで新しく生成された単語もすべて自動でネイティブ発音されます</p>
         </div>
 
         <div class="space-y-2">
@@ -335,42 +390,22 @@
           </div>
         </div>
 
-        <div class="pt-1 flex gap-2">
-          <button onclick="testAudioOutput()" class="flex-1 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow">
-            🔊 サンプル音声をテスト再生
-          </button>
-        </div>
-        <p id="audio-status-log" class="text-[11px] text-amber-300 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
-          💡 ヒント:「ハイブリッド」または「クラウド辞書」を選ぶと、Web Speech APIが無音になる環境でもネイティブ辞書音声（MP3）で発音されます。
-        </p>
+        <button onclick="testAudioOutput()" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs">
+          🔊 サンプル音声をテスト再生
+        </button>
       </div>
 
       <!-- Distribution & Shuffle Fix Card -->
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
-        <h3 class="text-sm font-black text-white">🎲 単語の頭文字・ジャンル分散リセット</h3>
-        <p class="text-xs text-slate-400">
-          「特定の頭文字（AやBなど）ばかり出る」場合、下のボタンを押すと、これまでの学習履歴を保ったまま、A〜Zが均等に混ざるように全Dayを再編成します。
-        </p>
+        <h3 class="text-sm font-black text-white">🎲 単語の頭文字・ジャンル分散シャッフル</h3>
         <button onclick="rebalanceAllUnlearnedDays(true)" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
-          🔄 A〜Z均等シャッフルで全Dayを再編成する
-        </button>
-      </div>
-
-      <!-- Optional Gemini API Key for Custom Infinite Themes -->
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
-        <h3 class="text-sm font-black text-white">🤖 Gemini API 連携（任意・カスタム補充用）</h3>
-        <p class="text-xs text-slate-400">
-          APIキー未設定でも内蔵マスター語彙＆公開コーパスから自動で50語ずつ無限補充されますが、Gemini APIキーを設定すると好みのテーマでAI例文付き単語を補充できます。
-        </p>
-        <input id="setting-api-key" type="password" placeholder="AIzaSy... (ブラウザ内にのみ保存)" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
-        <button onclick="saveApiKey()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">
-          APIキーを保存
+          🔄 A〜Z均等シャッフルで未学習Dayを再編成する
         </button>
       </div>
 
       <!-- Backup & Restore -->
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
-        <h3 class="text-sm font-black text-white">💾 学習データのバックアップ・復元</h3>
+        <h3 class="text-sm font-black text-white">💾 学習データ＆AI生成単語のバックアップ</h3>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="exportBackupJSON()" class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs">📤 JSON書き出し</button>
           <label class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs text-center cursor-pointer">
@@ -408,11 +443,9 @@
 
   <script>
     /*************************************************************************
-     * 1. A〜Z バランス収録マスター語彙プール (初期内蔵分 + 自動拡張シード)
-     * 特定の頭文字に偏らないよう、A〜Zの全アルファベットから実践必須語を収録
+     * 1. 内蔵ベース語彙プール (初期226語・A〜Zバランス収録)
      *************************************************************************/
     const CORE_VOCAB_POOL = [
-      // A
       ["abandon","/əbændən/","verb","〜を放棄する、断念する","They had to abandon the old plan.","彼らは古い計画を断念しなければならなかった。"],
       ["acquire","/əkwáiər/","verb","〜を習得する、獲得する","She acquired fluency in English.","彼女は流暢な英語を習得した。"],
       ["adequate","/ǽdɪkwət/","adj","十分な、適切な","Make sure you get adequate sleep.","十分な睡眠を必ずとるようにしてください。"],
@@ -421,7 +454,6 @@
       ["apparent","/əpǽrənt/","adj","明白な、一見〜らしい","The cause of the error was immediately apparent.","エラーの原因はすぐに明白になった。"],
       ["assess","/əsés/","verb","〜を評価する、査定する","We need to assess the impact carefully.","影響を慎重に評価する必要がある。"],
       ["attribute","/ətríbjuːt/","verb","〜の原因を（…に）帰する","She attributes her success to daily practice.","彼女は成功の要因を日々の練習にあるとしている。"],
-      // B
       ["banish","/bǽnɪʃ/","verb","〜を追放する、消し去る","Try to banish negative thoughts.","ネガティブな思考を追い払おうとしてごらん。"],
       ["barrier","/bǽriər/","noun","障壁、バリア","Language should not be a barrier to friendship.","言語が友情の障壁になるべきではない。"],
       ["beneficial","/bènəfíʃəl/","adj","有益な、ためになる","Regular exercise is beneficial to mental health.","定期的な運動はメンタルヘルスに有益だ。"],
@@ -429,7 +461,6 @@
       ["breed","/briːd/","verb","〜を育てる、生み出す","Success often breeds confidence.","成功はしばしば自信を生み出す。"],
       ["brief","/briːf/","adj","簡潔な、短時間の","Please keep your explanation brief.","説明は簡潔にお願いします。"],
       ["burden","/bɜ́ːrdn/","noun","負担、重荷","Automation reduces the burden on staff.","自動化はスタッフの負担を軽減する。"],
-      // C
       ["capacity","/kəpǽsəti/","noun","収容能力、処理能力","The stadium has a capacity of 50,000.","そのスタジアムは5万人の収容能力がある。"],
       ["capture","/kǽptʃər/","verb","〜を捉える、魅了する","The song captured the audience's hearts.","その曲は観客の心を捉えた。"],
       ["cease","/siːs/","verb","〜をやめる、終わる","The rain finally ceased at dawn.","雨は夜明けについに止んだ。"],
@@ -439,17 +470,15 @@
       ["comprehensive","/kɑ̀mprɪhénsɪv/","adj","包括的な、総合的な","We conducted a comprehensive review.","私たちは包括的な見直しを実施した。"],
       ["convey","/kənvéɪ/","verb","（感情・意味など）を伝える","Music can convey emotions beyond words.","音楽は言葉を超えた感情を伝えることができる。"],
       ["crucial","/krúːʃəl/","adj","極めて重要な、決定的な","Timing is crucial in live performances.","ライブ演奏ではタイミングが極めて重要だ。"],
-      // D
       ["debate","/dɪbéɪt/","noun","討論、議論","There was an intense debate over the policy.","その方針をめぐって激しい議論があった。"],
       ["decline","/dɪkláɪn/","verb","減少する、〜を丁重に断る","He politely declined the invitation.","彼は招待を丁重に断った。"],
       ["dedicate","/dédɪkèɪt/","verb","（時間・労力を）捧げる","She dedicated months to perfecting the track.","彼女はその楽曲の完成に何ヶ月も捧げた。"],
       ["demonstrate","/démənstrèɪt/","verb","〜を実証する、実演する","The experiment demonstrated clear results.","その実験は明確な結果を実証した。"],
-      ["Application","/dɪplɔ́ɪ/","verb","〜を配備する、展開する","We can deploy the web app in minutes.","数分でWebアプリをデプロイできる。"],
+      ["deploy","/dɪplɔ́ɪ/","verb","〜を配備する、展開する","We can deploy the web app in minutes.","数分でWebアプリをデプロイできる。"],
       ["detect","/dɪtékt/","verb","〜を検知する、見抜く","The algorithm detects subtle patterns.","そのアルゴリズムは微細なパターンを検知する。"],
       ["distinct","/dɪstíŋkt/","adj","明確に異なる、独特の","Each instrument has a distinct tone.","それぞれの楽器には独特の音色がある。"],
       ["diverse","/daɪvɜ́ːrs/","adj","多様な、さまざまな","Tokyo attracts people from diverse backgrounds.","東京は多様な背景を持つ人々を惹きつける。"],
       ["durable","/dʊ́rəbəl/","adj","耐久性のある、長持ちする","This case is made of durable material.","このケースは耐久性のある素材で作られている。"],
-      // E
       ["elaborate","/ɪlǽbərət/","adj","精巧な、入念な","They built an elaborate stage set.","彼らは精巧なステージセットを作り上げた。"],
       ["eliminate","/ɪlímənèɪt/","verb","〜を取り除く、排除する","Proper shielding eliminates background noise.","適切なシールド処理が背景ノイズを除去する。"],
       ["emerge","/ɪmɜ́ːrdʒ/","verb","現れる、浮上する","New musical trends emerge every year.","毎年新しい音楽トレンドが現れる。"],
@@ -460,27 +489,23 @@
       ["evaluate","/ɪvǽljuèɪt/","verb","〜を評価する、測定する","We evaluated the clustering accuracy.","私たちはクラスタリングの精度を評価した。"],
       ["exceed","/ɪksíːd/","verb","〜を超える、上回る","Ticket sales exceeded our expectations.","チケットの売上は予想を上回った。"],
       ["exhibit","/ɪgzíbɪt/","verb","〜を示す、展示する","The team exhibited remarkable resilience.","チームは驚くべき粘り強さを見せた。"],
-      // F
       ["facilitate","/fəsílɪtèɪt/","verb","〜を促進する、容易にする","Cloud tools facilitate remote collaboration.","クラウドツールはリモートでの共同作業を容易にする。"],
       ["feasible","/fíːzəbəl/","adj","実行可能な、実現できる","Is it feasible to finish by Friday?","金曜日までに終えることは実行可能ですか？"],
       ["fluctuate","/flʌ́ktʃuèɪt/","verb","変動する、上下する","Prices fluctuate depending on the season.","価格は季節によって変動する。"],
       ["foster","/fɔ́ːstər/","verb","〜を育成する、促進する","Good leaders foster open communication.","優れたリーダーはオープンな対話を育む。"],
       ["fragile","/frǽdʒəl/","adj","壊れやすい、繊細な","Handle the vintage equipment with care; it is fragile.","そのヴィンテージ機材は繊細なので慎重に扱ってください。"],
       ["fundamental","/fʌ̀ndəméntl/","adj","基本的な、根本的な","Rhythm is a fundamental element of music.","リズムは音楽の根本的な要素だ。"],
-      // G
       ["generate","/dʒénərèɪt/","verb","〜を生成する、生み出す","Solar panels generate clean electricity.","ソーラーパネルはクリーンな電力を生み出す。"],
       ["genuine","/dʒénjuɪn/","adj","本物の、心からの","She showed genuine interest in the project.","彼女はそのプロジェクトに心からの関心を示した。"],
       ["glance","/glæns/","verb","ちらりと見る","He glanced at his watch before going on stage.","彼はステージに出る前に時計をちらりと見た。"],
       ["grasp","/græsp/","verb","〜を理解する、しっかり掴む","It took time to grasp the complex theory.","その複雑な理論を理解するのに時間がかかった。"],
       ["guarantee","/gærəntíː/","verb","〜を保証する","Practice cannot guarantee perfection, but it brings progress.","練習は完璧を保証しないが、進歩をもたらす。"],
-      // H
       ["halt","/hɔːlt/","verb","〜を停止させる、止まる","Traffic came to a sudden halt.","交通が突然ストップした。"],
       ["harsh","/hɑːrʃ/","adj","厳しい、耳障りな、荒々しい","Use an EQ to tame the harsh high frequencies.","EQを使って耳に刺さる高音域を抑えよう。"],
       ["hesitate","/hézɪtèɪt/","verb","ためらう、躊躇する","Don't hesitate to ask if you have questions.","質問があれば遠慮なく聞いてください。"],
       ["highlight","/háɪlàɪt/","verb","〜を目立たせる、強調する","The report highlights three key findings.","その報告書は3つの重要な発見を強調している。"],
       ["hinder","/híndər/","verb","〜を妨げる、阻害する","Lack of sleep can hinder your concentration.","睡眠不足は集中力を妨げることがある。"],
       ["hypothesis","/haɪpɑ́θəsɪs/","noun","仮説","We tested the hypothesis using real data.","実データを使ってその仮説を検証した。"],
-      // I
       ["identical","/aɪdéntɪkəl/","adj","全く同じ、同一の","The two files are completely identical.","その2つのファイルは完全に同一だ。"],
       ["illustrate","/íləstrèɪt/","verb","〜を例証する、図解する","This chart illustrates the annual growth.","このグラフは年間成長率を示している。"],
       ["implement","/ímpləmènt/","verb","〜を実装する、実行に移す","We implemented a new caching system.","新しいキャッシュシステムを実装した。"],
@@ -491,17 +516,14 @@
       ["innovative","/ínəvèɪtɪv/","adj","革新的な、斬新な","They introduced an innovative sound design.","彼らは革新的なサウンドデザインを導入した。"],
       ["integrate","/íntɪgrèɪt/","verb","〜を統合する、融合させる","The app integrates seamlessly with your workflow.","そのアプリは作業フローにシームレスに統合される。"],
       ["interpret","/ɪntɜ́ːrprɪt/","verb","〜を解釈する、通訳する","Listeners interpret lyrics in their own way.","リスナーはそれぞれの解釈で歌詞を受け取る。"],
-      // J / K
       ["justify","/dʒʌ́stəfài/","verb","〜を正当化する","Can you justify the additional cost?","追加コストの妥当性を説明できますか？"],
       ["keen","/kiːn/","adj","鋭い、熱望している","She has a keen ear for pitch and harmony.","彼女は音程とハーモニーに対して鋭い耳を持っている。"],
-      // L
       ["launch","/lɔːntʃ/","verb","〜を開始する、立ち上げる","They plan to launch the new service in April.","彼らは4月に新サービスを立ち上げる予定だ。"],
       ["legitimate","/lɪdʒítəmət/","adj","正当な、合法的な","That is a legitimate concern.","それはもっともな懸念だ。"],
       ["leverage","/lévərɪdʒ/","verb","〜を有効活用する、てこにする","We can leverage AI to speed up routine tasks.","AIを活用してルーチン作業を高速化できる。"],
       ["likewise","/láɪkwàɪz/","adv","同様に、同じく","Treat others with respect, and they will do likewise.","他者に敬意をもって接すれば、相手も同様にしてくれるだろう。"],
       ["linger","/líŋgər/","verb","残る、長引く","The melody lingered in my mind all day.","そのメロディが一日中心に残っていた。"],
       ["lucrative","/lúːkrətɪv/","adj","収益性の高い、儲かる","Digital finance has become a lucrative sector.","デジタル金融は収益性の高い分野になっている。"],
-      // M
       ["maintain","/meɪntéɪn/","verb","〜を維持する、保守する","It is important to maintain a steady tempo.","一定のテンポを維持することが重要だ。"],
       ["manifest","/mǽnəfèst/","verb","〜を明確に表す、現れる","Stress often manifests as physical fatigue.","ストレスはしばしば肉体的な疲労として現れる。"],
       ["manipulate","/mənípjulèɪt/","verb","〜を巧みに操作する","You can manipulate the waveform in the editor.","エディタ内で波形を自在に操作できる。"],
@@ -509,23 +531,20 @@
       ["merge","/mɜ́ːrdʒ/","verb","〜を統合する、合併する","Let's merge the two branches into main.","2つのブランチをmainにマージしよう。"],
       ["modify","/mɑ́dəfài/","verb","〜を修正する、変更する","You can modify the settings anytime.","設定はいつでも変更できます。"],
       ["mutual","/mjúːtʃuəl/","adj","相互の、共通の","Collaboration requires mutual trust.","共同作業には相互の信頼が必要だ。"],
-      // N
       ["navigate","/nǽvɪgèɪt/","verb","〜を進む、ナビゲートする","Tourists can easily navigate the city by train.","観光客は電車で簡単に市内を移動できる。"],
       ["neglect","/nɪglékt/","verb","〜を怠る、無視する","Never neglect basic warm-up exercises.","基礎的なウォームアップを決して怠ってはいけない。"],
       ["neutral","/njúːtrəl/","adj","中立の、ニュートラルな","Studio monitors should have a neutral frequency response.","スタジオモニターはフラットな周波数特性であるべきだ。"],
       ["nevertheless","/nèvərðəlés/","adv","それにもかかわらず","It was raining heavily; nevertheless, the show went on.","大雨だったが、それにもかかわらず公演は続行された。"],
       ["notable","/nóʊtəbəl/","adj","注目すべき、顕著な","There was a notable improvement in clarity.","明瞭度に注目すべき改善が見られた。"],
       ["notion","/nóʊʃən/","noun","概念、考え","She rejected the notion that it was impossible.","彼女はそれが不可能だという考えを退けた。"],
-      // O
       ["obtain","/əbtéɪn/","verb","〜を入手する、得る","You need permission to obtain the dataset.","データセットを入手するには許可が必要だ。"],
       ["obvious","/ɑ́bviəs/","adj","明白な、明らかな","The advantage of this method is obvious.","この手法の利点は明らかだ。"],
       ["obstacle","/ɑ́bstəkəl/","noun","障害、妨げ","We overcame every obstacle together.","私たちはあらゆる障害を共に乗り越えた。"],
-      ["Trigger","/əkáːr/","verb","起こる、発生する","An unexpected error occurred during startup.","起動中に予期せぬエラーが発生した。"],
+      ["occur","/əkɜ́ːr/","verb","起こる、発生する","An unexpected error occurred during startup.","起動中に予期せぬエラーが発生した。"],
       ["omit","/oʊmít/","verb","〜を省略する、省く","You may omit unnecessary details.","不要な詳細は省略して構いません。"],
       ["optimal","/ɑ́ptəməl/","adj","最適な、最善の","Find the optimal balance between speed and accuracy.","速度と精度の最適なバランスを見つけよう。"],
       ["outcome","/áʊtkʌ̀m/","noun","結果、成果","The final outcome exceeded our goals.","最終的な成果は目標を上回った。"],
       ["overall","/óʊvərɔ̀ːl/","adj","全体的な、総合的な","The overall impression was very positive.","全体的な印象は非常に良好だった。"],
-      // P
       ["parallel","/pǽrəlèl/","adj","並行の、類似した","Parallel compression adds punch to drums.","パラレルコンプレッションはドラムに迫力を加える。"],
       ["perceive","/pərsíːv/","verb","〜を知覚する、認識する","How do users perceive the new design?","ユーザーは新しいデザインをどう認識しているだろうか？"],
       ["persist","/pərsíst/","verb","持続する、粘り強く続ける","If the issue persists, please restart your device.","問題が続く場合は端末を再起動してください。"],
@@ -540,7 +559,6 @@
       ["profound","/prəfáʊnd/","adj","深い、重大な","That book had a profound impact on my thinking.","その本は私の考え方に深い影響を与えた。"],
       ["prominent","/prɑ́mənənt/","adj","顕著な、著名な","Bass plays a prominent role in this track.","この曲ではベースが際立った役割を果たしている。"],
       ["pursue","/pərsúː/","verb","〜を追求する、追い求める","He decided to pursue both technology and music.","彼はテクノロジーと音楽の両方を追求することに決めた。"],
-      // Q / R
       ["quote","/kwoʊt/","verb","〜を引用する、見積もる","She quoted a famous line from the novel.","彼女はその小説から有名な一節を引用した。"],
       ["radical","/rǽdɪkəl/","adj","抜本的な、急進的な","The update brought radical changes to the UI.","そのアップデートはUIに抜本的な変化をもたらした。"],
       ["random","/rǽndəm/","adj","無作為の、ランダムな","Words are selected in random order across A to Z.","単語はAからZまでランダムな順序で選ばれる。"],
@@ -558,7 +576,6 @@
       ["retain","/rɪtéɪn/","verb","〜を保持する、記憶にとどめる","Reviewing helps you retain vocabulary longer.","復習は語彙をより長く記憶にとどめるのに役立つ。"],
       ["reveal","/rɪvíːl/","verb","〜を明らかにする、見せる","Tap the card to reveal the meaning.","カードをタップして意味を表示しよう。"],
       ["rigid","/rídʒɪd/","adj","硬直した、厳格な","Avoid a rigid schedule; keep it sustainable.","ガチガチの計画は避け、継続可能なものにしよう。"],
-      // S
       ["scarce","/skers/","adj","乏しい、希少な","Free time was scarce during the exam period.","試験期間中は自由な時間が乏しかった。"],
       ["scatter","/skǽtər/","verb","〜をばらまく、分散させる","The algorithm scatters initials evenly across days.","アルゴリズムが頭文字を各Dayに均等に分散させる。"],
       ["scheme","/skiːm/","noun","計画、スキーム、体系","The color scheme is easy on the eyes at night.","その配色は夜間でも目に優しい。"],
@@ -577,7 +594,6 @@
       ["subtle","/sʌ́tl/","adj","微妙な、かすかな","Notice the subtle change in vocal resonance.","ボーカルの共鳴の微妙な変化に注目してみよう。"],
       ["sufficient","/səfíʃənt/","adj","十分な","Ten minutes a day is sufficient to keep the streak.","連続記録を保つには1日10分で十分だ。"],
       ["sustain","/səstéɪn/","verb","〜を持続させる、支える","How do you sustain motivation over months?","何ヶ月もどうやってモチベーションを持続させますか？"],
-      // T
       ["tackle","/tǽkəl/","verb","（問題・課題に）取り組む","Let's tackle the hardest task first in the morning.","朝一番に最も難しい課題に取り組もう。"],
       ["temporary","/témpərèri/","adj","一時的な、仮の","This is only a temporary workaround.","これはあくまで一時的な回避策だ。"],
       ["terminate","/tɜ́ːrmənèɪt/","verb","〜を終了させる、打ち切る","The process terminated without any errors.","プロセスはエラーなしで終了した。"],
@@ -588,7 +604,6 @@
       ["transition","/trænzíʃən/","noun","移行、移り変わり","Practice a smooth transition from chest to head voice.","チェストボイスからヘッドボイスへの滑らかな移行を練習しよう。"],
       ["transmit","/trænzmít/","verb","〜を送信する、伝える","Optical cables transmit data at high speed.","光ケーブルは高速でデータを伝送する。"],
       ["trigger","/trígər/","verb","〜を引き起こす、作動させる","Finishing 40 words triggers the next day's unlock.","40語完了すると次のDayの自動解放が作動する。"],
-      // U / V / W / Y / Z
       ["ultimate","/ʌ́ltəmət/","adj","究極の、最終的な","Our ultimate goal is effortless comprehension.","私たちの最終目標はストレスのない英語理解だ。"],
       ["undergo","/ʌ̀ndərgóʊ/","verb","（変化・検査などを）経験する、受ける","The software underwent major improvements.","そのソフトウェアは大幅な改良を経た。"],
       ["undertake","/ʌ̀ndərtéɪk/","verb","（仕事・責任を）引き受ける、着手する","They undertook an ambitious research project.","彼らは野心的な研究プロジェクトに着手した。"],
@@ -607,13 +622,9 @@
       ["widespread","/wáɪdspréd/","adj","広範囲にわたる、広く普及した","The framework has gained widespread adoption.","そのフレームワークは広く普及している。"],
       ["withstand","/wɪðstǽnd/","verb","〜に耐える、持ちこたえる","The structure is designed to withstand earthquakes.","その構造は地震に耐えるよう設計されている。"],
       ["yield","/jiːld/","verb","（結果・利益を）生み出す、屈する","The experiment yielded promising results.","その実験は有望な結果を生み出した。"],
-      ["zeal","/ziːl/","noun","熱意、情熱","He approached the new project with great zeal.","彼は大きな情熱をもって新プロジェクトに取り組んだ。"]
-    ];
-
-    // 自動補充用の拡張シード語彙（A〜Zバランス収録・Day4以降も途切れず供給）
-    const EXTENDED_SEED_WORDS = [
+      ["zeal","/ziːl/","noun","熱意、情熱","He approached the new project with great zeal.","彼は大きな情熱をもって新プロジェクトに取り組んだ。"],
       ["absorb","/əbsɔ́ːrb/","verb","〜を吸収する、夢中にさせる","Dark surfaces absorb more heat.","暗い表面はより多くの熱を吸収する。"],
-      ["abstract","/ǽbstrækt/","adj","抽象的な","Read the abstract before the full paper.","論文全文の前に要旨（アブストラクト）を読もう。"],
+      ["abstract","/ǽbstrækt/","adj","抽象的な","Read the abstract before the full paper.","論文全文の前に要旨を読もう。"],
       ["abundant","/əbʌ́ndənt/","adj","豊富な、たくさんの","The region has abundant natural resources.","その地域には豊富な天然資源がある。"],
       ["accelerate","/æksélərèɪt/","verb","〜を加速させる","Shortcuts accelerate your daily workflow.","ショートカットは日々の作業を加速させる。"],
       ["accessible","/æksésəbəl/","adj","利用しやすい、到達できる","The museum is easily accessible by subway.","その美術館は地下鉄でアクセスしやすい。"],
@@ -631,7 +642,6 @@
       ["analogy","/ənǽlədʒi/","noun","類推、たとえ","He explained the concept using a simple analogy.","彼は簡単な例えを使ってその概念を説明した。"],
       ["anchor","/ǽŋkər/","noun","錨（いかり）、支え","The bassline acts as the anchor of the song.","ベースラインが楽曲の土台として機能している。"],
       ["anonymous","/ənɑ́nəməs/","adj","匿名の","Reviews were collected from anonymous users.","レビューは匿名のユーザーから収集された。"],
-      ["apparatus","/æ̀pərǽtəs/","noun","装置、器具","Check the recording apparatus before the session.","セッション前に録音装置を確認しよう。"],
       ["appealing","/əpíːlɪŋ/","adj","魅力的な、心を惹く","The melody is instantly appealing.","そのメロディは聴いた瞬間に心を惹きつける。"],
       ["arbitrary","/ɑ́ːrbɪtrèri/","adj","恣意的な、任意の","The cluster threshold should not be arbitrary.","クラスタの閾値は恣意的であってはならない。"],
       ["archive","/ɑ́ːrkaɪv/","noun","アーカイブ、保管所","Save finished projects in the archive folder.","完了したプロジェクトはアーカイブに保存しよう。"],
@@ -671,22 +681,24 @@
     ];
 
     /*************************************************************************
-     * 2. 状態管理・ストレージ永続化 (LocalStorage + IndexedDB 二重保存)
+     * 2. 状態管理・ストレージ永続化 (AI生成ストック customPool を含む)
      *************************************************************************/
-    const STORAGE_KEY = "AI_VOCAB_MASTER_50_V3";
-    const SRS_INTERVALS = [1, 3, 7, 14, 30]; // 忘却曲線（日数）
+    const STORAGE_KEY = "AI_VOCAB_MASTER_50_V4_INFINITE";
+    const SRS_INTERVALS = [1, 3, 7, 14, 30];
 
     let state = {
       currentDay: 1,
       streak: 1,
       lastStudyDate: new Date().toISOString().slice(0, 10),
       autoSpeak: true,
-      audioEngine: "hybrid", // 'hybrid' | 'cloud' | 'webspeech'
+      audioEngine: "hybrid",
       accent: "en-US",
       speed: 1.0,
       apiKey: "",
-      days: {},       // { 1: [wordObj, ...50], 2: [...50] }
-      progress: {},   // { wordText: { learned: bool, srsStage: 0..5, nextReview: 'YYYY-MM-DD', wrongCount: 0 } }
+      aiTheme: "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル、日常・ビジネス・学術バランス）",
+      customPool: [], // Gemini APIが自動生成して蓄積した単語オブジェクトの配列
+      days: {},
+      progress: {},
       studyIndex: 0,
       testIndex: 0,
       testScore: 0,
@@ -694,13 +706,14 @@
       isReviewTest: false
     };
 
+    let isGeneratingAI = false;
+
     /*************************************************************************
-     * 3. A〜Z バランス分散シャッフル・エンジン (頭文字の偏りを完全防止)
+     * 3. 語彙プール統合 ＆ A〜Z バランス分散シャッフル
      *************************************************************************/
     function buildBalancedPool() {
-      const merged = [...CORE_VOCAB_POOL, ...EXTENDED_SEED_WORDS];
       const uniqueMap = new Map();
-      for (const item of merged) {
+      for (const item of CORE_VOCAB_POOL) {
         const key = item[0].toLowerCase().trim();
         if (!uniqueMap.has(key)) {
           uniqueMap.set(key, {
@@ -713,10 +726,43 @@
           });
         }
       }
+      if (Array.isArray(state.customPool)) {
+        for (const w of state.customPool) {
+          if (w && w.word) {
+            const key = w.word.toLowerCase().trim();
+            if (!uniqueMap.has(key)) {
+              uniqueMap.set(key, {
+                word: w.word.trim(),
+                phonetic: w.phonetic || "/-/",
+                pos: w.pos || "word",
+                meaning: w.meaning || "",
+                example: w.example || "",
+                exampleJa: w.exampleJa || "",
+                aiGenerated: true
+              });
+            }
+          }
+        }
+      }
       return Array.from(uniqueMap.values());
     }
 
-    // 頭文字(A〜Z)のバケットに分け、ラウンドロビン＋シャッフルで1つのDayに絶対に同じ頭文字が固まらないように配分する
+    function getUsedWordsSet() {
+      const used = new Set();
+      Object.values(state.days).forEach(list => {
+        if (Array.isArray(list)) {
+          list.forEach(w => used.add(w.word.toLowerCase().trim()));
+        }
+      });
+      return used;
+    }
+
+    function getRemainingUnusedStockCount() {
+      const used = getUsedWordsSet();
+      const all = buildBalancedPool();
+      return all.filter(w => !used.has(w.word.toLowerCase())).length;
+    }
+
     function distributeWordsEvenlyByInitial(wordArray, seedOffset = 1) {
       const buckets = {};
       for (const w of wordArray) {
@@ -724,14 +770,11 @@
         if (!buckets[init]) buckets[init] = [];
         buckets[init].push(w);
       }
-
-      // 各バケット内をランダムシャッフル
       const letters = Object.keys(buckets).sort();
       letters.forEach((l, idx) => {
         buckets[l] = fyShuffle(buckets[l], seedOffset + idx * 17);
       });
 
-      // A -> B -> C ... と順番に1語ずつ取り出してインターリーブ配列を作成
       const interleaved = [];
       let added = true;
       let round = 0;
@@ -760,7 +803,6 @@
       return copy;
     }
 
-    // 既存のDayにアルファベット偏りがあるか検査（最初の15語中、同じ頭文字が6語以上あれば偏りと判定）
     function hasAlphabeticalBias(dayWords) {
       if (!dayWords || dayWords.length < 15) return false;
       const sample = dayWords.slice(0, 15);
@@ -773,12 +815,11 @@
       return false;
     }
 
-    // 全DayをA〜Z均等シャッフルで再編成（学習済み記録は保持）
     function rebalanceAllUnlearnedDays(showNotification = false) {
       const fullPool = buildBalancedPool();
       const balanced = distributeWordsEvenlyByInitial(fullPool, Date.now());
+      const totalDaysCount = Math.max(Object.keys(state.days).length, 4);
 
-      const totalDaysCount = Math.max(Object.keys(state.days).length, 3);
       for (let d = 1; d <= totalDaysCount; d++) {
         const startIdx = ((d - 1) * 50) % balanced.length;
         const slice = [];
@@ -787,22 +828,206 @@
         }
         state.days[d] = fyShuffle(slice, Date.now() + d * 97);
       }
-
       state.studyIndex = 0;
       saveState();
       renderAll();
       if (showNotification) {
-        alert("✅ A〜Zの全頭文字・品詞が均等に混ざるように全Dayの50単語を再編成しました！");
+        alert("✅ A〜Zの全頭文字・品詞が均等に混ざるように全Dayを再編成しました！");
       }
     }
 
-    // 次のDay（50語）を自動生成・追加
+    /*************************************************************************
+     * 4. Gemini API 無限自動生成エンジン
+     * 未出題ストックが100語（2日分）未満になったら自動で50語を生成し新しいDayも解放
+     *************************************************************************/
+    async function checkAndReplenishWithGemini(forceManual = false) {
+      const remaining = getRemainingUnusedStockCount();
+      updateAiStatusLog();
+
+      if (!forceManual && remaining >= 100) return;
+      if (!state.apiKey || !state.apiKey.trim()) {
+        if (forceManual) {
+          alert("⚙️ 設定タブで Gemini APIキー を入力・保存してから実行してください。");
+          switchTab("settings");
+        }
+        return;
+      }
+      if (isGeneratingAI) return;
+
+      isGeneratingAI = true;
+      setAiLoadingUI(true, "Gemini AIが重複なしの新しい50単語（発音・例文付き）を生成しています...");
+
+      try {
+        const allExistingWords = buildBalancedPool().map(w => w.word.toLowerCase());
+        // プロンプト肥大化を防ぐため直近400語＋ランダム抜粋を除外リストとして渡す
+        const exclusionSample = allExistingWords.slice(-350).join(", ");
+        const theme = state.aiTheme || "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル）";
+
+        const prompt = `あなたは英単語学習教材の専門作成AIです。
+以下のテーマに沿って、日本人学習者向けの重要英単語を【正確に50語】生成してください。
+テーマ: ${theme}
+
+【厳守ルール】
+1. 頭文字がA〜Zまで偏りなくバラけるように50語を選ぶこと（特定のアルファベットに集中させない）。
+2. 品詞（verb, noun, adj, adv）をバランスよく含めること。
+3. 以下の既出単語リストに含まれる単語は絶対に重複して出さないこと:
+[${exclusionSample}]
+4. 出力は以下のJSON配列形式のみとし、解説文やMarkdown記法は一切含めないこと:
+[
+  {
+    "word": "英単語(小文字)",
+    "phonetic": "/発音記号/",
+    "pos": "verb または noun または adj または adv",
+    "meaning": "簡潔で分かりやすい日本語訳（1〜2個）",
+    "example": "自然で実用的な英語例文（8〜14語程度）",
+    "exampleJa": "英語例文の自然な日本語訳"
+  }
+]`;
+
+        const modelsToTry = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+        let generatedArray = null;
+        let lastError = "";
+
+        for (const modelName of modelsToTry) {
+          try {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(state.apiKey.trim())}`;
+            const response = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                  temperature: 0.75,
+                  responseMimeType: "application/json"
+                }
+              })
+            });
+
+            if (!response.ok) {
+              const errData = await response.json().catch(() => ({}));
+              lastError = errData?.error?.message || `HTTP ${response.status}`;
+              continue;
+            }
+
+            const data = await response.json();
+            const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+            const cleaned = rawText.replace(/```json|```/g, "").trim();
+            const parsed = JSON.parse(cleaned);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              generatedArray = parsed;
+              break;
+            }
+          } catch (innerErr) {
+            lastError = innerErr.message || String(innerErr);
+          }
+        }
+
+        if (!generatedArray) {
+          throw new Error(lastError || "JSONの解析に失敗しました");
+        }
+
+        // 重複排除して customPool に追加
+        const existingSet = new Set(buildBalancedPool().map(w => w.word.toLowerCase()));
+        const newlyAdded = [];
+        for (const item of generatedArray) {
+          if (!item || !item.word) continue;
+          const cleanW = String(item.word).trim();
+          const lower = cleanW.toLowerCase();
+          if (!existingSet.has(lower) && cleanW.length > 1) {
+            existingSet.add(lower);
+            newlyAdded.push({
+              word: cleanW,
+              phonetic: item.phonetic || "/-/",
+              pos: item.pos || "word",
+              meaning: item.meaning || "（意味未設定）",
+              example: item.example || "",
+              exampleJa: item.exampleJa || "",
+              aiGenerated: true
+            });
+          }
+        }
+
+        if (!Array.isArray(state.customPool)) state.customPool = [];
+        state.customPool.push(...newlyAdded);
+
+        // 50語以上の未出題ストックが溜まったら自動的に新しいDayとしても編成可能にする
+        if (forceManual && newlyAdded.length > 0) {
+          const maxDay = Math.max(0, ...Object.keys(state.days).map(Number));
+          ensureNextDayUnlocked(maxDay + 1);
+        }
+
+        saveState();
+        renderAll();
+        setAiLoadingUI(false, `✅ Gemini AIが新しい単語を ${newlyAdded.length} 語追加補充しました！（累計AI追加: ${state.customPool.length}語）`);
+      } catch (err) {
+        console.error("Gemini Auto-Replenish Error:", err);
+        setAiLoadingUI(false, `⚠️ AI生成エラー: ${err.message}（APIキーや通信状況を確認してください）`);
+        if (forceManual) {
+          alert(`AI生成に失敗しました: ${err.message}`);
+        }
+      } finally {
+        isGeneratingAI = false;
+      }
+    }
+
+    function setAiLoadingUI(isLoading, messageText) {
+      const topBadge = document.getElementById("ai-gen-indicator");
+      const toast = document.getElementById("ai-toast");
+      const toastText = document.getElementById("ai-toast-text");
+      const logBox = document.getElementById("ai-log-box");
+      const btnManual = document.getElementById("btn-manual-ai-gen");
+
+      if (isLoading) {
+        topBadge.classList.remove("hidden");
+        topBadge.classList.add("flex");
+        toast.classList.remove("hidden");
+        toastText.textContent = messageText;
+        if (btnManual) {
+          btnManual.disabled = true;
+          btnManual.textContent = "⏳ AI生成中...";
+        }
+      } else {
+        topBadge.classList.add("hidden");
+        topBadge.classList.remove("flex");
+        if (btnManual) {
+          btnManual.disabled = false;
+          btnManual.textContent = "✨ 今すぐ+50語をAI生成";
+        }
+        if (messageText) {
+          toast.classList.remove("hidden");
+          toastText.textContent = messageText;
+          setTimeout(() => toast.classList.add("hidden"), 4500);
+        } else {
+          toast.classList.add("hidden");
+        }
+      }
+      if (logBox && messageText) {
+        logBox.textContent = messageText;
+      }
+    }
+
+    function updateAiStatusLog() {
+      const rem = getRemainingUnusedStockCount();
+      const remEl = document.getElementById("stat-remaining-stock");
+      if (remEl) remEl.textContent = rem;
+      const aiAddedEl = document.getElementById("stat-ai-added");
+      if (aiAddedEl) aiAddedEl.textContent = `AI追加: ${(state.customPool || []).length}語`;
+      const pill = document.getElementById("home-ai-status-pill");
+      if (pill) {
+        pill.textContent = state.apiKey
+          ? `🤖 Gemini無限補充ON (ストック残${rem}語)`
+          : `A〜Z均等配分 (APIキー設定で無限化)`;
+      }
+    }
+
+    function triggerManualAIGenerate() {
+      checkAndReplenishWithGemini(true);
+    }
+
     function ensureNextDayUnlocked(targetDay) {
       if (state.days[targetDay] && state.days[targetDay].length === 50) return;
 
-      const usedWords = new Set();
-      Object.values(state.days).forEach(list => list.forEach(w => usedWords.add(w.word.toLowerCase())));
-
+      const usedWords = getUsedWordsSet();
       const fullPool = distributeWordsEvenlyByInitial(buildBalancedPool(), Date.now() + targetDay * 101);
       const unused = fullPool.filter(w => !usedWords.has(w.word.toLowerCase()));
 
@@ -811,7 +1036,6 @@
         if (next50.length < 50) next50.push(w);
       }
 
-      // もし内蔵プールを一周した場合は、未定着語＋ランダムシャッフルで50語を構成
       if (next50.length < 50) {
         for (const w of fullPool) {
           if (next50.length >= 50) break;
@@ -821,10 +1045,13 @@
 
       state.days[targetDay] = fyShuffle(next50, Date.now() + targetDay);
       saveState();
+
+      // 新しいDayを作った結果、未出題ストックが100語を切ったら自動でGemini補充を起動
+      checkAndReplenishWithGemini(false);
     }
 
     /*************************************************************************
-     * 4. ハイブリッド音声再生エンジン (iPhoneマナーモード / Safari対策済)
+     * 5. ハイブリッド音声再生エンジン (iPhoneマナーモード / Safari対策済)
      *************************************************************************/
     let currentAudioObj = null;
     let audioCtxUnlocked = false;
@@ -847,7 +1074,6 @@
     document.addEventListener("touchstart", unlockAudioOnFirstTap, { once: true });
     document.addEventListener("click", unlockAudioOnFirstTap, { once: true });
 
-    // 単語または英文を確実に発音するメイン関数
     function speakText(text, isSentence = false) {
       if (!text) return;
       const btn = document.getElementById("btn-card-speak");
@@ -858,9 +1084,8 @@
       };
 
       const engine = state.audioEngine || "hybrid";
-      const accentType = state.accent === "en-GB" ? 1 : 2; // Youdao Dict: 1=UK, 2=US
+      const accentType = state.accent === "en-GB" ? 1 : 2;
 
-      // 1単語かつ 'hybrid' または 'cloud' の場合は、iOS消音モードでも鳴りやすいネイティブ辞書MP3ストリームを優先再生
       if (!isSentence && (engine === "hybrid" || engine === "cloud")) {
         try {
           if (currentAudioObj) {
@@ -874,16 +1099,11 @@
           currentAudioObj = audio;
 
           audio.onended = finishIndicator;
-          audio.onerror = () => {
-            // オフライン時やストリーム失敗時は即座にWeb Speech APIへフォールバック
-            speakViaWebSpeech(text, finishIndicator);
-          };
+          audio.onerror = () => speakViaWebSpeech(text, finishIndicator);
 
           const playPromise = audio.play();
           if (playPromise !== undefined) {
-            playPromise.catch(() => {
-              speakViaWebSpeech(text, finishIndicator);
-            });
+            playPromise.catch(() => speakViaWebSpeech(text, finishIndicator));
           }
           return;
         } catch (err) {
@@ -891,8 +1111,6 @@
           return;
         }
       }
-
-      // 例文または WebSpeech モード時
       speakViaWebSpeech(text, finishIndicator);
     }
 
@@ -926,39 +1144,36 @@
     }
 
     function testAudioOutput() {
-      const log = document.getElementById("audio-status-log");
-      log.textContent = "🔊 「perspective」のテスト音声を再生中...";
       speakText("perspective", false);
-      setTimeout(() => {
-        log.textContent = "✅ 再生コマンドを送信しました。これで聞こえる場合はそのまま学習を進められます！";
-      }, 900);
     }
 
     /*************************************************************************
-     * 5. 初期化・自動進行チェック・画面レンダリング
+     * 6. 初期化・自動進行チェック・レンダリング
      *************************************************************************/
     function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("VOCAB_MASTER_50_STATE");
+        const raw =
+          localStorage.getItem(STORAGE_KEY) ||
+          localStorage.getItem("AI_VOCAB_MASTER_50_V3") ||
+          localStorage.getItem("VOCAB_MASTER_50_STATE");
         if (raw) {
           const parsed = JSON.parse(raw);
           state = { ...state, ...parsed };
         }
       } catch (e) {}
 
-      // 初回起動または既存のDay1がアルファベット順で偏っている場合は自動でA〜Z均等シャッフルを実行
+      if (!Array.isArray(state.customPool)) state.customPool = [];
+
       if (!state.days || !state.days[1] || state.days[1].length === 0 || hasAlphabeticalBias(state.days[1])) {
         rebalanceAllUnlearnedDays(false);
       }
 
-      // 日付変更チェック＆連続日数更新＆前日80%達成時の自動次Dayシフト
       const today = new Date().toISOString().slice(0, 10);
       if (state.lastStudyDate !== today) {
         const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
         if (state.lastStudyDate === yesterday) {
           state.streak = (state.streak || 1) + 1;
         }
-        // 現在のDayが80%（40語）以上学習済みなら自動的に次のDayへ進める
         const currentWords = state.days[state.currentDay] || [];
         const learnedCount = currentWords.filter(w => state.progress[w.word]?.learned).length;
         if (learnedCount >= 40) {
@@ -970,6 +1185,9 @@
         state.lastStudyDate = today;
         saveState();
       }
+
+      // 起動時に未出題ストックが100語未満＆APIキー設定済みならバックグラウンド補充
+      setTimeout(() => checkAndReplenishWithGemini(false), 1200);
     }
 
     function saveState() {
@@ -986,6 +1204,7 @@
     function getDueReviewWords() {
       const today = new Date().toISOString().slice(0, 10);
       const allWordsMap = new Map();
+      buildBalancedPool().forEach(w => allWordsMap.set(w.word, w));
       Object.values(state.days).forEach(list => list.forEach(w => allWordsMap.set(w.word, w)));
 
       const due = [];
@@ -1006,11 +1225,12 @@
           ensureNextDayUnlocked(nextDay);
         }
       }
+      // 学習中に残りストックが少なくなった場合もバックグラウンド補充をトリガー
+      if (getRemainingUnusedStockCount() < 100) {
+        checkAndReplenishWithGemini(false);
+      }
     }
 
-    /*************************************************************************
-     * 6. UI 描画関数
-     *************************************************************************/
     function renderAll() {
       const curList = state.days[state.currentDay] || [];
       const doneCount = getDayCompletionCount(state.currentDay);
@@ -1022,11 +1242,9 @@
       document.getElementById("home-day-progress-text").textContent = `${doneCount} / 50 語完了 (${pct}%)`;
       document.getElementById("home-progress-bar").style.width = `${pct}%`;
 
-      // 頭文字の分散プレビューを表示
       const initials = Array.from(new Set(curList.slice(0, 12).map(w => w.word[0].toUpperCase()))).join(", ");
       document.getElementById("home-headword-preview").textContent = `収録頭文字プレビュー: ${initials}... (A〜Zランダム配分)`;
 
-      // スマートボタンのラベル更新
       const dueList = getDueReviewWords();
       const smartBtn = document.getElementById("smart-btn-label");
       if (doneCount < 50) {
@@ -1035,7 +1253,6 @@
         smartBtn.textContent = `Day ${state.currentDay} の4択テストへ進む`;
       }
 
-      // 復習バナーとバッジ
       const revBanner = document.getElementById("review-banner");
       const navBadge = document.getElementById("nav-review-badge");
       if (dueList.length > 0) {
@@ -1048,7 +1265,6 @@
         navBadge.classList.add("hidden");
       }
 
-      // Day切り替えピル
       const daySelector = document.getElementById("day-selector-list");
       daySelector.innerHTML = "";
       Object.keys(state.days).map(Number).sort((a, b) => a - b).forEach(d => {
@@ -1070,13 +1286,12 @@
         daySelector.appendChild(btn);
       });
 
-      // 統計カード
       const totalLearned = Object.values(state.progress).filter(p => p.learned).length;
       document.getElementById("stat-learned").textContent = totalLearned;
       document.getElementById("stat-review").textContent = dueList.length;
       document.getElementById("stat-total-pool").textContent = buildBalancedPool().length;
+      updateAiStatusLog();
 
-      // ホームの50単語リスト描画
       const listEl = document.getElementById("home-word-list");
       listEl.innerHTML = "";
       curList.forEach((item, idx) => {
@@ -1094,6 +1309,7 @@
                 <span class="font-bold text-xs text-white">${item.word}</span>
                 <span class="text-[10px] text-slate-500">${item.phonetic}</span>
                 <span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-indigo-300">${item.pos}</span>
+                ${item.aiGenerated ? '<span class="text-[9px] px-1 rounded bg-indigo-500/20 text-indigo-300">AI</span>' : ''}
               </div>
               <p class="text-[11px] text-slate-300 truncate">${item.meaning}</p>
             </div>
@@ -1118,14 +1334,13 @@
       document.getElementById("study-day-badge").textContent = `Day ${state.currentDay}`;
       document.getElementById("study-counter").textContent = `${state.studyIndex + 1} / ${curList.length}`;
       document.getElementById("card-pos").textContent = item.pos;
-      document.getElementById("card-initial-badge").textContent = `頭文字: ${item.word[0].toUpperCase()}`;
+      document.getElementById("card-initial-badge").textContent = `頭文字: ${item.word[0].toUpperCase()}${item.aiGenerated ? " ✨AI" : ""}`;
       document.getElementById("card-word").textContent = item.word;
       document.getElementById("card-phonetic").textContent = item.phonetic;
       document.getElementById("card-meaning").textContent = item.meaning;
       document.getElementById("card-example").textContent = item.example;
       document.getElementById("card-example-ja").textContent = item.exampleJa;
 
-      // 回答エリアを隠す
       document.getElementById("card-answer-box").classList.add("hidden");
       document.getElementById("card-tap-hint").classList.remove("hidden");
 
@@ -1188,7 +1403,6 @@
 
       checkAutoUnlock80Percent();
 
-      // 次のカードへ移動
       if (state.studyIndex < curList.length - 1) {
         state.studyIndex++;
         saveState();
@@ -1261,7 +1475,6 @@
 
       document.getElementById("test-feedback").classList.add("hidden");
 
-      // ダミー選択肢3つ＋正解1つを作成
       const allPool = buildBalancedPool().filter(w => w.word !== q.word);
       const distractors = fyShuffle(allPool, Date.now() + state.testIndex).slice(0, 3);
       const options = fyShuffle([q, ...distractors], Date.now());
@@ -1340,7 +1553,7 @@
     }
 
     /*************************************************************************
-     * 8. 復習センター＆ナビゲーション＆設定
+     * 8. 復習センター＆ナビゲーション＆設定保存
      *************************************************************************/
     function renderReviewSection() {
       const due = getDueReviewWords();
@@ -1399,7 +1612,7 @@
       const maxDay = Math.max(...Object.keys(state.days).map(Number));
       const nextDay = maxDay + 1;
       ensureNextDayUnlocked(nextDay);
-      state.currentDay = nextDay;
+      state.currentDay = nextD = nextDay;
       state.studyIndex = 0;
       saveState();
       renderAll();
@@ -1433,6 +1646,9 @@
       document.getElementById("setting-accent").value = state.accent || "en-US";
       document.getElementById("setting-speed").value = String(state.speed || "1.0");
       document.getElementById("setting-api-key").value = state.apiKey || "";
+      if (state.aiTheme) {
+        document.getElementById("setting-ai-theme").value = state.aiTheme;
+      }
     }
 
     function saveAudioSettings() {
@@ -1443,10 +1659,18 @@
       testAudioOutput();
     }
 
+    function saveAiSettings() {
+      state.aiTheme = document.getElementById("setting-ai-theme").value;
+      saveState();
+    }
+
     function saveApiKey() {
       state.apiKey = document.getElementById("setting-api-key").value.trim();
+      state.aiTheme = document.getElementById("setting-ai-theme").value;
       saveState();
-      alert("✅ APIキーをブラウザ内に保存しました。");
+      renderAll();
+      alert("✅ Gemini APIキーを保存しました！未出題ストックが100語未満になると自動で50語ずつ補充されます。");
+      checkAndReplenishWithGemini(false);
     }
 
     function exportBackupJSON() {
@@ -1468,7 +1692,7 @@
           state = { ...state, ...imported };
           saveState();
           renderAll();
-          alert("✅ バックアップデータを復元しました！");
+          alert("✅ バックアップデータ（AI生成単語を含む）を復元しました！");
         } catch (err) {
           alert("JSONファイルの形式が正しくありません。");
         }
@@ -1476,7 +1700,6 @@
       reader.readAsText(file);
     }
 
-    // 起動実行
     window.addEventListener("DOMContentLoaded", () => {
       loadState();
       renderAll();
