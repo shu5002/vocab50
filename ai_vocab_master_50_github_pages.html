@@ -48,7 +48,7 @@
             <h1 class="font-bold text-sm tracking-tight text-white">VOCAB MASTER 50</h1>
             <span id="badge-day" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Day 1</span>
           </div>
-          <p class="text-[11px] text-slate-400" id="header-subtitle">Gemini AI 無限自動補充エンジン搭載</p>
+          <p class="text-[11px] text-slate-400" id="header-subtitle">Gemini 最新モデル自動検出・無限補充</p>
         </div>
       </div>
 
@@ -322,7 +322,7 @@
           <div>
             <h3 class="text-sm font-black text-white">🤖 Gemini API 自動無限補充エンジン</h3>
             <p class="text-[11px] text-slate-400">
-              未出題の単語ストックが100語（2日分）未満になると、裏側で自動的にGeminiが新しい50語（発音・例文付き）を生成してDayを追加します。
+              APIキーで利用可能な最新モデル（Gemini 3.8 / 3.5 / 2.5 Flash等）を自動検出して50語ずつ無限生成します。
             </p>
           </div>
         </div>
@@ -681,7 +681,7 @@
     ];
 
     /*************************************************************************
-     * 2. 状態管理・ストレージ永続化 (AI生成ストック customPool を含む)
+     * 2. 状態管理・ストレージ永続化
      *************************************************************************/
     const STORAGE_KEY = "AI_VOCAB_MASTER_50_V4_INFINITE";
     const SRS_INTERVALS = [1, 3, 7, 14, 30];
@@ -696,7 +696,7 @@
       speed: 1.0,
       apiKey: "",
       aiTheme: "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル、日常・ビジネス・学術バランス）",
-      customPool: [], // Gemini APIが自動生成して蓄積した単語オブジェクトの配列
+      customPool: [],
       days: {},
       progress: {},
       studyIndex: 0,
@@ -837,17 +837,78 @@
     }
 
     /*************************************************************************
-     * 4. Gemini API 無限自動生成エンジン
-     * 未出題ストックが100語（2日分）未満になったら自動で50語を生成し新しいDayも解放
+     * 4. Gemini API 最新モデル自動検出＆無限自動生成エンジン
+     * ListModels APIで現在有効なモデルを動的に取得するため廃止エラーを完全回避
      *************************************************************************/
+    async function discoverAvailableGeminiModels(apiKey) {
+      const fallbackModels = [
+        "gemini-3.8-flash",
+        "gemini-3.7-flash",
+        "gemini-3.5-flash-lite",
+        "gemini-3.5-flash",
+        "gemini-2.5-flash-lite",
+        "gemini-2.5-flash"
+      ];
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`);
+        if (!res.ok) return fallbackModels;
+        const data = await res.json();
+        if (!data || !Array.isArray(data.models)) return fallbackModels;
+
+        const valid = data.models
+          .filter(m =>
+            Array.isArray(m.supportedGenerationMethods) &&
+            m.supportedGenerationMethods.includes("generateContent") &&
+            m.name &&
+            m.name.includes("gemini") &&
+            !m.name.includes("embedding") &&
+            !m.name.includes("imagen") &&
+            !m.name.includes("veo") &&
+            !m.name.includes("tts") &&
+            !m.name.includes("audio") &&
+            !m.name.includes("live") &&
+            !m.name.includes("vision")
+          )
+          .map(m => m.name.replace(/^models\//, ""));
+
+        // テキスト生成に高速で無料枠の大きい flash 系を優先ソート
+        valid.sort((a, b) => {
+          const score = name => {
+            let s = 0;
+            if (name.includes("flash")) s += 100;
+            if (name.includes("3.8")) s += 50;
+            else if (name.includes("3.7")) s += 45;
+            else if (name.includes("3.5")) s += 40;
+            else if (name.includes("2.5")) s += 30;
+            if (name.includes("lite")) s += 10;
+            if (name.includes("preview") || name.includes("exp")) s -= 15;
+            return s;
+          };
+          return score(b) - score(a);
+        });
+
+        return valid.length > 0 ? [...new Set([...valid, ...fallbackModels])] : fallbackModels;
+      } catch (e) {
+        return fallbackModels;
+      }
+    }
+
     async function checkAndReplenishWithGemini(forceManual = false) {
       const remaining = getRemainingUnusedStockCount();
       updateAiStatusLog();
 
       if (!forceManual && remaining >= 100) return;
+
+      // 入力欄にキーが入っていて未保存の場合も自動で拾う
+      const inputKeyEl = document.getElementById("setting-api-key");
+      if (inputKeyEl && inputKeyEl.value.trim() && !state.apiKey) {
+        state.apiKey = inputKeyEl.value.trim();
+        saveState();
+      }
+
       if (!state.apiKey || !state.apiKey.trim()) {
         if (forceManual) {
-          alert("⚙️ 設定タブで Gemini APIキー を入力・保存してから実行してください。");
+          alert("⚙️ 設定タブで Gemini APIキー を入力してから実行してください。");
           switchTab("settings");
         }
         return;
@@ -855,11 +916,13 @@
       if (isGeneratingAI) return;
 
       isGeneratingAI = true;
-      setAiLoadingUI(true, "Gemini AIが重複なしの新しい50単語（発音・例文付き）を生成しています...");
+      setAiLoadingUI(true, "利用可能な最新Geminiモデルを自動検索し、新しい50単語を生成中...");
 
       try {
+        const cleanKey = state.apiKey.trim();
+        const candidateModels = await discoverAvailableGeminiModels(cleanKey);
+
         const allExistingWords = buildBalancedPool().map(w => w.word.toLowerCase());
-        // プロンプト肥大化を防ぐため直近400語＋ランダム抜粋を除外リストとして渡す
         const exclusionSample = allExistingWords.slice(-350).join(", ");
         const theme = state.aiTheme || "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル）";
 
@@ -884,21 +947,21 @@
   }
 ]`;
 
-        const modelsToTry = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
         let generatedArray = null;
+        let usedModelName = "";
         let lastError = "";
 
-        for (const modelName of modelsToTry) {
+        for (const modelName of candidateModels.slice(0, 6)) {
           try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(state.apiKey.trim())}`;
+            setAiLoadingUI(true, `モデル ${modelName} で新しい50語を生成中...`);
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(cleanKey)}`;
             const response = await fetch(url, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }],
                 generationConfig: {
-                  temperature: 0.75,
-                  responseMimeType: "application/json"
+                  temperature: 0.75
                 }
               })
             });
@@ -911,10 +974,18 @@
 
             const data = await response.json();
             const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-            const cleaned = rawText.replace(/```json|```/g, "").trim();
-            const parsed = JSON.parse(cleaned);
+            // コードブロックや前後の説明文が混ざっていてもJSON配列 `[...]` だけを確実に抽出
+            const startIdx = rawText.indexOf("[");
+            const endIdx = rawText.lastIndexOf("]");
+            if (startIdx === -1 || endIdx === -1) {
+              lastError = "応答にJSON配列が含まれていませんでした";
+              continue;
+            }
+            const jsonSlice = rawText.slice(startIdx, endIdx + 1);
+            const parsed = JSON.parse(jsonSlice);
             if (Array.isArray(parsed) && parsed.length > 0) {
               generatedArray = parsed;
+              usedModelName = modelName;
               break;
             }
           } catch (innerErr) {
@@ -923,10 +994,9 @@
         }
 
         if (!generatedArray) {
-          throw new Error(lastError || "JSONの解析に失敗しました");
+          throw new Error(lastError || "利用可能なすべてのモデルで生成に失敗しました");
         }
 
-        // 重複排除して customPool に追加
         const existingSet = new Set(buildBalancedPool().map(w => w.word.toLowerCase()));
         const newlyAdded = [];
         for (const item of generatedArray) {
@@ -950,20 +1020,24 @@
         if (!Array.isArray(state.customPool)) state.customPool = [];
         state.customPool.push(...newlyAdded);
 
-        // 50語以上の未出題ストックが溜まったら自動的に新しいDayとしても編成可能にする
         if (forceManual && newlyAdded.length > 0) {
           const maxDay = Math.max(0, ...Object.keys(state.days).map(Number));
           ensureNextDayUnlocked(maxDay + 1);
+          state.currentDay = maxDay + 1;
+          state.studyIndex = 0;
         }
 
         saveState();
         renderAll();
-        setAiLoadingUI(false, `✅ Gemini AIが新しい単語を ${newlyAdded.length} 語追加補充しました！（累計AI追加: ${state.customPool.length}語）`);
+        setAiLoadingUI(
+          false,
+          `✅ ${usedModelName} で新しい単語を ${newlyAdded.length} 語追加し、新しいDayを解放しました！（累計AI追加: ${state.customPool.length}語）`
+        );
       } catch (err) {
         console.error("Gemini Auto-Replenish Error:", err);
-        setAiLoadingUI(false, `⚠️ AI生成エラー: ${err.message}（APIキーや通信状況を確認してください）`);
+        setAiLoadingUI(false, `⚠️ AI生成エラー: ${err.message}`);
         if (forceManual) {
-          alert(`AI生成に失敗しました: ${err.message}`);
+          alert(`AI生成エラー: ${err.message}`);
         }
       } finally {
         isGeneratingAI = false;
@@ -996,7 +1070,7 @@
         if (messageText) {
           toast.classList.remove("hidden");
           toastText.textContent = messageText;
-          setTimeout(() => toast.classList.add("hidden"), 4500);
+          setTimeout(() => toast.classList.add("hidden"), 5000);
         } else {
           toast.classList.add("hidden");
         }
@@ -1046,12 +1120,11 @@
       state.days[targetDay] = fyShuffle(next50, Date.now() + targetDay);
       saveState();
 
-      // 新しいDayを作った結果、未出題ストックが100語を切ったら自動でGemini補充を起動
       checkAndReplenishWithGemini(false);
     }
 
     /*************************************************************************
-     * 5. ハイブリッド音声再生エンジン (iPhoneマナーモード / Safari対策済)
+     * 5. ハイブリッド音声再生エンジン
      *************************************************************************/
     let currentAudioObj = null;
     let audioCtxUnlocked = false;
@@ -1186,7 +1259,6 @@
         saveState();
       }
 
-      // 起動時に未出題ストックが100語未満＆APIキー設定済みならバックグラウンド補充
       setTimeout(() => checkAndReplenishWithGemini(false), 1200);
     }
 
@@ -1225,7 +1297,6 @@
           ensureNextDayUnlocked(nextDay);
         }
       }
-      // 学習中に残りストックが少なくなった場合もバックグラウンド補充をトリガー
       if (getRemainingUnusedStockCount() < 100) {
         checkAndReplenishWithGemini(false);
       }
@@ -1612,7 +1683,7 @@
       const maxDay = Math.max(...Object.keys(state.days).map(Number));
       const nextDay = maxDay + 1;
       ensureNextDayUnlocked(nextDay);
-      state.currentDay = nextD = nextDay;
+      state.currentDay = nextDay;
       state.studyIndex = 0;
       saveState();
       renderAll();
@@ -1669,8 +1740,8 @@
       state.aiTheme = document.getElementById("setting-ai-theme").value;
       saveState();
       renderAll();
-      alert("✅ Gemini APIキーを保存しました！未出題ストックが100語未満になると自動で50語ずつ補充されます。");
-      checkAndReplenishWithGemini(false);
+      alert("✅ Gemini APIキーを保存しました！続けて動作テストも兼ねて最初の50語補充を開始します。");
+      checkAndReplenishWithGemini(true);
     }
 
     function exportBackupJSON() {
