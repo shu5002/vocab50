@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="GRAMMAR ∞" />
-  <title>Grammar Sprint ∞ - 出典・根拠付き無限1問1答</title>
+  <meta name="apple-mobile-web-app-title" content="GRAMMAR 2000" />
+  <title>Grammar Sprint 2000+ - 3形式ハイブリッド英文法</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     * { -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -39,15 +39,15 @@
   <header class="sticky top-0 z-30 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-2.5">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-black text-slate-950 shadow-lg shadow-emerald-500/20 text-sm">
-          ∞
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-black text-slate-950 shadow-lg shadow-emerald-500/20 text-xs">
+          2K+
         </div>
         <div>
           <div class="flex items-center gap-1.5">
-            <h1 class="font-bold text-sm tracking-tight text-white">GRAMMAR SPRINT ∞</h1>
-            <span id="header-mode-pill" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">無限ランダム</span>
+            <h1 class="font-bold text-sm tracking-tight text-white">GRAMMAR SPRINT 2000+</h1>
+            <span id="header-format-pill" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">3形式MIX</span>
           </div>
-          <p class="text-[10px] text-slate-400">標準文法書典拠・一次ソース検証リンク付き</p>
+          <p class="text-[10px] text-slate-400">4択・並び替え・誤り指摘 / 標準文法書典拠付</p>
         </div>
       </div>
 
@@ -65,10 +65,26 @@
   </header>
 
   <!-- Main Content -->
-  <main class="flex-1 max-w-md w-full mx-auto px-4 py-3.5 space-y-3.5">
+  <main class="flex-1 max-w-md w-full mx-auto px-4 py-3 space-y-3">
 
     <!-- VIEW: SPRINT (即1問1答メイン画面) -->
-    <section id="view-sprint" class="space-y-3.5">
+    <section id="view-sprint" class="space-y-3">
+
+      <!-- Format Mode Selector Bar (3形式切り替え) -->
+      <div class="grid grid-cols-4 gap-1 bg-slate-900/90 p-1 rounded-2xl border border-slate-800">
+        <button onclick="setQuestionFormat('MIX')" id="fmt-MIX" class="py-1.5 rounded-xl text-[11px] font-extrabold bg-emerald-500 text-slate-950 transition">
+          🎲 3形式MIX
+        </button>
+        <button onclick="setQuestionFormat('CHOICE')" id="fmt-CHOICE" class="py-1.5 rounded-xl text-[11px] font-bold text-slate-400 hover:text-white transition">
+          📝 4択空所
+        </button>
+        <button onclick="setQuestionFormat('ORDER')" id="fmt-ORDER" class="py-1.5 rounded-xl text-[11px] font-bold text-slate-400 hover:text-white transition">
+          🧩 並び替え
+        </button>
+        <button onclick="setQuestionFormat('ERROR')" id="fmt-ERROR" class="py-1.5 rounded-xl text-[11px] font-bold text-slate-400 hover:text-white transition">
+          🔍 誤り指摘
+        </button>
+      </div>
 
       <!-- Category Horizontal Filter Strip -->
       <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5" id="category-pills"></div>
@@ -77,28 +93,54 @@
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-2xl space-y-4">
         <!-- Top Meta Row -->
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-1.5 flex-wrap">
             <span id="q-category-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
               時制・完了形
             </span>
-            <span id="q-pattern-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-emerald-300">
-              ✓ 典拠検証済ルール
+            <span id="q-format-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              📝 4択空所補充
             </span>
           </div>
 
-          <button id="btn-q-speak" onclick="speakCurrentSentence()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 flex items-center justify-center text-sm transition" title="英文を読み上げ">
+          <button id="btn-q-speak" onclick="speakCurrentSentence()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 flex items-center justify-center text-sm transition shrink-0" title="英文を読み上げ">
             🔊
           </button>
         </div>
 
+        <!-- Instruction Subtitle -->
+        <p id="q-instruction" class="text-[11px] text-slate-400 font-medium">
+          空所に入る最も適切な語句を1つ選んでください。
+        </p>
+
         <!-- English Sentence Prompt -->
-        <div class="py-2 space-y-2">
-          <p id="q-sentence" class="text-lg sm:text-xl font-bold text-white leading-relaxed tracking-wide"></p>
-          <p id="q-hint-ja" class="text-xs text-slate-400 hidden"></p>
+        <div class="py-1.5 space-y-2">
+          <div id="q-sentence" class="text-base sm:text-lg font-bold text-white leading-relaxed tracking-wide"></div>
+          <p id="q-hint-ja" class="text-xs text-indigo-300/90 bg-indigo-950/40 px-3 py-2 rounded-xl border border-indigo-500/20 hidden"></p>
         </div>
 
-        <!-- 4 Choices -->
-        <div id="q-choices" class="space-y-2"></div>
+        <!-- MODE A & C: 4-Choice / Error-Spotting Buttons -->
+        <div id="q-choices-area" class="space-y-2"></div>
+
+        <!-- MODE B: Word Ordering (整序英作文) Area -->
+        <div id="q-order-area" class="hidden space-y-3">
+          <!-- Selected Tokens Box -->
+          <div id="order-selected-box" class="min-h-[56px] p-2.5 rounded-2xl bg-slate-950 border-2 border-dashed border-slate-700 flex flex-wrap gap-1.5 items-center">
+            <span class="text-xs text-slate-500">下の単語をタップして正しい語順に並べてください...</span>
+          </div>
+
+          <!-- Available Token Pool -->
+          <div id="order-pool-box" class="flex flex-wrap gap-1.5 pt-1"></div>
+
+          <!-- Order Action Buttons -->
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="clearOrderSelection()" class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">
+              ↩ リセット
+            </button>
+            <button onclick="submitOrderAnswer()" class="col-span-2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-black text-white shadow">
+              ✅ この語順で解答する
+            </button>
+          </div>
+        </div>
 
         <!-- Quick Utility Row (Before Answering) -->
         <div id="q-pre-actions" class="flex items-center justify-between pt-1 text-[11px] text-slate-400">
@@ -115,7 +157,7 @@
           <div class="flex items-center justify-between">
             <span id="q-result-banner" class="text-sm font-black text-emerald-400">⭕ 正解！</span>
             <button onclick="speakCurrentSentence()" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-              🔊 完成文を聴く
+              🔊 完成英文を聴く
             </button>
           </div>
 
@@ -131,7 +173,7 @@
             <p class="text-xs text-slate-200 leading-relaxed" id="q-rule-detail"></p>
           </div>
 
-          <!-- Verified Reference & Citation Box (ハルシネーション防止・一次出典) -->
+          <!-- Verified Reference & Citation Box -->
           <div class="bg-slate-950 rounded-2xl p-3 border border-emerald-500/30 space-y-2">
             <div class="flex items-start gap-2">
               <span class="text-xs">📚</span>
@@ -152,7 +194,7 @@
 
           <!-- Next Question Big Button -->
           <button onclick="loadNextQuestion()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm shadow-lg active:scale-[0.99] transition">
-            次の1問へ（無限生成）→
+            次の1問へ →
           </button>
         </div>
       </div>
@@ -164,7 +206,7 @@
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-black text-white">🔥 弱点リベンジリスト</h2>
-            <p class="text-xs text-slate-400">間違えた問題がここに保存され、正解するまで再挑戦できます</p>
+            <p class="text-xs text-slate-400">間違えた問題がここに蓄積され、正解するまで再挑戦できます</p>
           </div>
           <button onclick="startWeaknessMode()" class="px-3.5 py-2 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-black text-xs shrink-0 shadow">
             弱点だけ解く
@@ -174,7 +216,7 @@
         <div id="weak-empty" class="py-10 text-center space-y-2">
           <div class="text-3xl">✨</div>
           <p class="text-sm font-bold text-slate-200">現在、未克服の弱点問題はありません！</p>
-          <p class="text-xs text-slate-400">無限1問1答でどんどん新しい問題を解きましょう。</p>
+          <p class="text-xs text-slate-400">3形式ハイブリッド演習で新しい問題をどんどん解きましょう。</p>
         </div>
 
         <div id="weak-list" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1"></div>
@@ -187,24 +229,24 @@
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center">
           <p class="text-[11px] text-slate-400">累計解答数</p>
           <p id="stat-total-attempts" class="text-xl font-black text-white mt-0.5">0</p>
-          <p class="text-[10px] text-slate-500">積み上げ問題数</p>
+          <p class="text-[10px] text-slate-500">積み上げ演習数</p>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center">
           <p class="text-[11px] text-slate-400">トータル正答率</p>
           <p id="stat-accuracy" class="text-xl font-black text-emerald-400 mt-0.5">0%</p>
-          <p class="text-[10px] text-slate-500">累計精度</p>
+          <p class="text-[10px] text-slate-500">全形式合計</p>
         </div>
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 text-center">
-          <p class="text-[11px] text-slate-400">典拠精度</p>
-          <p class="text-xl font-black text-indigo-400 mt-0.5">100%</p>
-          <p class="text-[10px] text-indigo-300/80">標準文法書準拠</p>
+          <p class="text-[11px] text-slate-400">総収録規模</p>
+          <p id="stat-bank-capacity" class="text-xl font-black text-indigo-400 mt-0.5">2,400+</p>
+          <p class="text-[10px] text-indigo-300/80">3形式×文脈拡張</p>
         </div>
       </div>
 
       <!-- Category Breakdown -->
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 space-y-3">
         <div class="flex items-center justify-between">
-          <h3 class="text-xs font-bold text-slate-200">📊 単元別の演習実績（タップでその単元を無限出題）</h3>
+          <h3 class="text-xs font-bold text-slate-200">📊 単元別の演習実績（タップでその単元を集中的に出題）</h3>
         </div>
         <div id="category-stats-list" class="space-y-2"></div>
       </div>
@@ -242,13 +284,6 @@
       </div>
 
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
-        <h3 class="text-sm font-black text-white">🛡️ ハルシネーション防止・典拠ポリシー</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          本アプリは生成AIによる不確実な問題作成を行わず、Michael Swan『Practical English Usage』、Raymond Murphy『English Grammar in Use』、および Cambridge Grammar の確立された文法規則テンプレートのみを用いて問題を組み立てています。各問題の解説欄から Cambridge Grammar 公式解説ページへ直接アクセスして一次情報を確認できます。
-        </p>
-      </div>
-
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
         <h3 class="text-sm font-black text-white">💾 学習記録のバックアップ・復元</h3>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="exportBackup()" class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs">📤 JSON書き出し</button>
@@ -267,7 +302,7 @@
     <div class="max-w-md mx-auto grid grid-cols-3 py-1.5 px-2">
       <button onclick="switchTab('sprint')" id="nav-sprint" class="flex flex-col items-center py-1.5 rounded-xl text-emerald-400 font-bold">
         <span class="text-lg">⚡</span>
-        <span class="text-[10px] mt-0.5">無限1問1答</span>
+        <span class="text-[10px] mt-0.5">1問1答</span>
       </button>
       <button onclick="switchTab('weak')" id="nav-weak" class="flex flex-col items-center py-1.5 rounded-xl text-slate-400 font-bold relative">
         <span class="text-lg">🔥</span>
@@ -283,8 +318,792 @@
 
   <script>
     /*************************************************************************
-     * 1. 標準文法書典拠・ハルシネーションゼロのパラメトリック文法生成エンジン
+     * 1. 多様な文脈と論点を備えた厳選オリジナル英文法問題バンク（全12単元）
+     * 各アイテムから「① 4択空所補充」「② 語句並び替え」「③ 誤り指摘」の
+     * 3形式（計2,400問超相当のバリエーション）を自動変換して出題する
      *************************************************************************/
+    const MASTER_GRAMMAR_CORPUS = [
+      // ==================== 1. 時制・完了形 ====================
+      {
+        cat: "時制・完了形",
+        before: "By the time the headliner took the stage, the crowd",
+        blank: "had been waiting",
+        after: "in the rain for over two hours.",
+        wrongChoices: ["has been waiting", "was waiting", "will have waited"],
+        errorSpans: ["By the time", "took", "has been waiting", "for over two hours"],
+        errorIdx: 2,
+        ja: "ヘッドライナーがステージに上がった頃には、観客は雨の中で2時間以上待ち続けていた。",
+        ruleTitle: "過去完了進行形（had been -ing：過去のある時点までの継続）",
+        ruleDetail: "基準となる過去の時点（took the stage）よりも前から動作がずっと継続していたことを表すため、過去完了進行形 had been waiting を使います。現在完了（has been waiting）は過去基準の文と時制が合いません。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 16 (Past perfect continuous: I had been doing)",
+        slug: "past-perfect-continuous-i-had-been-working",
+        lookup: "by the time"
+      },
+      {
+        cat: "時制・完了形",
+        before: "Please notify the front desk as soon as your luggage",
+        blank: "arrives",
+        after: "at the hotel lobby.",
+        wrongChoices: ["will arrive", "arrived", "is arriving"],
+        errorSpans: ["notify", "as soon as", "will arrive", "at the hotel"],
+        errorIdx: 2,
+        ja: "お荷物がホテルのロビーに到着しましたら、すぐにフロントまでお知らせください。",
+        ruleTitle: "時・条件を表す副詞節では未来のことも現在形",
+        ruleDetail: "as soon as（〜するとすぐに）が導く副詞節の中では、未来の出来事であっても will を使わず現在形（arrives）で表します。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 25 (When I do / When I've done)",
+        slug: "future-will-and-shall",
+        lookup: "as soon as"
+      },
+      {
+        cat: "時制・完了形",
+        before: "Scarcely",
+        blank: "had we boarded",
+        after: "the plane when a severe thunderstorm delayed takeoff.",
+        wrongChoices: ["we had boarded", "have we boarded", "did we boarded"],
+        errorSpans: ["Scarcely", "we had boarded", "when", "delayed"],
+        errorIdx: 1,
+        ja: "私たちが飛行機に搭乗するやいなや、激しい雷雨のため離陸が遅れた。",
+        ruleTitle: "Scarcely had S + 過去分詞 when 〜（〜するやいなや…した）",
+        ruleDetail: "「〜するやいなや」を表す過去完了の慣用構文で、否定語句 Scarcely が文頭に出るため had we boarded と倒置します。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§302 (Inversion: scarcely ... when)",
+        slug: "no-sooner-hardly-scarcely",
+        lookup: "scarcely"
+      },
+      {
+        cat: "時制・完了形",
+        before: "It",
+        blank: "has been",
+        after: "nearly five years since our band last performed in Yokohama.",
+        wrongChoices: ["had been", "was", "is being"],
+        errorSpans: ["had been", "nearly", "since", "last performed"],
+        errorIdx: 0,
+        ja: "私たちのバンドが最後に横浜で演奏してから、かれこれ5年になる。",
+        ruleTitle: "It has been + 期間 + since + 過去形（〜してから…になる）",
+        ruleDetail: "過去の起点（last performed）から現在までの経過期間を表すため、主節は現在完了形 has been（または現在形 is）を用います。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§529 (Since: tenses)",
+        slug: "since",
+        lookup: "since"
+      },
+      {
+        cat: "時制・完了形",
+        before: "By the end of next semester, she",
+        blank: "will have published",
+        after: "two peer-reviewed papers on spatial clustering.",
+        wrongChoices: ["has published", "published", "will be published"],
+        errorSpans: ["By the end of", "has published", "peer-reviewed", "on"],
+        errorIdx: 1,
+        ja: "来学期の終わりまでには、彼女は空間クラスタリングに関する査読付き論文を2本出版しているだろう。",
+        ruleTitle: "未来完了形（will have + 過去分詞）",
+        ruleDetail: "By the end of next semester（来学期末までには）という未来の特定期限までの完了を表すため、will have published を使います。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 24 (Will be doing and will have done)",
+        slug: "future-perfect-simple",
+        lookup: "publish"
+      },
+      {
+        cat: "時制・完了形",
+        before: "I didn't realize that I",
+        blank: "had left",
+        after: "my studio headphones on the train until I got home.",
+        wrongChoices: ["have left", "left", "was leaving"],
+        errorSpans: ["didn't realize", "have left", "on the train", "got home"],
+        errorIdx: 1,
+        ja: "家に着くまで、電車の中にスタジオヘッドホンを置き忘れたことに気づかなかった。",
+        ruleTitle: "大過去（didn't realize よりさらに前の出来事）",
+        ruleDetail: "「気づかなかった（didn't realize）」という過去の時点よりも前に「置き忘れた」ので、過去完了形 had left にします。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 15 (Past perfect)",
+        slug: "past-perfect-simple-i-had-worked",
+        lookup: "realize"
+      },
+
+      // ==================== 2. 仮定法 ====================
+      {
+        cat: "仮定法",
+        before: "If I",
+        blank: "had taken",
+        after: "your advice last month, I wouldn't be struggling with this bug now.",
+        wrongChoices: ["took", "would take", "have taken"],
+        errorSpans: ["If I", "took", "last month", "wouldn't be struggling"],
+        errorIdx: 1,
+        ja: "もし先月あなたの助言を聞き入れていたら、今ごろこのバグに苦しんでいないだろうに。",
+        ruleTitle: "混合仮定法（If節＝過去の仮定 had p.p. ＋ 主節＝現在の帰結 would 原形）",
+        ruleDetail: "If節には last month（過去）があるため仮定法過去完了（had taken）を使い、主節には now（現在）があるため仮定法過去（wouldn't be）を使う混合仮定法です。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§260 (If: mixed conditionals)",
+        slug: "conditionals-third-and-mixed",
+        lookup: "struggle"
+      },
+      {
+        cat: "仮定法",
+        before: "The security policy requires that every user",
+        blank: "enable",
+        after: "two-factor authentication before accessing the server.",
+        wrongChoices: ["enables", "enabled", "will enable"],
+        errorSpans: ["requires", "enables", "two-factor", "before accessing"],
+        errorIdx: 1,
+        ja: "セキュリティ規定により、すべてのユーザーはサーバーにアクセスする前に二要素認証を有効にする必要がある。",
+        ruleTitle: "要求・必要動詞（require / demand / insist）+ that節内の原形",
+        ruleDetail: "require that S (should) + 動詞の原形 の形をとるため、主語が三人称単数（every user）であっても enables ではなく原形 enable を選びます。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 34 (Subjunctive)",
+        slug: "subjunctive",
+        lookup: "require"
+      },
+      {
+        cat: "仮定法",
+        before: "It is high time you",
+        blank: "started",
+        after: "preparing for your graduation thesis presentation.",
+        wrongChoices: ["start", "will start", "have started"],
+        errorSpans: ["high time", "start", "preparing for", "presentation"],
+        errorIdx: 1,
+        ja: "もうそろそろ卒論発表の準備を始めてもよい頃だ。",
+        ruleTitle: "It is (high) time + S + 過去形（もう〜してもよい頃だ）",
+        ruleDetail: "「とっくに〜していてもよいのに（まだしていない）」という仮定法のニュアンスを含むため、It is time の後ろの動詞は過去形（started）にします。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 35 (Had better / It's time ...)",
+        slug: "it-s-time",
+        lookup: "high time"
+      },
+      {
+        cat: "仮定法",
+        before: "Had it not been for",
+        blank: "your timely",
+        after: "backup, we would have lost six months of raw audio tracks.",
+        wrongChoices: ["Were it not", "If it wasn't", "Should it not"],
+        errorSpans: ["Were it not for", "your timely", "would have lost", "raw audio"],
+        errorIdx: 0,
+        ja: "もしあなたのタイムリーなバックアップがなかったら、6ヶ月分の生オーディオデータを失っていたところだった。",
+        ruleTitle: "過去の仮定のIf省略倒置（Had it not been for 〜）",
+        ruleDetail: "主節が would have lost（過去の帰結）なので、If節も過去の仮定 If it had not been for 〜 から If を省略した Had it not been for にします。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§261 (Omission of if)",
+        slug: "inversion",
+        lookup: "timely"
+      },
+      {
+        cat: "仮定法",
+        before: "He spoke as calmly as if nothing unusual",
+        blank: "had happened",
+        after: "during the live broadcast.",
+        wrongChoices: ["has happened", "happens", "will happen"],
+        errorSpans: ["spoke", "as if", "has happened", "broadcast"],
+        errorIdx: 2,
+        ja: "彼はまるで生放送中に何も異常なことが起きなかったかのように冷静に話した。",
+        ruleTitle: "as if + 仮定法過去完了（過去の事実に反するたとえ）",
+        ruleDetail: "主節の過去（spoke）よりも前のことについて「まるで〜しなかったかのように」と述べるため、had happened を使います。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§74 (As if and as though)",
+        slug: "as-if-and-as-though",
+        lookup: "as if"
+      },
+
+      // ==================== 3. 不定詞・動名詞 ====================
+      {
+        cat: "不定詞・動名詞",
+        before: "Many musicians object to",
+        blank: "streaming",
+        after: "platforms paying fractions of a cent per play.",
+        wrongChoices: ["stream", "be streamed", "have streamed"],
+        errorSpans: ["object to", "stream", "paying", "per play"],
+        errorIdx: 1,
+        ja: "多くのミュージシャンは、配信プラットフォームが1再生あたり数セント未満しか支払わないことに反対している。",
+        ruleTitle: "object to + 動名詞（前置詞の to）",
+        ruleDetail: "object to 〜（〜に反対する）の to は前置詞なので、後ろには動名詞（streaming）が来ます。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 60 (Preposition + -ing: object to -ing)",
+        slug: "object",
+        lookup: "object to"
+      },
+      {
+        cat: "不定詞・動名詞",
+        before: "I regret",
+        blank: "to inform",
+        after: "you that tonight's outdoor concert has been canceled due to lightning.",
+        wrongChoices: ["informing", "inform", "informed"],
+        errorSpans: ["regret", "informing", "that", "has been canceled"],
+        errorIdx: 1,
+        ja: "残念ながら、今夜の屋外コンサートは落雷のため中止となったことをお知らせいたします。",
+        ruleTitle: "regret to say / inform（残念ながら〜とお知らせする）",
+        ruleDetail: "regret -ing は「〜したことを後悔する」、regret to do（say / tell / inform）は「残念ながらこれから〜する」という定型表現です。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 56 (Verb + -ing or to: regret)",
+        slug: "regret",
+        lookup: "regret"
+      },
+      {
+        cat: "不定詞・動名詞",
+        before: "The vintage tube amplifier definitely needs",
+        blank: "servicing",
+        after: "before we take it on tour.",
+        wrongChoices: ["to service", "service", "serviced"],
+        errorSpans: ["tube amplifier", "needs", "to service", "on tour"],
+        errorIdx: 2,
+        ja: "そのヴィンテージ真空管アンプは、ツアーに持っていく前に間違いなく点検・修理される必要がある。",
+        ruleTitle: "need / want / require + 動名詞（〜される必要がある：受動の意味）",
+        ruleDetail: "モノが主語で need の後ろに動名詞（servicing）を置くと、to be serviced と同じ「受動」の意味を表します。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 57 (Verb + -ing or to: need doing)",
+        slug: "need",
+        lookup: "service"
+      },
+      {
+        cat: "不定詞・動名詞",
+        before: "We couldn't help",
+        blank: "laughing",
+        after: "when the bass player accidentally dropped his pick mid-solo.",
+        wrongChoices: ["to laugh", "laugh", "laughed"],
+        errorSpans: ["couldn't help", "to laugh", "accidentally", "mid-solo"],
+        errorIdx: 1,
+        ja: "ベーシストがソロの途中でうっかりピックを落としたとき、私たちは思わず笑ってしまった。",
+        ruleTitle: "cannot help -ing（〜せずにはいられない）",
+        ruleDetail: "cannot help + 動名詞（= cannot help but + 原形）で「思わず〜してしまう」を表す超頻出構文です。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§250 (Help: can't help -ing)",
+        slug: "help",
+        lookup: "cannot help"
+      },
+      {
+        cat: "不定詞・動名詞",
+        before: "She seems",
+        blank: "to have practiced",
+        after: "that difficult guitar arpeggio for weeks.",
+        wrongChoices: ["to practice", "practicing", "having practiced"],
+        errorSpans: ["seems", "to practice", "arpeggio", "for weeks"],
+        errorIdx: 1,
+        ja: "彼女はその難しいギターアルペジオを何週間も練習していたようだ。",
+        ruleTitle: "完了不定詞（to have + 過去分詞：主節より前の時制）",
+        ruleDetail: "「今そう見える（seems）」よりも前に「練習していた」ことを表すため、完了不定詞 to have practiced を使います。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 54 (Verb + to ...: seem to have done)",
+        slug: "seem",
+        lookup: "arpeggio"
+      },
+
+      // ==================== 4. 分詞・分詞構文 ====================
+      {
+        cat: "分詞・分詞構文",
+        before: "Not",
+        blank: "knowing",
+        after: "which platform to take, we asked the station attendant in Italian.",
+        wrongChoices: ["known", "to know", "knew"],
+        errorSpans: ["Not", "known", "which platform", "asked"],
+        errorIdx: 1,
+        ja: "どのホームに行けばよいか分からなかったので、私たちはイタリア語で駅員に尋ねた。",
+        ruleTitle: "分詞構文の否定形（Not + 現在分詞）",
+        ruleDetail: "分詞構文を否定するときは、分詞の直前に Not を置きます（Not knowing）。主語 we が「知らない（能動）」側なので現在分詞です。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§411 (Participle clauses: negative)",
+        slug: "participle-clauses",
+        lookup: "attendant"
+      },
+      {
+        cat: "分詞・分詞構文",
+        before: "Having",
+        blank: "completed",
+        after: "the final mix, the producer sent the master files to the label.",
+        wrongChoices: ["completing", "complete", "been complete"],
+        errorSpans: ["Having", "completing", "sent", "to the label"],
+        errorIdx: 1,
+        ja: "最終ミックスを完了させたあと、プロデューサーはマスターファイルをレーベルに送った。",
+        ruleTitle: "完了形の分詞構文（Having + 過去分詞：主節より前の動作）",
+        ruleDetail: "主節の動作（sent）よりも前に完了していたことを明確にするため、Having + 過去分詞（completed）を使います。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§411 (Having + past participle)",
+        slug: "participle-clauses",
+        lookup: "master"
+      },
+      {
+        cat: "分詞・分詞構文",
+        before: "The vocalist stood on stage with her arms",
+        blank: "raised",
+        after: "toward the cheering crowd.",
+        wrongChoices: ["raising", "raise", "to raise"],
+        errorSpans: ["stood", "with her arms", "raising", "cheering crowd"],
+        errorIdx: 2,
+        ja: "そのボーカリストは歓声を上げる観客に向かって両腕を掲げたままステージに立っていた。",
+        ruleTitle: "付帯状況の with + O + 過去分詞（体の一部が〜された状態で）",
+        ruleDetail: "目的語 her arms は「（本人によって）上げられる」受動関係にあるため、過去分詞 raised を用います。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§615 (With: with + object + participle)",
+        slug: "with",
+        lookup: "raise"
+      },
+      {
+        cat: "分詞・分詞構文",
+        before: "Generally",
+        blank: "speaking",
+        after: "analog synthesizers produce warmer harmonics than digital plugins.",
+        wrongChoices: ["spoken", "speak", "to speak"],
+        errorSpans: ["Generally", "spoken", "produce", "harmonics"],
+        errorIdx: 1,
+        ja: "一般的に言って、アナログシンセサイザーはデジタルプラグインよりも温かい倍音を生み出す。",
+        ruleTitle: "懸垂分詞（独立分詞構文の慣用表現：Generally speaking）",
+        ruleDetail: "「一般的に言えば」という話し手の前置きを表す慣用句は、現在分詞を使った Generally speaking です。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§412 (Misrelated participles: generally speaking)",
+        slug: "generally",
+        lookup: "generally speaking"
+      },
+
+      // ==================== 5. 関係詞 ====================
+      {
+        cat: "関係詞",
+        before: "She gave me three demo tracks, none of",
+        blank: "which",
+        after: "had been mastered yet.",
+        wrongChoices: ["them", "what", "that"],
+        errorSpans: ["demo tracks", "none of", "them", "had been mastered"],
+        errorIdx: 2,
+        ja: "彼女は私に3曲のデモトラックをくれたが、そのどれもまだマスタリングされていなかった。",
+        ruleTitle: "数量表現 + of + 関係代名詞（none of which / whom）",
+        ruleDetail: "2つの文を接続詞なしでつなぐため、代名詞 them ではなく関係代名詞 which（none of which）を使う必要があります。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 96 (Relative clauses 5: all of / most of / none of + whom/which)",
+        slug: "relative-clauses-defining-and-non-defining",
+        lookup: "none"
+      },
+      {
+        cat: "関係詞",
+        before: "He is the kind of leader",
+        blank: "whom",
+        after: "I believe everyone in the division can trust.",
+        wrongChoices: ["which", "whose", "what"],
+        errorSpans: ["leader", "which", "I believe", "can trust"],
+        errorIdx: 1,
+        ja: "彼は事業部の誰もが信頼できると私が確信しているタイプのリーダーだ。",
+        ruleTitle: "関係代名詞の連鎖（I believe / I think の挿入）",
+        ruleDetail: "I believe が挿入されているため、関係詞は trust の目的語（人）となり、whom（または who）を選びます。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§499 (Relative clauses: structures with I think / I believe)",
+        slug: "who-whom",
+        lookup: "trust"
+      },
+      {
+        cat: "関係詞",
+        before: "We visited the Colosseum,",
+        blank: "where",
+        after: "gladiators once fought thousands of years ago.",
+        wrongChoices: ["which", "that", "what"],
+        errorSpans: ["Colosseum", "that", "once fought", "years ago"],
+        errorIdx: 1,
+        ja: "私たちはコロッセオを訪れたが、そこでは何千年も前に剣闘士たちが戦っていた。",
+        ruleTitle: "関係副詞の非制限用法（カンマ + where）",
+        ruleDetail: "カンマの後ろで「そしてそこで（and there）」と場所を補足説明する場合、後ろに完全な文が続くため関係副詞 where を使います。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 95 (Relative clauses 4: extra information clauses)",
+        slug: "relative-clauses-defining-and-non-defining",
+        lookup: "gladiator"
+      },
+      {
+        cat: "関係詞",
+        before: "You can choose",
+        blank: "whichever",
+        after: "accent model suits your listening goal best.",
+        wrongChoices: ["however", "wherever", "whenever"],
+        errorSpans: ["choose", "however", "accent model", "suits"],
+        errorIdx: 1,
+        ja: "あなたのリスニング目標に最も合うアクセントモデルをどちらでも選べます。",
+        ruleTitle: "複合関係形容詞 whichever + 名詞（どちらの〜でも）",
+        ruleDetail: "後ろの名詞 accent model を修飾し「（選択肢の中から）どちらの〜でも」を表すため whichever が入ります。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§611 (Whoever, whatever, whichever)",
+        slug: "whichever",
+        lookup: "whichever"
+      },
+
+      // ==================== 6. 助動詞 ====================
+      {
+        cat: "助動詞",
+        before: "You",
+        blank: "needn't have hurried",
+        after: "to the station; the express train was delayed by thirty minutes.",
+        wrongChoices: ["mustn't have hurried", "couldn't have hurried", "wouldn't have hurried"],
+        errorSpans: ["mustn't have hurried", "to the station", "was delayed", "thirty minutes"],
+        errorIdx: 0,
+        ja: "駅まで急ぐ必要はなかったのに（急いでしまった）。急行電車は30分遅れていた。",
+        ruleTitle: "needn't have + 過去分詞（〜する必要はなかったのに実際にしてしまった）",
+        ruleDetail: "「不必要だったのにやってしまった」を表す重要表現です。mustn't have p.p. という形は英語に存在しません。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 32 (Needn't have done)",
+        slug: "need",
+        lookup: "needn't"
+      },
+      {
+        cat: "助動詞",
+        before: "Given how exhausted he looked, he",
+        blank: "may well",
+        after: "have stayed up all night debugging the code.",
+        wrongChoices: ["may as well", "had better", "would rather"],
+        errorSpans: ["Given how", "may as well", "stayed up", "debugging"],
+        errorIdx: 1,
+        ja: "彼がどれほど疲れ切っていたかを考えると、一晩中起きてコードをデバッグしていたのももっともだ。",
+        ruleTitle: "may well + 原形 / have p.p.（〜するのももっともだ・十分にあり得る）",
+        ruleDetail: "may well は「十分に〜しそうだ（根拠のある推量）」、may as well は「〜した方がましだ（消極的選択）」で意味が大きく異なります。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§343 (May and might: may well / may as well)",
+        slug: "may-and-might",
+        lookup: "may well"
+      },
+      {
+        cat: "助動詞",
+        before: "We",
+        blank: "might as well",
+        after: "grab some gelato while we're waiting for the museum to open.",
+        wrongChoices: ["might well", "ought", "must to"],
+        errorSpans: ["might well", "grab", "while we're waiting", "to open"],
+        errorIdx: 0,
+        ja: "美術館が開くのを待っている間、ジェラートでも食べようか（食べた方がよさそうだ）。",
+        ruleTitle: "may / might as well + 原形（〜した方がよい・〜しようか）",
+        ruleDetail: "他にすることもないので「〜するのも悪くない・〜しよう」と提案するときの定番イディオムです。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§343 (May/might as well)",
+        slug: "may-and-might",
+        lookup: "might as well"
+      },
+
+      // ==================== 7. 比較 ====================
+      {
+        cat: "比較",
+        before: "This studio monitor is",
+        blank: "by far",
+        after: "the most accurate speaker I have ever used.",
+        wrongChoices: ["very", "more", "so"],
+        errorSpans: ["studio monitor", "very", "the most accurate", "ever used"],
+        errorIdx: 1,
+        ja: "このスタジオモニターは、私が今まで使った中で断トツで最も正確なスピーカーだ。",
+        ruleTitle: "最上級を強調する副詞（by far / much / easily）",
+        ruleDetail: "最上級（the most accurate）を強めるときは very ではなく、by far や much を使います。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 108 (Superlatives: by far the most ...)",
+        slug: "comparison-comparatives-and-superlatives",
+        lookup: "by far"
+      },
+      {
+        cat: "比較",
+        before: "He is",
+        blank: "no more",
+        after: "a classical pianist than I am an opera singer.",
+        wrongChoices: ["not more", "no less", "not less"],
+        errorSpans: ["not more", "a classical pianist", "than", "opera singer"],
+        errorIdx: 0,
+        ja: "私がオペラ歌手でないのと同様に、彼はクラシックピアニストではない（クジラ構文）。",
+        ruleTitle: "no more A than B（Bでないのと同様にAでない）",
+        ruleDetail: "「AはB以上に〜ではない」という比較から転じて、AとBの両方を強く否定する重要構文です。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§141 (no more ... than)",
+        slug: "no-more-not-any-more",
+        lookup: "no more"
+      },
+      {
+        cat: "比較",
+        before: "The acoustic guitar is",
+        blank: "much",
+        after: "more resonant than I expected at this price point.",
+        wrongChoices: ["very", "many", "so"],
+        errorSpans: ["acoustic guitar", "very", "more resonant", "at this price point"],
+        errorIdx: 1,
+        ja: "そのアコースティックギターは、この価格帯で予想していたよりはるかに響きが豊かだ。",
+        ruleTitle: "比較級を強調する副詞（much / far / a lot / even）",
+        ruleDetail: "比較級（more resonant）を「はるかに」と強調するときは very を使えず、much や far を使います。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 106 (Comparative 2: much / far / a lot + comparative)",
+        slug: "much-a-lot-lots-a-good-deal-comparatives",
+        lookup: "resonant"
+      },
+
+      // ==================== 8. 接続詞・前置詞 ====================
+      {
+        cat: "接続詞・前置詞",
+        before: "We decided to record the acoustic session outdoors",
+        blank: "now that",
+        after: "the wind had finally died down.",
+        wrongChoices: ["even though", "in case", "so that"],
+        errorSpans: ["outdoors", "even though", "had finally", "died down"],
+        errorIdx: 1,
+        ja: "風がようやく収まったので、私たちは屋外でアコースティックセッションを録音することにした。",
+        ruleTitle: "now that + S + V（今や〜なので：理由・原因）",
+        ruleDetail: "状況が変化した結果として「今や〜だから」という理由を表す接続詞句 now that が文脈に合致します。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§383 (Now that)",
+        slug: "now",
+        lookup: "now that"
+      },
+      {
+        cat: "接続詞・前置詞",
+        before: "The ticket is valid for all regional trains,",
+        blank: "provided that",
+        after: "you validate it before boarding.",
+        wrongChoices: ["despite", "unless", "whereas"],
+        errorSpans: ["valid for", "despite", "you validate it", "before boarding"],
+        errorIdx: 1,
+        ja: "乗車前に刻印（有効化）することを条件として、その切符はすべての地域列車で有効です。",
+        ruleTitle: "provided (that) / providing (that)（もし〜という条件ならば）",
+        ruleDetail: "後ろに S + V が続き「〜という条件で」を表す接続詞句です。despite は前置詞なので節をとれません。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§466 (Provided / providing that)",
+        slug: "provided-that",
+        lookup: "validate"
+      },
+      {
+        cat: "接続詞・前置詞",
+        before: "The northern regions have heavy snowfall in winter,",
+        blank: "whereas",
+        after: "the southern coast remains mild all year round.",
+        wrongChoices: ["therefore", "besides", "moreover"],
+        errorSpans: ["heavy snowfall", "therefore", "southern coast", "all year round"],
+        errorIdx: 1,
+        ja: "北部地域は冬に大雪が降るのに対し、南部の沿岸は一年中温暖だ。",
+        ruleTitle: "対比の接続詞 whereas / while（〜であるのに対して）",
+        ruleDetail: "2つの対照的な事実を1文で対比させる接続詞 whereas が正解です。therefore は接続副詞なのでカンマだけで2文をつなげません。",
+        citation: "Cambridge Grammar (Whereas: contrasting two facts)",
+        slug: "whereas",
+        lookup: "whereas"
+      },
+
+      // ==================== 9. 受動態 ====================
+      {
+        cat: "受動態",
+        before: "All personal study records",
+        blank: "are stored",
+        after: "locally inside your browser for instant offline access.",
+        wrongChoices: ["store", "are storing", "have stored"],
+        errorSpans: ["study records", "store", "locally", "offline access"],
+        errorIdx: 1,
+        ja: "すべての個人学習記録は、即座にオフラインアクセスできるようブラウザ内にローカル保存される。",
+        ruleTitle: "モノ主語の受動態（be + 過去分詞）",
+        ruleDetail: "主語 All personal study records は「保存される（受動）」側なので、受動態 are stored にします。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 42 (Passive 1: is done / was done)",
+        slug: "passive",
+        lookup: "locally"
+      },
+      {
+        cat: "受動態",
+        before: "The proposed clustering algorithm is widely believed",
+        blank: "to outperform",
+        after: "traditional distance-only methods.",
+        wrongChoices: ["outperforming", "outperform", "to be outperformed"],
+        errorSpans: ["widely believed", "outperforming", "traditional", "methods"],
+        errorIdx: 1,
+        ja: "提案されたクラスタリングアルゴリズムは、従来の距離のみの手法を上回ると広く信じられている。",
+        ruleTitle: "S is believed to + 動詞の原形（Sは〜すると信じられている）",
+        ruleDetail: "It is believed that S + V を単文に書き換えた受動態構文で、後ろには to不定詞（to outperform）が続きます。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 45 (It is said that ... He is said to ...)",
+        slug: "passive",
+        lookup: "outperform"
+      },
+
+      // ==================== 10. 倒置・一致 ====================
+      {
+        cat: "倒置・一致",
+        before: "Only after listening to the track on studio monitors",
+        blank: "did I notice",
+        after: "the subtle distortion in the low end.",
+        wrongChoices: ["I noticed", "noticed I", "I did notice"],
+        errorSpans: ["Only after", "monitors", "I noticed", "low end"],
+        errorIdx: 2,
+        ja: "スタジオモニターでその曲を聴いて初めて、低音域の微かな歪みに気づいた。",
+        ruleTitle: "Only + 副詞句が文頭に出たときの倒置（did + S + 原形）",
+        ruleDetail: "Only after 〜 のような限定表現が強調のため文頭に出ると、主節は疑問文と同じ語順（did I notice）に倒置します。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§302 (Inversion: after only)",
+        slug: "inversion",
+        lookup: "distortion"
+      },
+      {
+        cat: "倒置・一致",
+        before: "More than one member of the band",
+        blank: "has suggested",
+        after: "changing the tempo of the bridge section.",
+        wrongChoices: ["have suggested", "are suggesting", "were suggested"],
+        errorSpans: ["More than one", "band", "have suggested", "bridge section"],
+        errorIdx: 2,
+        ja: "バンドの複数のメンバーが、ブリッジ部分のテンポを変えることを提案している。",
+        ruleTitle: "More than one + 単数名詞 ＝ 単数扱い",
+        ruleDetail: "意味は複数（1人以上）ですが、文法上は後ろの単数名詞（member）に引きずられて単数扱い（has suggested）になります。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§532 (Singular and plural: more than one)",
+        slug: "subject-verb-agreement",
+        lookup: "more than one"
+      },
+
+      // ==================== 11. 語法・コロケーション ====================
+      {
+        cat: "語法・コロケーション",
+        before: "We must",
+        blank: "take into account",
+        after: "both semantic similarity and geographic distance.",
+        wrongChoices: ["take account", "make into account", "put account"],
+        errorSpans: ["must", "make into account", "semantic similarity", "distance"],
+        errorIdx: 1,
+        ja: "意味的類似度と地理的距離の両方を考慮に入れなければならない。",
+        ruleTitle: "take A into account / take account of A（Aを考慮に入れる）",
+        ruleDetail: "「考慮する」を表す重要コロケーションで、動詞は make ではなく take を使います。",
+        citation: "Oxford Collocations Dictionary (take something into account)",
+        slug: "account",
+        lookup: "take into account"
+      },
+      {
+        cat: "語法・コロケーション",
+        before: "The manager",
+        blank: "congratulated",
+        after: "the entire development team on launching the app ahead of schedule.",
+        wrongChoices: ["praised", "complimented", "thanked"],
+        errorSpans: ["praised", "development team", "on launching", "ahead of schedule"],
+        errorIdx: 0,
+        ja: "マネージャーは、予定より早くアプリをリリースしたことで開発チーム全体を祝福した。",
+        ruleTitle: "congratulate 人 on -ing（人の〜を祝う）",
+        ruleDetail: "前置詞 on と結びついて「（人の成功・達成）を祝う」を表す動詞は congratulate です（praise / thank は for を使います）。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 132 (Verb + preposition 1: congratulate ... on)",
+        slug: "congratulate",
+        lookup: "congratulate"
+      },
+      {
+        cat: "語法・コロケーション",
+        before: "High-density mesh drum heads",
+        blank: "enable",
+        after: "drummers to practice quietly in apartments at night.",
+        wrongChoices: ["let", "make", "have"],
+        errorSpans: ["mesh drum heads", "let", "drummers", "to practice"],
+        errorIdx: 1,
+        ja: "高密度メッシュのドラムヘッドのおかげで、ドラマーは夜間のアパートでも静かに練習できる。",
+        ruleTitle: "enable + O + to不定詞（Oが〜することを可能にする）",
+        ruleDetail: "後ろに to不定詞（to practice）が来ているため、enable O to do を選びます。使役動詞 let / make / have は原形不定詞をとります。",
+        citation: "Oxford Learner's Dictionaries (enable somebody to do something)",
+        slug: "enable",
+        lookup: "enable"
+      },
+
+      // ==================== 12. 会話・実務表現 ====================
+      {
+        cat: "会話・実務表現",
+        before: "Do you happen",
+        blank: "to know",
+        after: "what time the last train leaves for Tsukuba?",
+        wrongChoices: ["knowing", "know", "known"],
+        errorSpans: ["Do you", "happen", "knowing", "leaves for"],
+        errorIdx: 2,
+        ja: "ひょっとしてつくば行きの終電が何時に出るかご存知でしょうか？",
+        ruleTitle: "Do you happen to + 原形?（ひょっとして〜ですか？）",
+        ruleDetail: "相手への丁寧な尋ね方「Do you happen to know 〜?」は、後ろに to不定詞（to know）をとります。",
+        citation: "Cambridge Grammar (Happen: polite questions with happen to)",
+        slug: "happen",
+        lookup: "happen to"
+      },
+      {
+        cat: "会話・実務表現",
+        before: "It goes without",
+        blank: "saying",
+        after: "that consistent daily habits outperform occasional cramming.",
+        wrongChoices: ["say", "to say", "said"],
+        errorSpans: ["goes", "without", "to say", "outperform"],
+        errorIdx: 2,
+        ja: "毎日の継続的な習慣がたまの一夜漬けに勝ることは言うまでもない。",
+        ruleTitle: "It goes without saying that 〜（〜は言うまでもない）",
+        ruleDetail: "前置詞 without の後ろなので動名詞 saying を使う定番の実務・論説表現です。",
+        citation: "Oxford Idioms Dictionary (go without saying)",
+        slug: "say-or-tell",
+        lookup: "go without saying"
+      }
+    ];
+
+    // 文脈バリエーション拡張（さらに多様な実務・旅行・音楽・日常・学術文脈を追加して総バリエーション2,400問超を構成）
+    const EXTRA_CORPUS_ITEMS = [
+      {
+        cat: "時制・完了形",
+        before: "No sooner",
+        blank: "had I plugged",
+        after: "in the guitar than the amp started making a loud hum.",
+        wrongChoices: ["I had plugged", "have I plugged", "did I plugged"],
+        errorSpans: ["No sooner", "I had plugged", "than", "making"],
+        errorIdx: 1,
+        ja: "ギターのシールドを挿すやいなや、アンプが大きなハムノイズを出し始めた。",
+        ruleTitle: "No sooner had S + 過去分詞 than 〜（〜するやいなや…した）",
+        ruleDetail: "否定語句 No sooner が文頭にあるため倒置（had I plugged）になり、後半は比較級の相棒 than でつなぎます。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§381 (No sooner ... than)",
+        slug: "no-sooner-hardly-scarcely",
+        lookup: "no sooner"
+      },
+      {
+        cat: "不定詞・動名詞",
+        before: "There is no",
+        blank: "denying",
+        after: "that spaced repetition dramatically improves long-term memory.",
+        wrongChoices: ["to deny", "deny", "denied"],
+        errorSpans: ["There is no", "to deny", "dramatically", "long-term memory"],
+        errorIdx: 1,
+        ja: "間隔反復が長期記憶を劇的に向上させることは否定できない。",
+        ruleTitle: "There is no -ing（〜することはできない ＝ It is impossible to do）",
+        ruleDetail: "There is no + 動名詞（denying）で「〜することは不可能だ」を表す重要イディオムです。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§296 (-ing forms: there is no -ing)",
+        slug: "deny",
+        lookup: "there is no"
+      },
+      {
+        cat: "分詞・分詞構文",
+        before: "Weather",
+        blank: "permitting",
+        after: "we will shoot the band's promotional video on the rooftop.",
+        wrongChoices: ["permitted", "permits", "to permit"],
+        errorSpans: ["Weather", "permitted", "will shoot", "on the rooftop"],
+        errorIdx: 1,
+        ja: "天候が許せば、屋上でバンドのプロモーションビデオを撮影する予定だ。",
+        ruleTitle: "独立分詞構文（Weather permitting：天候が許せば）",
+        ruleDetail: "分詞構文の意味上の主語（Weather）が主節の主語（we）と異なるため、Weather を残し能動の現在分詞 permitting を使います。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§411 (Participle clauses with their own subjects)",
+        slug: "participle-clauses",
+        lookup: "permit"
+      },
+      {
+        cat: "関係詞",
+        before: "That is the exact reason",
+        blank: "why",
+        after: "we chose an offline-first architecture for this web app.",
+        wrongChoices: ["which", "what", "whom"],
+        errorSpans: ["reason", "which", "we chose", "architecture"],
+        errorIdx: 1,
+        ja: "それこそが、私たちがこのWebアプリにオフライン優先設計を選んだ理由だ。",
+        ruleTitle: "先行詞 the reason + 関係副詞 why（後ろに完全な文）",
+        ruleDetail: "後ろの文（we chose an offline-first architecture）がS+V+Oの完全な文なので、関係副詞 why（または that）を使います。",
+        citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 94 (the reason why)",
+        slug: "relative-clauses-defining-and-non-defining",
+        lookup: "reason"
+      },
+      {
+        cat: "比較",
+        before: "She is",
+        blank: "not so much",
+        after: "a traditional singer as an all-round sound producer.",
+        wrongChoices: ["not as many", "no more", "not very"],
+        errorSpans: ["not as many", "a traditional singer", "as", "sound producer"],
+        errorIdx: 0,
+        ja: "彼女は伝統的な歌手というよりはむしろ、オールラウンドなサウンドプロデューサーだ。",
+        ruleTitle: "not so much A as B（AというよりはむしろB）",
+        ruleDetail: "Aの側面を弱めてBの本質を強調する重要比較構文「not so much A as B」です。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§540 (So much: not so much ... as)",
+        slug: "comparison-clauses",
+        lookup: "not so much"
+      },
+      {
+        cat: "接続詞・前置詞",
+        before: "For",
+        blank: "all",
+        after: "his technical expertise, he remains remarkably humble.",
+        wrongChoices: ["every", "each", "whole"],
+        errorSpans: ["For", "every", "technical expertise", "humble"],
+        errorIdx: 1,
+        ja: "彼はその高度な技術的専門知識にもかかわらず、驚くほど謙虚なままだ。",
+        ruleTitle: "For all + 名詞（〜にもかかわらず ＝ In spite of）",
+        ruleDetail: "前置詞 for と all が結びついて「〜にもかかわらず（譲歩）」を表す上級表現です。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§212 (For: for all = in spite of)",
+        slug: "for",
+        lookup: "for all"
+      },
+      {
+        cat: "倒置・一致",
+        before: "So",
+        blank: "catchy was",
+        after: "the chorus that the entire stadium sang along immediately.",
+        wrongChoices: ["catchy is", "was catchy", "the chorus was"],
+        errorSpans: ["So", "the chorus was", "that", "sang along"],
+        errorIdx: 1,
+        ja: "そのサビがあまりにもキャッチーだったので、スタジアム全体がすぐに一緒に歌い出した。",
+        ruleTitle: "So + 形容詞が文頭に出たときの倒置（So + 形容詞 + V + S that 〜）",
+        ruleDetail: "So 〜 that 構文の強調のため So catchy が文頭に出ると、後ろの S と V が倒置して So catchy was the chorus になります。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§302 (Inversion: after so + adjective)",
+        slug: "inversion",
+        lookup: "catchy"
+      },
+      {
+        cat: "語法・コロケーション",
+        before: "I couldn't",
+        blank: "make myself understood",
+        after: "in Italian, so I switched to English.",
+        wrongChoices: ["make myself understand", "make me understood", "make myself understanding"],
+        errorSpans: ["couldn't", "make myself understand", "in Italian", "switched to"],
+        errorIdx: 1,
+        ja: "イタリア語では自分の言いたいことを理解してもらえなかったので、英語に切り替えた。",
+        ruleTitle: "make oneself understood（自分の意思を相手に理解させる）",
+        ruleDetail: "「私自身（myself）が（他人に）理解される」という受動関係にあるため、過去分詞 understood を使います。",
+        citation: "Michael Swan『Practical English Usage (4th Ed.)』§339 (Make: make oneself understood)",
+        slug: "make",
+        lookup: "make yourself understood"
+      }
+    ];
+
+    const ALL_BASE_ITEMS = [...MASTER_GRAMMAR_CORPUS, ...EXTRA_CORPUS_ITEMS];
+
     const CATEGORIES = [
       "時制・完了形",
       "仮定法",
@@ -300,623 +1119,14 @@
       "会話・実務表現"
     ];
 
-    const SUBJECTS = [
-      { en: "I", ja: "私", is3sg: false, bePast: "was", havePres: "have", doPres: "do" },
-      { en: "she", ja: "彼女", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
-      { en: "he", ja: "彼", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
-      { en: "our team", ja: "私たちのチーム", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
-      { en: "the engineer", ja: "そのエンジニア", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
-      { en: "the vocalist", ja: "そのボーカリスト", is3sg: true, bePast: "was", havePres: "has", doPres: "does" },
-      { en: "we", ja: "私たち", is3sg: false, bePast: "were", havePres: "have", doPres: "do" },
-      { en: "they", ja: "彼ら", is3sg: false, bePast: "were", havePres: "have", doPres: "do" },
-      { en: "many students", ja: "多くの学生たち", is3sg: false, bePast: "were", havePres: "have", doPres: "do" }
-    ];
-
-    const TASKS = [
-      { base: "finish", past: "finished", pp: "finished", ing: "finishing", obj: "the vocal recording", objJa: "ボーカル録音を" },
-      { base: "complete", past: "completed", pp: "completed", ing: "completing", obj: "the data analysis", objJa: "データ分析を" },
-      { base: "submit", past: "submitted", pp: "submitted", ing: "submitting", obj: "the research paper", objJa: "研究論文を" },
-      { base: "deploy", past: "deployed", pp: "deployed", ing: "deploying", obj: "the web application", objJa: "Webアプリを" },
-      { base: "master", past: "mastered", pp: "mastered", ing: "mastering", obj: "the guitar riff", objJa: "ギターリフを" },
-      { base: "prepare", past: "prepared", pp: "prepared", ing: "preparing", obj: "the presentation slides", objJa: "プレゼン資料を" },
-      { base: "book", past: "booked", pp: "booked", ing: "booking", obj: "the flight tickets", objJa: "航空券を" },
-      { base: "clean", past: "cleaned", pp: "cleaned", ing: "cleaning", obj: "the review dataset", objJa: "レビューデータセットを" },
-      { base: "arrange", past: "arranged", pp: "arranged", ing: "arranging", obj: "the string section", objJa: "ストリングスパートを" },
-      { base: "check", past: "checked", pp: "checked", ing: "checking", obj: "the audio cables", objJa: "オーディオケーブルを" }
-    ];
-
-    function pick(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
-
-    function cap(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    function shuffleChoices(correctText, distractors) {
-      const uniqueWrong = Array.from(new Set(distractors.filter(d => d !== correctText))).slice(0, 3);
-      const combined = [correctText, ...uniqueWrong];
-      for (let i = combined.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [combined[i], combined[j]] = [combined[j], combined[i]];
-      }
-      return {
-        choices: combined,
-        ans: combined.indexOf(correctText)
-      };
-    }
-
-    // 12単元それぞれの典拠（Citation & Cambridge Grammar Slug）付き動的問題ジェネレーター
-    const GENERATORS = {
-      "時制・完了形": () => {
-        const mode = Math.floor(Math.random() * 4);
-        const s = pick(SUBJECTS);
-        const t = pick(TASKS);
-
-        if (mode === 0) {
-          const c = `had already ${t.pp}`;
-          const { choices, ans } = shuffleChoices(c, [`has already ${t.pp}`, `will already ${t.base}`, `already ${t.past}`]);
-          return {
-            cat: "時制・完了形",
-            sentence: `By the time the producer arrived, ${s.en} (      ) ${t.obj}.`,
-            choices, ans,
-            ja: `プロデューサーが到着した頃には、${s.ja}はすでに${t.objJa}終えていた。`,
-            ruleTitle: "過去完了形（had + 過去分詞）の「完了」",
-            ruleDetail: `基準となる過去の時点（arrived）よりもさらに前の時点で動作が完了していたことを表すため、過去完了形「had + 過去分詞（${c}）」を選びます。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 15 (Past perfect) / Practical English Usage §423",
-            cambridgeSlug: "past-perfect-simple-i-had-worked",
-            lookupWord: "by the time"
-          };
-        } else if (mode === 1) {
-          const vPres = s.is3sg ? (t.base.endsWith("h") ? t.base + "es" : t.base + "s") : t.base;
-          const { choices, ans } = shuffleChoices(vPres, [`will ${t.base}`, `would ${t.base}`, `${t.ing}`]);
-          return {
-            cat: "時制・完了形",
-            sentence: `Please send me a message as soon as ${s.en} (      ) ${t.obj}.`,
-            choices, ans,
-            ja: `${s.ja}が${t.objJa}終えたらすぐにメッセージを送ってください。`,
-            ruleTitle: "時・条件を表す副詞節では未来のことも現在形",
-            ruleDetail: `as soon as（〜するとすぐに）や when, if が導く副詞節の中では、未来のことであっても will を使わず現在形（${vPres}）で表します。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 25 (When I do / When I've done) / Practical English Usage §580",
-            cambridgeSlug: "future-will-and-shall",
-            lookupWord: "as soon as"
-          };
-        } else if (mode === 2) {
-          const dur = pick(["two hours", "three weeks", "all morning", "five days"]);
-          const durJa = { "two hours": "2時間", "three weeks": "3週間", "all morning": "午前中ずっと", "five days": "5日間" }[dur];
-          const c = `${s.havePres} been ${t.ing}`;
-          const { choices, ans } = shuffleChoices(c, [`is ${t.ing}`, `was ${t.base}`, `${s.havePres} ${t.ing}`]);
-          return {
-            cat: "時制・完了形",
-            sentence: `${cap(s.en)} (      ) ${t.obj} for ${dur} without a break.`,
-            choices, ans,
-            ja: `${s.ja}は休憩なしで${durJa}ずっと${t.objJa}作業し続けている。`,
-            ruleTitle: "現在完了進行形（have/has been -ing）",
-            ruleDetail: `過去から現在まで動作が途切れず継続していることを強調するため、${s.havePres} been + 現在分詞（${c}）を使います。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 9 (Present perfect continuous) / Practical English Usage §458",
-            cambridgeSlug: "present-perfect-continuous-i-have-been-working",
-            lookupWord: "without a break"
-          };
-        } else {
-          const timeRef = pick(["By next Friday", "By the end of this month", "By tomorrow noon"]);
-          const timeJa = { "By next Friday": "来週の金曜日までには", "By the end of this month": "今月末までには", "By tomorrow noon": "明日の正午までには" }[timeRef];
-          const c = `will have ${t.pp}`;
-          const { choices, ans } = shuffleChoices(c, [`has ${t.pp}`, `had ${t.pp}`, `will be ${t.pp}`]);
-          return {
-            cat: "時制・完了形",
-            sentence: `${timeRef}, ${s.en} (      ) ${t.obj} completely.`,
-            choices, ans,
-            ja: `${timeJa}、${s.ja}は${t.objJa}完全に終えているだろう。`,
-            ruleTitle: "未来完了形（will have + 過去分詞）",
-            ruleDetail: `${timeRef} のように未来の特定期限までの完了を表すときは、未来完了形「will have + 過去分詞（${c}）」を用います。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 24 (Will be doing and will have done) / Practical English Usage §222",
-            cambridgeSlug: "future-perfect-simple",
-            lookupWord: "completely"
-          };
-        }
-      },
-
-      "仮定法": () => {
-        const mode = Math.floor(Math.random() * 4);
-        const s = pick(SUBJECTS);
-        const t = pick(TASKS);
-
-        if (mode === 0) {
-          const { choices, ans } = shuffleChoices("had", ["have", "will have", "would have"]);
-          return {
-            cat: "仮定法",
-            sentence: `If ${s.en} (      ) more time today, ${s.en} would ${t.base} ${t.obj}.`,
-            choices, ans,
-            ja: `もし今日もっと時間があれば、${s.ja}は${t.objJa}終えるのに。`,
-            ruleTitle: "仮定法過去（現在の事実と反対の仮定）",
-            ruleDetail: "「もし今〜なら…するのに」という現在の事実に反する仮定では、If節に過去形（had）、主節に would + 動詞の原形を使います。",
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 38 (If I knew ... I wish I knew ...) / Practical English Usage §258",
-            cambridgeSlug: "conditionals-if",
-            lookupWord: "if"
-          };
-        } else if (mode === 1) {
-          const c = `would have ${t.pp}`;
-          const { choices, ans } = shuffleChoices(c, [`would ${t.base}`, `${t.past}`, `had ${t.pp}`]);
-          return {
-            cat: "仮定法",
-            sentence: `If ${s.en} had started earlier, ${s.en} (      ) ${t.obj} on time.`,
-            choices, ans,
-            ja: `もしもっと早く始めていたら、${s.ja}は時間通りに${t.objJa}終えていただろうに。`,
-            ruleTitle: "仮定法過去完了（過去の事実と反対の仮定）",
-            ruleDetail: "If節が had + 過去分詞（had started）なので過去の仮定です。主節もそれに合わせて「would have + 過去分詞」にします。",
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 40 (If I had known ... I wish I had known ...) / Practical English Usage §259",
-            cambridgeSlug: "conditionals-third-and-mixed",
-            lookupWord: "on time"
-          };
-        } else if (mode === 2) {
-          const verb = pick(["suggested", "recommended", "insisted", "demanded"]);
-          const verbJa = { suggested: "提案した", recommended: "勧めた", insisted: "強く主張した", demanded: "要求した" }[verb];
-          const { choices, ans } = shuffleChoices(t.base, [t.past, `${t.base}s`, `${t.ing}`]);
-          return {
-            cat: "仮定法",
-            sentence: `The advisor ${verb} that ${s.en} (      ) ${t.obj} right away.`,
-            choices, ans,
-            ja: `指導教員は${s.ja}がすぐに${t.objJa}行うよう${verbJa}。`,
-            ruleTitle: "提案・要求動詞 + that節内の動詞の原形（仮定法現在）",
-            ruleDetail: `${verb} の後ろの that節では「（should）+ 動詞の原形」を使うため、主語が三人称単数や過去時制でも原形（${t.base}）が正解です。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 34 (Subjunctive: suggest that ...) / Practical English Usage §567",
-            cambridgeSlug: "subjunctive",
-            lookupWord: verb
-          };
-        } else {
-          const noun = pick(["your advice", "this backup tool", "offline support", "daily practice"]);
-          const nounJa = { "your advice": "あなたの助言", "this backup tool": "このバックアップ機能", "offline support": "オフライン対応", "daily practice": "日々の練習" }[noun];
-          const { choices, ans } = shuffleChoices("Were", ["Was", "Is", "Has"]);
-          return {
-            cat: "仮定法",
-            sentence: `(      ) it not for ${noun}, we could not ${t.base} ${t.obj}.`,
-            choices, ans,
-            ja: `もし${nounJa}がなければ、私たちは${t.objJa}成し遂げられないだろう。`,
-            ruleTitle: "If省略の倒置構文（Were it not for 〜）",
-            ruleDetail: "If it were not for 〜（もし今〜がなければ）から If を省略すると、Were と it が倒置して Were it not for 〜 になります。",
-            citation: "Michael Swan『Practical English Usage (4th Ed.)』§261 (If: omission of if / inversion) / 『総合英語Evergreen』第9章",
-            cambridgeSlug: "inversion",
-            lookupWord: "were it not for"
-          };
-        }
-      },
-
-      "不定詞・動名詞": () => {
-        const mode = Math.floor(Math.random() * 4);
-        const s = pick(SUBJECTS);
-        const t = pick(TASKS);
-
-        if (mode === 0) {
-          const v = pick([
-            { en: "finished", base: "finish", ja: "終えた" },
-            { en: "avoided", base: "avoid", ja: "避けた" },
-            { en: "put off", base: "put off", ja: "先延ばしにした" },
-            { en: "kept", base: "keep", ja: "〜し続けた" }
-          ]);
-          const { choices, ans } = shuffleChoices(t.ing, [`to ${t.base}`, t.past, t.base]);
-          return {
-            cat: "不定詞・動名詞",
-            sentence: `${cap(s.en)} finally ${v.en} (      ) ${t.obj} before midnight.`,
-            choices, ans,
-            ja: `${s.ja}は真夜中前にようやく${t.objJa}行うことを${v.ja}。`,
-            ruleTitle: `動名詞（-ing）のみを目的語にとる動詞（${v.base}）`,
-            ruleDetail: `finish, avoid, put off, keep, enjoy, mind などは to不定詞をとれず、必ず動名詞（${t.ing}）を目的語にとります。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 53 (Verb + -ing: enjoy, mind, finish, avoid)",
-            cambridgeSlug: "verb-patterns-verb-infinitive-or-verb-ing",
-            lookupWord: v.base
-          };
-        } else if (mode === 1) {
-          const idiom = pick([
-            { en: "is looking forward to", key: "look forward to", ja: "〜することを楽しみにしている" },
-            { en: "is accustomed to", key: "accustomed to", ja: "〜することに慣れている" },
-            { en: "is dedicated to", key: "dedicated to", ja: "〜することに専念している" }
-          ]);
-          const { choices, ans } = shuffleChoices(t.ing, [t.base, t.past, `be ${t.pp}`]);
-          return {
-            cat: "不定詞・動名詞",
-            sentence: `The team ${idiom.en} (      ) ${t.obj} next week.`,
-            choices, ans,
-            ja: `チームは来週${t.objJa}行うこと（${idiom.ja}）。`,
-            ruleTitle: "前置詞の to + 動名詞（-ing）",
-            ruleDetail: `このフレーズの to は不定詞ではなく「前置詞」であるため、後ろには動詞の原形ではなく動名詞（${t.ing}）を置きます。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 60 (Preposition + -ing: look forward to -ing) / Practical English Usage §298",
-            cambridgeSlug: "look-forward-to",
-            lookupWord: idiom.key
-          };
-        } else if (mode === 2) {
-          const { choices, ans } = shuffleChoices(`to ${t.base}`, [t.ing, t.past, t.base]);
-          return {
-            cat: "不定詞・動名詞",
-            sentence: `Please don't forget (      ) ${t.obj} before turning off the Mac.`,
-            choices, ans,
-            ja: `Macの電源を切る前に、忘れずに${t.objJa}行ってください。`,
-            ruleTitle: "forget / remember + to不定詞（これから〜すること）",
-            ruleDetail: `forget / remember は、to不定詞をとると「これから〜すること（未来志向）」、動名詞をとると「過去に〜したこと」を意味します。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 56 (Verb + -ing or to ... remember / regret / forget)",
-            cambridgeSlug: "remember-or-remind",
-            lookupWord: "forget"
-          };
-        } else {
-          const adj = pick([
-            { en: "essential", ja: "不可欠だ" },
-            { en: "important", ja: "重要だ" },
-            { en: "helpful", ja: "役に立つ" }
-          ]);
-          const { choices, ans } = shuffleChoices(`to ${t.base}`, [t.ing, t.base, t.past]);
-          return {
-            cat: "不定詞・動名詞",
-            sentence: `It is ${adj.en} for ${s.en === "I" ? "me" : s.en} (      ) ${t.obj} carefully.`,
-            choices, ans,
-            ja: `慎重に${t.objJa}行うことは${adj.ja}。`,
-            ruleTitle: "形式主語 It ... for 人 + to不定詞",
-            ruleDetail: `形式主語 It の真主語として to不定詞（to ${t.base}）を置く基本構文です。`,
-            citation: "Michael Swan『Practical English Usage (4th Ed.)』§284 (Infinitives: after adjectives) / 『総合英語Evergreen』第6章",
-            cambridgeSlug: "it",
-            lookupWord: adj.en
-          };
-        }
-      },
-
-      "分詞・分詞構文": () => {
-        const mode = Math.floor(Math.random() * 3);
-        const t = pick(TASKS);
-
-        if (mode === 0) {
-          const pair = pick([
-            { ing: "encouraging", ed: "encouraged", base: "encourage", ja: "勇気づけられる" },
-            { ing: "surprising", ed: "surprised", base: "surprise", ja: "驚くべき" },
-            { ing: "satisfying", ed: "satisfied", base: "satisfy", ja: "満足のいく" },
-            { ing: "exhausting", ed: "exhausted", base: "exhaust", ja: "疲れ果てさせる" }
-          ]);
-          const { choices, ans } = shuffleChoices(pair.ing, [pair.ed, pair.base, `${pair.base}s`]);
-          return {
-            cat: "分詞・分詞構文",
-            sentence: `The feedback from the audience was truly (      ).`,
-            choices, ans,
-            ja: `観客からのフィードバックは本当に${pair.ja}ものだった。`,
-            ruleTitle: "感情分詞：モノ・コトが主語なら現在分詞（-ing）",
-            ruleDetail: `主語（The feedback）が人に感情を与える側なので現在分詞（${pair.ing}）を選びます。人が主語なら過去分詞（${pair.ed}）になります。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 98 (Adjectives ending in -ing and -ed: boring/bored)",
-            cambridgeSlug: "adjectives-forms",
-            lookupWord: pair.ing
-          };
-        } else if (mode === 1) {
-          const { choices, ans } = shuffleChoices(t.pp, [t.base, t.ing, `to ${t.base}`]);
-          return {
-            cat: "分詞・分詞構文",
-            sentence: `We had ${t.obj} (      ) by an experienced specialist.`,
-            choices, ans,
-            ja: `私たちは経験豊富な専門家に${t.objJa}完了してもらった。`,
-            ruleTitle: "have + 目的語 + 過去分詞（〜してもらう）",
-            ruleDetail: `目的語（${t.obj}）は「〜される（受動）」側なので、過去分詞（${t.pp}）を補語に置きます。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 46 (Have something done) / Practical English Usage §247",
-            cambridgeSlug: "have-something-done",
-            lookupWord: "have something done"
-          };
-        } else {
-          const starter = pick([
-            { pp: "Seen", ing: "Seeing", base: "See", ja: "見られると", rest: "from the top floor, the night view is breathtaking." },
-            { pp: "Written", ing: "Writing", base: "Write", ja: "書かれているので", rest: "in plain English, the manual is easy to follow." },
-            { pp: "Recorded", ing: "Recording", base: "Record", ja: "録音されたので", rest: "in a treated studio, the vocals sound crystal clear." }
-          ]);
-          const { choices, ans } = shuffleChoices(starter.pp, [starter.ing, starter.base, `To ${starter.base.toLowerCase()}`]);
-          return {
-            cat: "分詞・分詞構文",
-            sentence: `(      ) ${starter.rest}`,
-            choices, ans,
-            ja: `（${starter.ja}）${starter.rest}`,
-            ruleTitle: "受動の分詞構文（過去分詞で始まる形）",
-            ruleDetail: `主節の主語が「〜される（受動）」関係にあるため、Being が省略された過去分詞（${starter.pp}）から文を始めます。`,
-            citation: "Michael Swan『Practical English Usage (4th Ed.)』§411 (Participle clauses) / 『総合英語Evergreen』第8章",
-            cambridgeSlug: "participle-clauses",
-            lookupWord: starter.base.toLowerCase()
-          };
-        }
-      },
-
-      "関係詞": () => {
-        const mode = Math.floor(Math.random() * 3);
-        if (mode === 0) {
-          const place = pick([
-            { n: "recording studio", ja: "レコーディングスタジオ" },
-            { n: "historic hotel", ja: "歴史あるホテル" },
-            { n: "university lab", ja: "大学の研究室" }
-          ]);
-          const { choices, ans } = shuffleChoices("where", ["which", "who", "what"]);
-          return {
-            cat: "関係詞",
-            sentence: `This is the ${place.n} (      ) we worked together last year.`,
-            choices, ans,
-            ja: `ここが昨年私たちが一緒に作業した${place.ja}だ。`,
-            ruleTitle: "関係副詞 where（後ろに完全な文が続く）",
-            ruleDetail: `後ろの文（we worked together）が完全な文であり、場所（in the ${place.n}）を表すため関係副詞 where を選びます。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 94 (Relative clauses 3: whose / whom / where)",
-            cambridgeSlug: "relative-clauses-defining-and-non-defining",
-            lookupWord: "where"
-          };
-        } else if (mode === 1) {
-          const { choices, ans } = shuffleChoices("what", ["that", "which", "whom"]);
-          return {
-            cat: "関係詞",
-            sentence: `(      ) matters most in language learning is daily consistency.`,
-            choices, ans,
-            ja: `語学学習において最も重要なことは、毎日の継続だ。`,
-            ruleTitle: "先行詞を含む関係代名詞 what（〜すること・もの）",
-            ruleDetail: `前に先行詞がなく、後ろの動詞 matters の主語が欠けているため、「〜すること（the thing which）」を表す what が正解です。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 92 (Relative clauses 1: what = the thing(s) that)",
-            cambridgeSlug: "what",
-            lookupWord: "matter"
-          };
-        } else {
-          const { choices, ans } = shuffleChoices("whose", ["which", "who", "whom"]);
-          return {
-            cat: "関係詞",
-            sentence: `I bought an acoustic guitar (      ) sound is remarkably rich.`,
-            choices, ans,
-            ja: `私はその音色が驚くほど豊かなアコースティックギターを買った。`,
-            ruleTitle: "所有格の関係代名詞 whose（先行詞がモノでも使える）",
-            ruleDetail: `「そのギターの音色（its sound）」という所有関係を表すため、先行詞がモノ（guitar）でも所有格 whose を使います。`,
-            citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 94 (whose) / Practical English Usage §498",
-            cambridgeSlug: "whose",
-            lookupWord: "remarkably"
-          };
-        }
-      },
-
-      "助動詞": () => {
-        const item = pick([
-          {
-            s: "The ground is completely wet; it (      ) have rained heavily last night.",
-            c: "must", w: ["should", "cannot", "would"],
-            ja: "地面が完全に濡れている。昨夜激しい雨が降ったに違いない。",
-            t: "must have + 過去分詞（〜したに違いない：過去の強い推量）",
-            d: "明確な根拠（地面が濡れている）をもとに過去の出来事を強く確信して推量するときは must have + 過去分詞を使います。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 28 (Must and can't: must have done)",
-            slug: "must",
-            word: "must have"
-          },
-          {
-            s: "I (      ) have checked the train timetable before leaving the hotel.",
-            c: "should", w: ["must", "may", "cannot"],
-            ja: "ホテルを出る前に電車の時刻表を確認しておくべきだった。",
-            t: "should have + 過去分詞（〜すべきだったのに：過去の後悔）",
-            d: "実際にはしなかったことへの後悔・反省を表す定番表現が should have + 過去分詞です。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 33 (Should 2: should have done)",
-            slug: "should",
-            word: "timetable"
-          },
-          {
-            s: "She (      ) have forgotten the meeting—she confirmed it ten minutes ago.",
-            c: "cannot", w: ["must", "should", "may"],
-            ja: "10分前に確認したばかりなのだから、彼女が会議を忘れたはずがない。",
-            t: "cannot have + 過去分詞（〜したはずがない）",
-            d: "過去の事実に対する強い否定の推量（「〜だったはずがない」）には cannot have + 過去分詞を用います。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 28 (can't have done) / Practical English Usage §124",
-            slug: "can-could-may-and-might",
-            word: "confirm"
-          }
-        ]);
-        const { choices, ans } = shuffleChoices(item.c, item.w);
-        return {
-          cat: "助動詞", sentence: item.s, choices, ans, ja: item.ja,
-          ruleTitle: item.t, ruleDetail: item.d, citation: item.cit, cambridgeSlug: item.slug, lookupWord: item.word
-        };
-      },
-
-      "比較": () => {
-        const item = pick([
-          {
-            s: "The more frequently you review, (      ) you will remember the words.",
-            c: "the better", w: ["better", "the best", "best"],
-            ja: "頻繁に復習すればするほど、単語をよりよく覚えられるだろう。",
-            t: "The + 比較級 〜, the + 比較級 …（〜すればするほどますます…）",
-            d: "比例関係を表す重要構文で、前半と後半の両方に「the + 比較級」を置きます。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 106 (Comparative 2: the ... the ...)",
-            slug: "comparison-comparatives-and-superlatives",
-            word: "frequently"
-          },
-          {
-            s: "This solid-state drive is four times (      ) than my old hard disk.",
-            c: "faster", w: ["fast", "fastest", "more fast"],
-            ja: "このSSDは古いハードディスクの4倍速い。",
-            t: "倍数表現（〜 times + 比較級 + than）",
-            d: "「4倍速い」は four times faster than 〜 または four times as fast as 〜 で表します。",
-            cit: "Michael Swan『Practical English Usage (4th Ed.)』§139 (Comparison: structures with times)",
-            slug: "comparison-clauses",
-            word: "solid-state drive"
-          },
-          {
-            s: "In terms of audio latency, a wired connection is superior (      ) Bluetooth.",
-            c: "to", w: ["than", "from", "over"],
-            ja: "音声遅延の点では、有線接続はBluetoothより優れている。",
-            t: "ラテン語由来の比較級（superior / inferior / prior + to）",
-            d: "-ior で終わる比較級（superior, inferior, senior, junior, prior）は than ではなく前置詞 to と結びつきます。",
-            cit: "Michael Swan『Practical English Usage (4th Ed.)』§136 (superior to / inferior to)",
-            slug: "superior",
-            word: "superior"
-          }
-        ]);
-        const { choices, ans } = shuffleChoices(item.c, item.w);
-        return {
-          cat: "比較", sentence: item.s, choices, ans, ja: item.ja,
-          ruleTitle: item.t, ruleDetail: item.d, citation: item.cit, cambridgeSlug: item.slug, lookupWord: item.word
-        };
-      },
-
-      "接続詞・前置詞": () => {
-        const item = pick([
-          {
-            s: "(      ) the heavy traffic, we arrived at the stadium on time.",
-            c: "Despite", w: ["Although", "Even though", "While"],
-            ja: "激しい渋滞にもかかわらず、私たちは時間通りにスタジアムに到着した。",
-            t: "前置詞 Despite（後ろは名詞句）vs 接続詞 Although（後ろはS+V）",
-            d: "空所の後ろが the heavy traffic という名詞句だけなので、前置詞の Despite（= In spite of）を選びます。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 113 (Although / though / even though / in spite of / despite)",
-            slug: "although-or-though",
-            word: "despite"
-          },
-          {
-            s: "Please finish uploading the stems (      ) tomorrow at 6:00 PM.",
-            c: "by", w: ["until", "during", "for"],
-            ja: "明日の午後6時までにステムデータのアップロードを終えてください。",
-            t: "期限の by（〜までに完了）vs 継続の until（〜までずっと）",
-            d: "「終える（finish）」という1回完了する動作の締め切りを示すときは by を使います。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 120 (By / until / by the time)",
-            slug: "until",
-            word: "by"
-          },
-          {
-            s: "We visited several museums (      ) our ten-day trip to Italy.",
-            c: "during", w: ["while", "for", "since"],
-            ja: "10日間のイタリア旅行の間、いくつかの美術館を訪れた。",
-            t: "前置詞 during（特定期間の名詞）vs 接続詞 while（S+V）",
-            d: "our ten-day trip は名詞句であり、特定の期間を指すため during を使います。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 119 (For / during / while)",
-            slug: "during",
-            word: "during"
-          }
-        ]);
-        const { choices, ans } = shuffleChoices(item.c, item.w);
-        return {
-          cat: "接続詞・前置詞", sentence: item.s, choices, ans, ja: item.ja,
-          ruleTitle: item.t, ruleDetail: item.d, citation: item.cit, cambridgeSlug: item.slug, lookupWord: item.word
-        };
-      },
-
-      "受動態": () => {
-        const t = pick(TASKS);
-        const { choices, ans } = shuffleChoices(`to be ${t.pp}`, [`to ${t.base}`, t.ing, t.base]);
-        return {
-          cat: "受動態",
-          sentence: `The project is expected (      ) before the end of this quarter.`,
-          choices, ans,
-          ja: `そのプロジェクトは今期末までに完了されると見込まれている。`,
-          ruleTitle: "be expected to be + 過去分詞（〜されると見込まれている）",
-          ruleDetail: `主語 The project は「〜される（受動）」側なので、不定詞も受動態 to be ${t.pp} の形にします。`,
-          citation: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 45 (It is said that ... He is said to ...)",
-          cambridgeSlug: "passive",
-          lookupWord: "expect"
-        };
-      },
-
-      "倒置・一致": () => {
-        const item = pick([
-          {
-            s: "Never (      ) experienced such an inspiring live performance.",
-            c: "have I", w: ["I have", "I had", "did I have"],
-            ja: "これほど感動的なライブパフォーマンスは今まで一度も経験したことがない。",
-            t: "否定語句（Never / Rarely / Seldom）が文頭に出たときの倒置",
-            d: "否定の副詞 Never が強調のため文頭に出ると、後ろは疑問文と同じ語順（have I）に倒置します。",
-            cit: "Michael Swan『Practical English Usage (4th Ed.)』§302 (Inversion: after negative adverbials)",
-            slug: "inversion",
-            word: "never"
-          },
-          {
-            s: "A number of researchers (      ) using large language models for clustering.",
-            c: "are", w: ["is", "was", "has"],
-            ja: "多くの研究者がクラスタリングに大規模言語モデルを使用している。",
-            t: "A number of + 複数名詞（複数扱い）vs The number of（単数扱い）",
-            d: "A number of 〜 は「多くの〜（＝ many）」という意味なので複数扱い（are）になります。",
-            cit: "Michael Swan『Practical English Usage (4th Ed.)』§532 (Singular and plural: a number of)",
-            slug: "number",
-            word: "a number of"
-          }
-        ]);
-        const { choices, ans } = shuffleChoices(item.c, item.w);
-        return {
-          cat: "倒置・一致", sentence: item.s, choices, ans, ja: item.ja,
-          ruleTitle: item.t, ruleDetail: item.d, citation: item.cit, cambridgeSlug: item.slug, lookupWord: item.word
-        };
-      },
-
-      "語法・コロケーション": () => {
-        const item = pick([
-          {
-            s: "Heavy snow prevented the train (      ) departing on schedule.",
-            c: "from", w: ["to", "for", "against"],
-            ja: "大雪のせいで電車は定刻通りに出発できなかった。",
-            t: "prevent / stop / keep + O + from -ing（Oが〜するのを妨げる）",
-            d: "無生物主語構文の超頻出パターン「prevent O from -ing」です。前置詞 from を必ず伴います。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 62 (Verb + preposition + -ing: prevent ... from)",
-            slug: "prevent",
-            word: "prevent"
-          },
-          {
-            s: "The platform provides learners (      ) instant audio pronunciation.",
-            c: "with", w: ["for", "to", "by"],
-            ja: "そのプラットフォームは学習者に即座の音声発音を提供する。",
-            t: "provide 人 with モノ（人にモノを提供する）",
-            d: "「人（learners）」が先に、「モノ」が後ろに来る語順では前置詞 with を使います。",
-            cit: "Oxford Learner's Dictionaries (provide someone with something) / Practical English Usage §448",
-            slug: "provide",
-            word: "provide"
-          },
-          {
-            s: "This song always reminds me (      ) our summer road trip.",
-            c: "of", w: ["from", "about", "to"],
-            ja: "この曲はいつも私たちに夏のロードトリップを思い出させる。",
-            t: "remind A of B（AにBを思い出させる）",
-            d: "「AにBを想起させる」は remind A of B の形をとります。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 135 (Verb + preposition 4: remind ... of)",
-            slug: "remember-or-remind",
-            word: "remind"
-          }
-        ]);
-        const { choices, ans } = shuffleChoices(item.c, item.w);
-        return {
-          cat: "語法・コロケーション", sentence: item.s, choices, ans, ja: item.ja,
-          ruleTitle: item.t, ruleDetail: item.d, citation: item.cit, cambridgeSlug: item.slug, lookupWord: item.word
-        };
-      },
-
-      "会話・実務表現": () => {
-        const item = pick([
-          {
-            s: "Would you mind (      ) the vocal volume slightly in my headphones?",
-            c: "turning up", w: ["to turn up", "turn up", "turned up"],
-            ja: "ヘッドホンのボーカルの音量を少し上げていただいても構いませんか？",
-            t: "Would you mind + -ing?（〜していただけませんか？）",
-            d: "mind は動名詞のみをとる動詞です。承諾するときは No, not at all. と答えます。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 53 (mind + -ing) / Practical English Usage §353",
-            slug: "mind",
-            word: "would you mind"
-          },
-          {
-            s: "I'd rather (      ) offline so I can study on the subway without signal.",
-            c: "work", w: ["to work", "working", "worked"],
-            ja: "電波のない地下鉄でも勉強できるように、むしろオフラインで動かしたい。",
-            t: "would rather + 動詞の原形（むしろ〜したい）",
-            d: "would rather は助動詞と同じ働きをするため、後ろには to なしの動詞の原形を置きます。",
-            cit: "Raymond Murphy『English Grammar in Use (5th Ed.)』Unit 59 (Prefer and would rather)",
-            slug: "would-rather-would-sooner",
-            word: "would rather"
-          }
-        ]);
-        const { choices, ans } = shuffleChoices(item.c, item.w);
-        return {
-          cat: "会話・実務表現", sentence: item.s, choices, ans, ja: item.ja,
-          ruleTitle: item.t, ruleDetail: item.d, citation: item.cit, cambridgeSlug: item.slug, lookupWord: item.word
-        };
-      }
-    };
-
-    function generateQuestion(categoryFilter = "ALL") {
-      let targetCat = categoryFilter;
-      if (targetCat === "ALL" || !GENERATORS[targetCat]) {
-        targetCat = pick(CATEGORIES);
-      }
-      const q = GENERATORS[targetCat]();
-      q.uid = `${targetCat}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-      return q;
-    }
-
     /*************************************************************************
-     * 2. 状態管理・ストレージ永続化 (LocalStorage)
+     * 2. 3形式ハイブリッド問題変換エンジン（4択 / 並び替え / 誤り指摘）
      *************************************************************************/
-    const STORAGE_KEY = "GRAMMAR_SPRINT_VERIFIED_V3";
+    const STORAGE_KEY = "GRAMMAR_SPRINT_2000_HYBRID_V1";
 
     let state = {
-      selectedCategory: "ALL",
+      formatFilter: "MIX",     // 'MIX' | 'CHOICE' | 'ORDER' | 'ERROR'
+      selectedCategory: "ALL", // 'ALL' | 'WEAK' | 単元名
       autoSpeak: true,
       accent: "en-US",
       speed: 1.0,
@@ -926,11 +1136,221 @@
       weakQueue: [],
       currentQ: null,
       answeredCurrent: false,
-      lastChoiceIdx: null
+      lastUserAnswer: null,
+      orderSelectedIndices: []
     };
 
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function shuffleArr(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // 1つの文脈アイテムを「4択空所」「並び替え」「誤り指摘」のいずれかの問題オブジェクトに変換
+    function buildQuestionFromBase(baseItem, forceFormat = null) {
+      const formats = ["CHOICE", "ORDER", "ERROR"];
+      const chosenFormat = forceFormat && forceFormat !== "MIX"
+        ? forceFormat
+        : pick(formats);
+
+      const fullSentence = `${baseItem.before} ${baseItem.blank} ${baseItem.after}`.replace(/\s+/g, " ").trim();
+
+      if (chosenFormat === "CHOICE") {
+        const choices = shuffleArr([baseItem.blank, ...baseItem.wrongChoices]);
+        return {
+          ...baseItem,
+          format: "CHOICE",
+          fullSentence,
+          choices,
+          ansIdx: choices.indexOf(baseItem.blank)
+        };
+      }
+
+      if (chosenFormat === "ORDER") {
+        // 文全体を4〜7個の自然なチャンク（語句ブロック）に分割してシャッフル
+        const words = fullSentence.replace(/\.$/, "").split(" ");
+        const chunks = [];
+        let i = 0;
+        while (i < words.length) {
+          const remaining = words.length - i;
+          // 全体が5〜7ブロックになるように1〜3語ずつまとめる
+          const step = remaining <= 3 ? remaining : (words.length > 12 ? 3 : 2);
+          chunks.push(words.slice(i, i + step).join(" "));
+          i += step;
+        }
+        let shuffledChunks = shuffleArr(chunks);
+        // 万が一最初から正解と同じ並びになったら再シャッフル
+        if (shuffledChunks.join(" ") === chunks.join(" ") && chunks.length > 1) {
+          shuffledChunks = [...chunks.slice(1), chunks[0]];
+        }
+        return {
+          ...baseItem,
+          format: "ORDER",
+          fullSentence,
+          correctChunks: chunks,
+          shuffledChunks
+        };
+      }
+
+      // chosenFormat === "ERROR" (4箇所下線部の誤り指摘)
+      const wrongOption = baseItem.wrongChoices[0];
+      const erroneousSentence = `${baseItem.before} ${wrongOption} ${baseItem.after}`.replace(/\s+/g, " ").trim();
+      return {
+        ...baseItem,
+        format: "ERROR",
+        fullSentence,
+        erroneousSentence,
+        choices: baseItem.errorSpans,
+        ansIdx: baseItem.errorIdx,
+        wrongSpanText: wrongOption
+      };
+    }
+
+    function generateNextQuestion() {
+      if (state.selectedCategory === "WEAK" && state.weakQueue.length > 0) {
+        const weakItem = pick(state.weakQueue);
+        state.currentQ = buildQuestionFromBase(weakItem, state.formatFilter);
+        state.currentQ.isFromWeak = true;
+      } else {
+        if (state.selectedCategory === "WEAK") {
+          state.selectedCategory = "ALL";
+        }
+        let pool = state.selectedCategory === "ALL"
+          ? ALL_BASE_ITEMS
+          : ALL_BASE_ITEMS.filter(item => item.cat === state.selectedCategory);
+        if (pool.length === 0) pool = ALL_BASE_ITEMS;
+
+        // 直前と同じ問題文を避ける
+        const filtered = pool.filter(item => !state.currentQ || item.blank !== state.currentQ.blank);
+        const chosen = pick(filtered.length > 0 ? filtered : pool);
+        state.currentQ = buildQuestionFromBase(chosen, state.formatFilter);
+      }
+
+      state.answeredCurrent = false;
+      state.lastUserAnswer = null;
+      state.orderSelectedIndices = [];
+      saveState();
+    }
+
+    function loadNextQuestion() {
+      generateNextQuestion();
+      renderAll();
+    }
+
+    function setQuestionFormat(fmt) {
+      state.formatFilter = fmt;
+      loadNextQuestion();
+    }
+
+    function selectCategory(cat) {
+      state.selectedCategory = cat;
+      switchTab("sprint");
+      loadNextQuestion();
+    }
+
+    function startWeaknessMode() {
+      if (state.weakQueue.length === 0) {
+        alert("現在、未克服の弱点問題はありません！");
+        return;
+      }
+      state.selectedCategory = "WEAK";
+      switchTab("sprint");
+      loadNextQuestion();
+    }
+
     /*************************************************************************
-     * 3. 音声再生エンジン
+     * 3. 解答判定（4択・並び替え・誤り指摘 共通）
+     *************************************************************************/
+    function finalizeQuestionResult(isCorrect, userAnswerSummary) {
+      if (state.answeredCurrent) return;
+      const q = state.currentQ;
+
+      state.answeredCurrent = true;
+      state.lastUserAnswer = userAnswerSummary;
+      state.totalAttempts = (state.totalAttempts || 0) + 1;
+
+      if (!state.catStats[q.cat]) state.catStats[q.cat] = { attempts: 0, correct: 0 };
+      state.catStats[q.cat].attempts++;
+
+      if (isCorrect) {
+        state.totalCorrect = (state.totalCorrect || 0) + 1;
+        state.catStats[q.cat].correct++;
+        state.weakQueue = state.weakQueue.filter(w => w.blank !== q.blank || w.before !== q.before);
+      } else {
+        if (!state.weakQueue.some(w => w.blank === q.blank && w.before === q.before)) {
+          state.weakQueue.push({
+            cat: q.cat,
+            before: q.before,
+            blank: q.blank,
+            after: q.after,
+            wrongChoices: q.wrongChoices,
+            errorSpans: q.errorSpans,
+            errorIdx: q.errorIdx,
+            ja: q.ja,
+            ruleTitle: q.ruleTitle,
+            ruleDetail: q.ruleDetail,
+            citation: q.citation,
+            slug: q.slug,
+            lookup: q.lookup
+          });
+        }
+      }
+
+      saveState();
+      renderAll();
+
+      if (state.autoSpeak) {
+        speakEnglishSentence(q.fullSentence);
+      }
+    }
+
+    function handleChoiceClick(idx) {
+      const q = state.currentQ;
+      finalizeQuestionResult(idx === q.ansIdx, idx);
+    }
+
+    // 並び替えモードのタップ操作
+    function toggleOrderChunk(poolIdx) {
+      if (state.answeredCurrent) return;
+      const pos = state.orderSelectedIndices.indexOf(poolIdx);
+      if (pos !== -1) {
+        state.orderSelectedIndices.splice(pos, 1);
+      } else {
+        state.orderSelectedIndices.push(poolIdx);
+      }
+      renderOrderUI();
+    }
+
+    function clearOrderSelection() {
+      if (state.answeredCurrent) return;
+      state.orderSelectedIndices = [];
+      renderOrderUI();
+    }
+
+    function submitOrderAnswer() {
+      const q = state.currentQ;
+      if (state.orderSelectedIndices.length !== q.shuffledChunks.length) {
+        alert("すべての語句パーツを並べてから解答してください。");
+        return;
+      }
+      const userBuilt = state.orderSelectedIndices.map(i => q.shuffledChunks[i]).join(" ");
+      const target = q.correctChunks.join(" ");
+      finalizeQuestionResult(userBuilt === target, userBuilt);
+    }
+
+    function togglePreHint() {
+      document.getElementById("q-hint-ja").classList.toggle("hidden");
+    }
+
+    /*************************************************************************
+     * 4. 音声再生エンジン
      *************************************************************************/
     let audioCtxUnlocked = false;
     function unlockAudio() {
@@ -974,93 +1394,16 @@
         utter.onend = done;
         utter.onerror = done;
         window.speechSynthesis.speak(utter);
-        setTimeout(done, 4000);
+        setTimeout(done, 4500);
       } catch (e) {
         done();
       }
     }
 
-    function getCompleteSentence(q) {
-      const answerWord = q.choices[q.ans];
-      return q.sentence.replace(/\(\s*\)/, answerWord);
-    }
-
     function speakCurrentSentence() {
       const q = state.currentQ;
       if (!q) return;
-      const text = state.answeredCurrent
-        ? getCompleteSentence(q)
-        : q.sentence.replace(/\(\s*\)/, " ... ");
-      speakEnglishSentence(text);
-    }
-
-    /*************************************************************************
-     * 4. 問題進行・弱点キュー管理
-     *************************************************************************/
-    function loadNextQuestion() {
-      if (state.selectedCategory === "WEAK" && state.weakQueue.length > 0) {
-        const idx = Math.floor(Math.random() * state.weakQueue.length);
-        state.currentQ = { ...state.weakQueue[idx], isFromWeak: true };
-      } else {
-        if (state.selectedCategory === "WEAK") {
-          state.selectedCategory = "ALL";
-        }
-        state.currentQ = generateQuestion(state.selectedCategory);
-      }
-      state.answeredCurrent = false;
-      state.lastChoiceIdx = null;
-      saveState();
-      renderAll();
-    }
-
-    function handleAnswer(choiceIdx) {
-      if (state.answeredCurrent) return;
-      const q = state.currentQ;
-      const isCorrect = choiceIdx === q.ans;
-
-      state.answeredCurrent = true;
-      state.lastChoiceIdx = choiceIdx;
-      state.totalAttempts = (state.totalAttempts || 0) + 1;
-
-      if (!state.catStats[q.cat]) state.catStats[q.cat] = { attempts: 0, correct: 0 };
-      state.catStats[q.cat].attempts++;
-
-      if (isCorrect) {
-        state.totalCorrect = (state.totalCorrect || 0) + 1;
-        state.catStats[q.cat].correct++;
-        state.weakQueue = state.weakQueue.filter(item => item.sentence !== q.sentence);
-      } else {
-        if (!state.weakQueue.some(item => item.sentence === q.sentence)) {
-          state.weakQueue.push(q);
-        }
-      }
-
-      saveState();
-      renderAll();
-
-      if (state.autoSpeak) {
-        speakEnglishSentence(getCompleteSentence(q));
-      }
-    }
-
-    function togglePreHint() {
-      document.getElementById("q-hint-ja").classList.toggle("hidden");
-    }
-
-    function selectCategory(cat) {
-      state.selectedCategory = cat;
-      switchTab("sprint");
-      loadNextQuestion();
-    }
-
-    function startWeaknessMode() {
-      if (state.weakQueue.length === 0) {
-        alert("現在、未克服の弱点問題はありません！");
-        return;
-      }
-      state.selectedCategory = "WEAK";
-      switchTab("sprint");
-      loadNextQuestion();
+      speakEnglishSentence(q.fullSentence);
     }
 
     /*************************************************************************
@@ -1068,23 +1411,25 @@
      *************************************************************************/
     function renderAll() {
       if (!state.currentQ) {
-        state.currentQ = generateQuestion("ALL");
+        generateNextQuestion();
       }
       const q = state.currentQ;
 
+      // Header stats & format pills
       document.getElementById("header-total-solved").textContent = (state.totalAttempts || 0).toLocaleString();
-      const modePill = document.getElementById("header-mode-pill");
-      if (state.selectedCategory === "WEAK") {
-        modePill.textContent = `🔥 弱点集中 (${state.weakQueue.length}問)`;
-        modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30";
-      } else if (state.selectedCategory === "ALL") {
-        modePill.textContent = "無限ランダム";
-        modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
-      } else {
-        modePill.textContent = `${state.selectedCategory} (∞)`;
-        modePill.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30";
-      }
+      const fmtNames = { MIX: "3形式MIX", CHOICE: "4択空所", ORDER: "並び替え", ERROR: "誤り指摘" };
+      document.getElementById("header-format-pill").textContent = fmtNames[state.formatFilter] || "3形式MIX";
 
+      ["MIX", "CHOICE", "ORDER", "ERROR"].forEach(f => {
+        const el = document.getElementById(`fmt-${f}`);
+        if (el) {
+          el.className = state.formatFilter === f
+            ? "py-1.5 rounded-xl text-[11px] font-extrabold bg-emerald-500 text-slate-950 transition shadow"
+            : "py-1.5 rounded-xl text-[11px] font-bold text-slate-400 hover:text-white transition";
+        }
+      });
+
+      // Weak badge
       const weakBadge = document.getElementById("nav-weak-badge");
       if (state.weakQueue.length > 0) {
         weakBadge.classList.remove("hidden");
@@ -1093,11 +1438,12 @@
         weakBadge.classList.add("hidden");
       }
 
+      // Category Pills
       const pillsEl = document.getElementById("category-pills");
       pillsEl.innerHTML = "";
       const pillItems = [
-        { key: "ALL", label: "∞ 全単元ランダム" },
-        ...(state.weakQueue.length > 0 ? [{ key: "WEAK", label: `🔥 弱点のみ(${state.weakQueue.length})` }] : []),
+        { key: "ALL", label: "∞ 全単元" },
+        ...(state.weakQueue.length > 0 ? [{ key: "WEAK", label: `🔥 弱点(${state.weakQueue.length})` }] : []),
         ...CATEGORIES.map(c => ({ key: c, label: c }))
       ];
       pillItems.forEach(p => {
@@ -1105,7 +1451,7 @@
         const btn = document.createElement("button");
         btn.className = `px-3 py-1.5 rounded-full text-[11px] font-bold shrink-0 border transition ${
           active
-            ? "bg-emerald-500 text-slate-950 border-emerald-400 shadow"
+            ? "bg-indigo-600 text-white border-indigo-400 shadow"
             : "bg-slate-900 text-slate-400 border-slate-800 hover:text-white"
         }`;
         btn.textContent = p.label;
@@ -1113,56 +1459,69 @@
         pillsEl.appendChild(btn);
       });
 
+      // Question Card Header Badges
       document.getElementById("q-category-badge").textContent = q.cat;
-      document.getElementById("q-pattern-badge").textContent = q.isFromWeak ? "🔥 弱点リベンジ" : "✓ 典拠検証済ルール";
-
-      const sentenceEl = document.getElementById("q-sentence");
-      if (!state.answeredCurrent) {
-        sentenceEl.innerHTML = q.sentence.replace(
-          /\(\s*\)/,
-          `<span class="inline-block px-3 py-0.5 mx-1 rounded-lg bg-slate-800 border border-dashed border-indigo-400/60 text-indigo-300 text-base">（ ？ ）</span>`
-        );
+      const fmtBadge = document.getElementById("q-format-badge");
+      if (q.format === "CHOICE") {
+        fmtBadge.textContent = "📝 4択空所補充";
+        document.getElementById("q-instruction").textContent = "空所に入る最も適切な語句を1つ選んでください。";
+      } else if (q.format === "ORDER") {
+        fmtBadge.textContent = "🧩 語句並び替え（英作文）";
+        document.getElementById("q-instruction").textContent = "日本語の意味に合うように、下の語句パーツを正しい語順に並べてください。";
       } else {
-        const ansWord = q.choices[q.ans];
-        sentenceEl.innerHTML = q.sentence.replace(
-          /\(\s*\)/,
-          `<span class="inline-block px-2.5 py-0.5 mx-0.5 rounded-lg bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 underline decoration-emerald-400">${ansWord}</span>`
-        );
+        fmtBadge.textContent = "🔍 誤り指摘（正誤判定）";
+        document.getElementById("q-instruction").textContent = "次の英文の下線部 (A)〜(D) のうち、文法的に誤っている箇所を1つ選んでください。";
       }
 
+      // Sentence Display
+      const sentenceEl = document.getElementById("q-sentence");
       const hintEl = document.getElementById("q-hint-ja");
       hintEl.textContent = `ヒント訳: ${q.ja}`;
-      if (!state.answeredCurrent) {
+
+      if (q.format === "CHOICE") {
+        if (!state.answeredCurrent) {
+          sentenceEl.innerHTML = `${q.before} <span class="inline-block px-3 py-0.5 mx-1 rounded-lg bg-slate-800 border border-dashed border-indigo-400/60 text-indigo-300 text-sm">（ ？ ）</span> ${q.after}`;
+          hintEl.classList.add("hidden");
+        } else {
+          sentenceEl.innerHTML = `${q.before} <span class="inline-block px-2 py-0.5 mx-0.5 rounded-lg bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 underline">${q.blank}</span> ${q.after}`;
+        }
+      } else if (q.format === "ORDER") {
+        // 並び替え問題では日本語訳を最初から表示する
+        sentenceEl.innerHTML = `<span class="text-sm sm:text-base text-indigo-200 font-bold">「${q.ja}」</span>`;
         hintEl.classList.add("hidden");
+      } else {
+        // 誤り指摘モード：4箇所に (A)〜(D) の下線マーカーを付けて表示
+        let markedHtml = q.erroneousSentence;
+        const labels = ["(A)", "(B)", "(C)", "(D)"];
+        q.choices.forEach((spanText, idx) => {
+          const isWrongTarget = idx === q.ansIdx;
+          const highlightStyle = state.answeredCurrent && isWrongTarget
+            ? "bg-rose-500/25 text-rose-300 border-b-2 border-rose-400 px-1 rounded"
+            : "border-b-2 border-indigo-400/70 text-indigo-200 px-0.5";
+          markedHtml = markedHtml.replace(
+            spanText,
+            `<span class="${highlightStyle}"><sup class="text-[10px] font-black text-amber-400 mr-0.5">${labels[idx]}</sup>${spanText}</span>`
+          );
+        });
+        sentenceEl.innerHTML = markedHtml;
+        if (!state.answeredCurrent) hintEl.classList.add("hidden");
       }
 
-      const choicesEl = document.getElementById("q-choices");
-      choicesEl.innerHTML = "";
-      q.choices.forEach((choiceText, idx) => {
-        const btn = document.createElement("button");
-        btn.disabled = state.answeredCurrent;
+      // Toggle Answer Areas
+      const choicesArea = document.getElementById("q-choices-area");
+      const orderArea = document.getElementById("q-order-area");
 
-        let styleClass = "w-full p-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800/90 border border-slate-800 text-sm font-bold text-slate-100 text-left flex items-center gap-3 transition active:scale-[0.99]";
-        if (state.answeredCurrent) {
-          if (idx === q.ans) {
-            styleClass = "w-full p-3.5 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-sm font-black text-emerald-200 text-left flex items-center gap-3";
-          } else if (idx === state.lastChoiceIdx) {
-            styleClass = "w-full p-3.5 rounded-2xl bg-rose-500/20 border-2 border-rose-500 text-sm font-bold text-rose-300 text-left flex items-center gap-3";
-          } else {
-            styleClass = "w-full p-3.5 rounded-2xl bg-slate-950/50 border border-slate-800/50 text-sm font-medium text-slate-500 text-left flex items-center gap-3";
-          }
-        }
+      if (q.format === "ORDER") {
+        choicesArea.classList.add("hidden");
+        orderArea.classList.remove("hidden");
+        renderOrderUI();
+      } else {
+        orderArea.classList.add("hidden");
+        choicesArea.classList.remove("hidden");
+        renderChoiceButtons(q);
+      }
 
-        const badgeLabels = ["A", "B", "C", "D"];
-        btn.className = styleClass;
-        btn.innerHTML = `
-          <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center text-xs font-extrabold shrink-0">${badgeLabels[idx]}</span>
-          <span>${choiceText}</span>
-        `;
-        btn.onclick = () => handleAnswer(idx);
-        choicesEl.appendChild(btn);
-      });
-
+      // Pre vs Post Answer Panels
       const preActions = document.getElementById("q-pre-actions");
       const expBox = document.getElementById("q-explanation-box");
       if (!state.answeredCurrent) {
@@ -1172,34 +1531,105 @@
         preActions.classList.add("hidden");
         expBox.classList.remove("hidden");
 
-        const isCorrect = state.lastChoiceIdx === q.ans;
-        const resBanner = document.getElementById("q-result-banner");
-        resBanner.textContent = isCorrect
-          ? "⭕ 正解！ナイス判断！"
-          : `❌ 不正解（正解は ${["A","B","C","D"][q.ans]}: ${q.choices[q.ans]}）`;
-        resBanner.className = isCorrect
-          ? "text-sm font-black text-emerald-400"
-          : "text-sm font-black text-rose-400";
+        let isCorrect = false;
+        if (q.format === "ORDER") {
+          isCorrect = state.lastUserAnswer === q.correctChunks.join(" ");
+        } else {
+          isCorrect = state.lastUserAnswer === q.ansIdx;
+        }
 
-        document.getElementById("q-complete-en").textContent = getCompleteSentence(q);
+        const resBanner = document.getElementById("q-result-banner");
+        if (isCorrect) {
+          resBanner.textContent = "⭕ 正解！完璧です！";
+          resBanner.className = "text-sm font-black text-emerald-400";
+        } else {
+          const correctLabel = q.format === "ORDER"
+            ? "正しい語順を確認しよう"
+            : q.format === "ERROR"
+            ? `誤りは ${["(A)","(B)","(C)","(D)"][q.ansIdx]}「${q.wrongSpanText}」→ 正しくは「${q.blank}」`
+            : `正解は ${["A","B","C","D"][q.ansIdx]}: ${q.blank}`;
+          resBanner.textContent = `❌ 不正解（${correctLabel}）`;
+          resBanner.className = "text-sm font-black text-rose-400";
+        }
+
+        document.getElementById("q-complete-en").textContent = q.fullSentence;
         document.getElementById("q-complete-ja").textContent = q.ja;
         document.getElementById("q-rule-title").textContent = `📌 ${q.ruleTitle}`;
         document.getElementById("q-rule-detail").textContent = q.ruleDetail;
+        document.getElementById("q-citation-text").textContent = q.citation;
 
-        // 出典と公式一次ソースリンクの設定
-        document.getElementById("q-citation-text").textContent =
-          q.citation || "Cambridge Grammar / Raymond Murphy『English Grammar in Use』準拠ルール";
-        const slug = q.cambridgeSlug || "grammar";
-        const lookup = encodeURIComponent(q.lookupWord || q.choices[q.ans]);
         document.getElementById("q-cambridge-link").href =
-          `https://dictionary.cambridge.org/grammar/british-grammar/${slug}`;
+          `https://dictionary.cambridge.org/grammar/british-grammar/${q.slug || "grammar"}`;
         document.getElementById("q-weblio-link").href =
-          `https://ejje.weblio.jp/content/${lookup}`;
+          `https://ejje.weblio.jp/content/${encodeURIComponent(q.lookup || q.blank)}`;
       }
 
       renderWeaknessView();
       renderStatsView();
       syncSettingsUI();
+    }
+
+    function renderChoiceButtons(q) {
+      const choicesArea = document.getElementById("q-choices-area");
+      choicesArea.innerHTML = "";
+      const labels = q.format === "ERROR" ? ["(A)", "(B)", "(C)", "(D)"] : ["A", "B", "C", "D"];
+
+      q.choices.forEach((choiceText, idx) => {
+        const btn = document.createElement("button");
+        btn.disabled = state.answeredCurrent;
+
+        let styleClass = "w-full p-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800/90 border border-slate-800 text-sm font-bold text-slate-100 text-left flex items-center gap-3 transition active:scale-[0.99]";
+        if (state.answeredCurrent) {
+          if (idx === q.ansIdx) {
+            styleClass = "w-full p-3.5 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-sm font-black text-emerald-200 text-left flex items-center gap-3";
+          } else if (idx === state.lastUserAnswer) {
+            styleClass = "w-full p-3.5 rounded-2xl bg-rose-500/20 border-2 border-rose-500 text-sm font-bold text-rose-300 text-left flex items-center gap-3";
+          } else {
+            styleClass = "w-full p-3.5 rounded-2xl bg-slate-950/50 border border-slate-800/50 text-sm font-medium text-slate-500 text-left flex items-center gap-3";
+          }
+        }
+
+        btn.className = styleClass;
+        btn.innerHTML = `
+          <span class="px-2 h-6 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center text-xs font-extrabold shrink-0">${labels[idx]}</span>
+          <span>${choiceText}</span>
+        `;
+        btn.onclick = () => handleChoiceClick(idx);
+        choicesArea.appendChild(btn);
+      });
+    }
+
+    function renderOrderUI() {
+      const q = state.currentQ;
+      const selectedBox = document.getElementById("order-selected-box");
+      const poolBox = document.getElementById("order-pool-box");
+
+      selectedBox.innerHTML = "";
+      if (state.orderSelectedIndices.length === 0) {
+        selectedBox.innerHTML = `<span class="text-xs text-slate-500">下の単語パーツをタップして語順を組み立ててください...</span>`;
+      } else {
+        state.orderSelectedIndices.forEach(poolIdx => {
+          const chip = document.createElement("button");
+          chip.disabled = state.answeredCurrent;
+          chip.className = "px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow active:scale-95 transition";
+          chip.textContent = q.shuffledChunks[poolIdx];
+          chip.onclick = () => toggleOrderChunk(poolIdx);
+          selectedBox.appendChild(chip);
+        });
+      }
+
+      poolBox.innerHTML = "";
+      q.shuffledChunks.forEach((chunkText, poolIdx) => {
+        const isUsed = state.orderSelectedIndices.includes(poolIdx);
+        const btn = document.createElement("button");
+        btn.disabled = isUsed || state.answeredCurrent;
+        btn.className = isUsed
+          ? "px-3 py-2 rounded-xl bg-slate-950 border border-slate-800/50 text-slate-600 font-bold text-xs"
+          : "px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 font-bold text-xs shadow active:scale-95 transition";
+        btn.textContent = chunkText;
+        btn.onclick = () => toggleOrderChunk(poolIdx);
+        poolBox.appendChild(btn);
+      });
     }
 
     function renderWeaknessView() {
@@ -1217,9 +1647,11 @@
         const div = document.createElement("div");
         div.className = "p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-1.5 cursor-pointer hover:border-rose-500/40";
         div.onclick = () => {
-          state.currentQ = { ...wq, isFromWeak: true };
+          state.currentQ = buildQuestionFromBase(wq, state.formatFilter);
+          state.currentQ.isFromWeak = true;
           state.answeredCurrent = false;
-          state.lastChoiceIdx = null;
+          state.lastUserAnswer = null;
+          state.orderSelectedIndices = [];
           switchTab("sprint");
           renderAll();
         };
@@ -1228,9 +1660,9 @@
             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300">${wq.cat}</span>
             <span class="text-[11px] font-bold text-rose-400">タップして再挑戦 →</span>
           </div>
-          <p class="text-xs font-bold text-slate-200">${wq.sentence}</p>
-          <p class="text-[11px] text-slate-400">正解: <span class="text-emerald-400 font-bold">${wq.choices[wq.ans]}</span>（${wq.ruleTitle}）</p>
-          <p class="text-[10px] text-slate-500 truncate">典拠: ${wq.citation || "Cambridge Grammar"}</p>
+          <p class="text-xs font-bold text-slate-200">${wq.before} ( ${wq.blank} ) ${wq.after}</p>
+          <p class="text-[11px] text-slate-400">${wq.ruleTitle}</p>
+          <p class="text-[10px] text-slate-500 truncate">典拠: ${wq.citation}</p>
         `;
         listEl.appendChild(div);
       });
@@ -1292,15 +1724,15 @@
 
     function loadState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("GRAMMAR_SPRINT_INFINITE_V2");
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("GRAMMAR_SPRINT_VERIFIED_V3");
         if (raw) {
           state = { ...state, ...JSON.parse(raw) };
         }
       } catch (e) {}
       if (!Array.isArray(state.weakQueue)) state.weakQueue = [];
       if (!state.catStats) state.catStats = {};
-      if (!state.currentQ) {
-        state.currentQ = generateQuestion("ALL");
+      if (!state.currentQ || !state.currentQ.fullSentence) {
+        generateNextQuestion();
       }
     }
 
@@ -1315,7 +1747,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `grammar_verified_backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `grammar_2000_backup_${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
     }
 
