@@ -31,7 +31,7 @@
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    .spin-ai { display: inline-block; animation: spin-slow 2s linear infinite; }
+    .spin-ai { display: inline-block; animation: spin-slow 1.2s linear infinite; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -48,13 +48,13 @@
             <h1 class="font-bold text-sm tracking-tight text-white">VOCAB MASTER 50</h1>
             <span id="badge-day" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Day 1</span>
           </div>
-          <p class="text-[11px] text-slate-400" id="header-subtitle">Gemini 最新モデル自動検出・無限補充</p>
+          <p class="text-[11px] text-slate-400" id="header-subtitle">最速Flash-Lite固定・並列AI補充</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
         <div id="ai-gen-indicator" class="hidden items-center gap-1 bg-indigo-500/20 border border-indigo-400/40 px-2.5 py-1 rounded-full text-[10px] font-bold text-indigo-300">
-          <span class="spin-ai">✨</span> AI補充中
+          <span class="spin-ai">⚡</span> 高速生成中
         </div>
         <div class="flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-full">
           <span class="text-xs">🔥</span>
@@ -73,8 +73,8 @@
     <!-- AI Background Status Toast -->
     <div id="ai-toast" class="hidden bg-indigo-950/90 border border-indigo-500/50 rounded-2xl p-3 text-xs text-indigo-200 flex items-center justify-between shadow-lg">
       <div class="flex items-center gap-2">
-        <span class="spin-ai text-sm">🤖</span>
-        <span id="ai-toast-text">Gemini AIが新しい50単語をバックグラウンド生成中...</span>
+        <span class="spin-ai text-sm">⚡</span>
+        <span id="ai-toast-text">最速Flashモデル（25語×2並列）で50語を高速生成中...</span>
       </div>
     </div>
 
@@ -132,9 +132,9 @@
       <!-- Day Selector Pills -->
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 space-y-2.5">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-300">📅 学習Day一覧（残100語未満でAI自動生成）</span>
+          <span class="text-xs font-bold text-slate-300">📅 学習Day一覧（残100語未満で裏側自動補充）</span>
           <button onclick="triggerManualAIGenerate()" class="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 underline">
-            ✨ AIで+50語今すぐ補充
+            ⚡ 高速AIで+50語補充
           </button>
         </div>
         <div id="day-selector-list" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1"></div>
@@ -320,9 +320,9 @@
       <div class="bg-slate-900 border border-indigo-500/50 rounded-3xl p-5 space-y-3.5 shadow-xl">
         <div class="flex items-center justify-between">
           <div>
-            <h3 class="text-sm font-black text-white">🤖 Gemini API 自動無限補充エンジン</h3>
+            <h3 class="text-sm font-black text-white">⚡ 最速Flash-Lite固定・並列AI補充</h3>
             <p class="text-[11px] text-slate-400">
-              APIキーで利用可能な最新モデル（Gemini 3.8 / 3.5 / 2.5 Flash等）を自動検出して50語ずつ無限生成します。
+              重いモデルを除外し、最速のFlash-Lite系モデル＋25語×2並列リクエストで約2〜4秒で50語を生成します。
             </p>
           </div>
         </div>
@@ -348,12 +348,12 @@
             💾 APIキーを保存
           </button>
           <button id="btn-manual-ai-gen" onclick="triggerManualAIGenerate()" class="py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg">
-            ✨ 今すぐ+50語をAI生成
+            ⚡ 高速で+50語をAI生成
           </button>
         </div>
 
         <div id="ai-log-box" class="text-[11px] text-slate-300 bg-slate-950/90 p-3 rounded-xl border border-slate-800 leading-relaxed">
-          ステータス: 未出題ストックが残り <span id="stat-remaining-stock" class="font-bold text-indigo-400">0</span> 語あります（100語未満で自動生成が作動します）。
+          ステータス: 未出題ストックが残り <span id="stat-remaining-stock" class="font-bold text-indigo-400">0</span> 語あります（100語未満で裏側自動生成が作動します）。
         </div>
       </div>
 
@@ -695,6 +695,7 @@
       accent: "en-US",
       speed: 1.0,
       apiKey: "",
+      cachedFastModel: "",
       aiTheme: "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル、日常・ビジネス・学術バランス）",
       customPool: [],
       days: {},
@@ -837,60 +838,115 @@
     }
 
     /*************************************************************************
-     * 4. Gemini API 最新モデル自動検出＆無限自動生成エンジン
-     * ListModels APIで現在有効なモデルを動的に取得するため廃止エラーを完全回避
+     * 4. 最速Flash-Lite固定・並列ターボ Gemini 生成エンジン
      *************************************************************************/
-    async function discoverAvailableGeminiModels(apiKey) {
-      const fallbackModels = [
-        "gemini-3.8-flash",
-        "gemini-3.7-flash",
-        "gemini-3.5-flash-lite",
-        "gemini-3.5-flash",
+    async function resolveFastestGeminiModel(apiKey) {
+      if (state.cachedFastModel && state.cachedFastModel.includes("lite")) {
+        return state.cachedFastModel;
+      }
+
+      const defaultFastOrder = [
         "gemini-2.5-flash-lite",
-        "gemini-2.5-flash"
+        "gemini-2.0-flash-lite",
+        "gemini-2.5-flash",
+        "gemini-2.0-flash"
       ];
+
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`);
-        if (!res.ok) return fallbackModels;
+        if (!res.ok) return defaultFastOrder[0];
         const data = await res.json();
-        if (!data || !Array.isArray(data.models)) return fallbackModels;
+        if (!data || !Array.isArray(data.models)) return defaultFastOrder[0];
 
         const valid = data.models
           .filter(m =>
             Array.isArray(m.supportedGenerationMethods) &&
             m.supportedGenerationMethods.includes("generateContent") &&
             m.name &&
-            m.name.includes("gemini") &&
+            m.name.includes("flash") &&
+            !m.name.includes("3.8") &&
             !m.name.includes("embedding") &&
             !m.name.includes("imagen") &&
             !m.name.includes("veo") &&
             !m.name.includes("tts") &&
             !m.name.includes("audio") &&
             !m.name.includes("live") &&
-            !m.name.includes("vision")
+            !m.name.includes("vision") &&
+            !m.name.includes("thinking")
           )
           .map(m => m.name.replace(/^models\//, ""));
 
-        // テキスト生成に高速で無料枠の大きい flash 系を優先ソート
         valid.sort((a, b) => {
           const score = name => {
             let s = 0;
-            if (name.includes("flash")) s += 100;
-            if (name.includes("3.8")) s += 50;
-            else if (name.includes("3.7")) s += 45;
-            else if (name.includes("3.5")) s += 40;
-            else if (name.includes("2.5")) s += 30;
-            if (name.includes("lite")) s += 10;
-            if (name.includes("preview") || name.includes("exp")) s -= 15;
+            if (name.includes("flash-lite")) s += 300;
+            else if (name.includes("lite")) s += 200;
+            else if (name.includes("flash")) s += 100;
+            if (name.includes("preview") || name.includes("exp")) s -= 50;
             return s;
           };
           return score(b) - score(a);
         });
 
-        return valid.length > 0 ? [...new Set([...valid, ...fallbackModels])] : fallbackModels;
-      } catch (e) {
-        return fallbackModels;
+        if (valid.length > 0) {
+          state.cachedFastModel = valid[0];
+          saveState();
+          return valid[0];
+        }
+      } catch (e) {}
+      return defaultFastOrder[0];
+    }
+
+    async function requestCompactBatch25(apiKey, modelName, theme, initialRangeLabel, exclusionSample) {
+      const prompt = `テーマ「${theme}」の重要英単語を【25語】出力せよ。
+条件:
+- 頭文字は【${initialRangeLabel}】から万遍なく選ぶ
+- 品詞(verb,noun,adj,adv)を混ぜる
+- 既出語は除外: [${exclusionSample}]
+- キー名無しの2次元JSON配列のみ出力(Markdown不要):
+[["word","/発音/","pos","日本語訳","短い英語例文(7〜10語)","例文和訳"]]`;
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+      const makePayload = includeThinkingOff => {
+        const body = {
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.7,
+            responseMimeType: "application/json"
+          }
+        };
+        if (includeThinkingOff && modelName.includes("2.5")) {
+          body.generationConfig.thinkingConfig = { thinkingBudget: 0 };
+        }
+        return JSON.stringify(body);
+      };
+
+      let response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: makePayload(true)
+      });
+
+      if (!response.ok) {
+        response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: makePayload(false)
+        });
       }
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData?.error?.message || `HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      const startIdx = rawText.indexOf("[");
+      const endIdx = rawText.lastIndexOf("]");
+      if (startIdx === -1 || endIdx === -1) throw new Error("JSON配列が見つかりません");
+      return JSON.parse(rawText.slice(startIdx, endIdx + 1));
     }
 
     async function checkAndReplenishWithGemini(forceManual = false) {
@@ -899,7 +955,6 @@
 
       if (!forceManual && remaining >= 100) return;
 
-      // 入力欄にキーが入っていて未保存の場合も自動で拾う
       const inputKeyEl = document.getElementById("setting-api-key");
       if (inputKeyEl && inputKeyEl.value.trim() && !state.apiKey) {
         state.apiKey = inputKeyEl.value.trim();
@@ -916,104 +971,67 @@
       if (isGeneratingAI) return;
 
       isGeneratingAI = true;
-      setAiLoadingUI(true, "利用可能な最新Geminiモデルを自動検索し、新しい50単語を生成中...");
+      const startTime = performance.now();
+      setAiLoadingUI(true, "⚡ 最速Flash-Lite（25語×2並列）で50語を高速生成中...");
 
       try {
         const cleanKey = state.apiKey.trim();
-        const candidateModels = await discoverAvailableGeminiModels(cleanKey);
+        let targetModel = await resolveFastestGeminiModel(cleanKey);
 
         const allExistingWords = buildBalancedPool().map(w => w.word.toLowerCase());
-        const exclusionSample = allExistingWords.slice(-350).join(", ");
+        const exclusionSample = allExistingWords.slice(-220).join(",");
         const theme = state.aiTheme || "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル）";
 
-        const prompt = `あなたは英単語学習教材の専門作成AIです。
-以下のテーマに沿って、日本人学習者向けの重要英単語を【正確に50語】生成してください。
-テーマ: ${theme}
-
-【厳守ルール】
-1. 頭文字がA〜Zまで偏りなくバラけるように50語を選ぶこと（特定のアルファベットに集中させない）。
-2. 品詞（verb, noun, adj, adv）をバランスよく含めること。
-3. 以下の既出単語リストに含まれる単語は絶対に重複して出さないこと:
-[${exclusionSample}]
-4. 出力は以下のJSON配列形式のみとし、解説文やMarkdown記法は一切含めないこと:
-[
-  {
-    "word": "英単語(小文字)",
-    "phonetic": "/発音記号/",
-    "pos": "verb または noun または adj または adv",
-    "meaning": "簡潔で分かりやすい日本語訳（1〜2個）",
-    "example": "自然で実用的な英語例文（8〜14語程度）",
-    "exampleJa": "英語例文の自然な日本語訳"
-  }
-]`;
-
-        let generatedArray = null;
-        let usedModelName = "";
-        let lastError = "";
-
-        for (const modelName of candidateModels.slice(0, 6)) {
-          try {
-            setAiLoadingUI(true, `モデル ${modelName} で新しい50語を生成中...`);
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(cleanKey)}`;
-            const response = await fetch(url, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }],
-                generationConfig: {
-                  temperature: 0.75
-                }
-              })
-            });
-
-            if (!response.ok) {
-              const errData = await response.json().catch(() => ({}));
-              lastError = errData?.error?.message || `HTTP ${response.status}`;
-              continue;
-            }
-
-            const data = await response.json();
-            const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-            // コードブロックや前後の説明文が混ざっていてもJSON配列 `[...]` だけを確実に抽出
-            const startIdx = rawText.indexOf("[");
-            const endIdx = rawText.lastIndexOf("]");
-            if (startIdx === -1 || endIdx === -1) {
-              lastError = "応答にJSON配列が含まれていませんでした";
-              continue;
-            }
-            const jsonSlice = rawText.slice(startIdx, endIdx + 1);
-            const parsed = JSON.parse(jsonSlice);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              generatedArray = parsed;
-              usedModelName = modelName;
-              break;
-            }
-          } catch (innerErr) {
-            lastError = innerErr.message || String(innerErr);
-          }
-        }
-
-        if (!generatedArray) {
-          throw new Error(lastError || "利用可能なすべてのモデルで生成に失敗しました");
+        let rawItems = [];
+        try {
+          const [batchAM, batchNZ] = await Promise.all([
+            requestCompactBatch25(cleanKey, targetModel, theme, "A〜M", exclusionSample),
+            requestCompactBatch25(cleanKey, targetModel, theme, "N〜Z", exclusionSample)
+          ]);
+          rawItems = [...(Array.isArray(batchAM) ? batchAM : []), ...(Array.isArray(batchNZ) ? batchNZ : [])];
+        } catch (firstErr) {
+          state.cachedFastModel = "";
+          targetModel = await resolveFastestGeminiModel(cleanKey);
+          const [batchAM, batchNZ] = await Promise.all([
+            requestCompactBatch25(cleanKey, targetModel, theme, "A〜M", exclusionSample),
+            requestCompactBatch25(cleanKey, targetModel, theme, "N〜Z", exclusionSample)
+          ]);
+          rawItems = [...(Array.isArray(batchAM) ? batchAM : []), ...(Array.isArray(batchNZ) ? batchNZ : [])];
         }
 
         const existingSet = new Set(buildBalancedPool().map(w => w.word.toLowerCase()));
         const newlyAdded = [];
-        for (const item of generatedArray) {
-          if (!item || !item.word) continue;
-          const cleanW = String(item.word).trim();
+
+        for (const item of rawItems) {
+          if (!item) continue;
+          const wText = Array.isArray(item) ? item[0] : item.word;
+          if (!wText) continue;
+          const cleanW = String(wText).trim();
           const lower = cleanW.toLowerCase();
+
           if (!existingSet.has(lower) && cleanW.length > 1) {
             existingSet.add(lower);
-            newlyAdded.push({
-              word: cleanW,
-              phonetic: item.phonetic || "/-/",
-              pos: item.pos || "word",
-              meaning: item.meaning || "（意味未設定）",
-              example: item.example || "",
-              exampleJa: item.exampleJa || "",
-              aiGenerated: true
-            });
+            if (Array.isArray(item)) {
+              newlyAdded.push({
+                word: cleanW,
+                phonetic: item[1] || "/-/",
+                pos: item[2] || "word",
+                meaning: item[3] || "",
+                example: item[4] || "",
+                exampleJa: item[5] || "",
+                aiGenerated: true
+              });
+            } else {
+              newlyAdded.push({
+                word: cleanW,
+                phonetic: item.phonetic || "/-/",
+                pos: item.pos || "word",
+                meaning: item.meaning || "",
+                example: item.example || "",
+                exampleJa: item.exampleJa || "",
+                aiGenerated: true
+              });
+            }
           }
         }
 
@@ -1027,14 +1045,15 @@
           state.studyIndex = 0;
         }
 
+        const elapsedSec = ((performance.now() - startTime) / 1000).toFixed(1);
         saveState();
         renderAll();
         setAiLoadingUI(
           false,
-          `✅ ${usedModelName} で新しい単語を ${newlyAdded.length} 語追加し、新しいDayを解放しました！（累計AI追加: ${state.customPool.length}語）`
+          `⚡ 完了（${elapsedSec}秒 / ${targetModel}）：新しい単語を ${newlyAdded.length} 語追加しました！（累計AI追加: ${state.customPool.length}語）`
         );
       } catch (err) {
-        console.error("Gemini Auto-Replenish Error:", err);
+        console.error("Gemini Fast Replenish Error:", err);
         setAiLoadingUI(false, `⚠️ AI生成エラー: ${err.message}`);
         if (forceManual) {
           alert(`AI生成エラー: ${err.message}`);
@@ -1058,19 +1077,19 @@
         toastText.textContent = messageText;
         if (btnManual) {
           btnManual.disabled = true;
-          btnManual.textContent = "⏳ AI生成中...";
+          btnManual.textContent = "⚡ 並列生成中...";
         }
       } else {
         topBadge.classList.add("hidden");
         topBadge.classList.remove("flex");
         if (btnManual) {
           btnManual.disabled = false;
-          btnManual.textContent = "✨ 今すぐ+50語をAI生成";
+          btnManual.textContent = "⚡ 高速で+50語をAI生成";
         }
         if (messageText) {
           toast.classList.remove("hidden");
           toastText.textContent = messageText;
-          setTimeout(() => toast.classList.add("hidden"), 5000);
+          setTimeout(() => toast.classList.add("hidden"), 4500);
         } else {
           toast.classList.add("hidden");
         }
@@ -1089,7 +1108,7 @@
       const pill = document.getElementById("home-ai-status-pill");
       if (pill) {
         pill.textContent = state.apiKey
-          ? `🤖 Gemini無限補充ON (ストック残${rem}語)`
+          ? `⚡ 並列AI補充ON (未出題ストック残${rem}語)`
           : `A〜Z均等配分 (APIキー設定で無限化)`;
       }
     }
@@ -1236,6 +1255,11 @@
       } catch (e) {}
 
       if (!Array.isArray(state.customPool)) state.customPool = [];
+
+      // もし3.8など重いモデルがキャッシュされていたら自動的にクリアして最速モデルを再選択
+      if (state.cachedFastModel && !state.cachedFastModel.includes("lite")) {
+        state.cachedFastModel = "";
+      }
 
       if (!state.days || !state.days[1] || state.days[1].length === 0 || hasAlphabeticalBias(state.days[1])) {
         rebalanceAllUnlearnedDays(false);
@@ -1738,9 +1762,9 @@
     function saveApiKey() {
       state.apiKey = document.getElementById("setting-api-key").value.trim();
       state.aiTheme = document.getElementById("setting-ai-theme").value;
+      state.cachedFastModel = "";
       saveState();
       renderAll();
-      alert("✅ Gemini APIキーを保存しました！続けて動作テストも兼ねて最初の50語補充を開始します。");
       checkAndReplenishWithGemini(true);
     }
 
