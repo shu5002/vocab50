@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>AI Vocab 50 - 毎日50語・忘却曲線スマート英単語</title>
+
+  <!-- iOS Safari Home Screen Web App (PWA) Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Vocab 50" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <!-- Custom SVG App Icon for iOS Home Screen & Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' rx='28' fill='url(%23g)'/%3E%3Ctext x='60' y='62' font-family='sans-serif' font-size='44' font-weight='900' fill='white' text-anchor='middle' dominant-baseline='middle'%3E50%3C/text%3E%3Ctext x='60' y='95' font-family='sans-serif' font-size='16' font-weight='700' fill='%23e0e7ff' text-anchor='middle'%3EVOCAB%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='120' height='120' fill='url(%23g)'/%3E%3Ctext x='60' y='62' font-family='sans-serif' font-size='44' font-weight='900' fill='white' text-anchor='middle' dominant-baseline='middle'%3E50%3C/text%3E%3Ctext x='60' y='95' font-family='sans-serif' font-size='16' font-weight='700' fill='%23e0e7ff' text-anchor='middle'%3EVOCAB%3C/text%3E%3C/svg%3E" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+    body {
+      font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      background-color: #020617;
+      color: #f8fafc;
+      overscroll-behavior-y: none;
+    }
+    .safe-top {
+      padding-top: max(0.75rem, env(safe-area-inset-top));
+    }
+    .safe-bottom {
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    }
+    .card-3d {
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+    }
+    .card-3d:active {
+      transform: scale(0.985);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade {
+      animation: fadeIn 0.22s ease-out forwards;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center bg-slate-950 text-slate-100">
+
+  <!-- App Shell Container (Mobile optimized max-w-md) -->
+  <div class="w-full max-w-md min-h-screen bg-slate-900 flex flex-col justify-between shadow-2xl border-x border-slate-800/80 relative pb-24">
+
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-3 safe-top flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 font-black text-white text-sm">
+          50
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h1 class="text-sm font-black tracking-tight text-white">AI Vocab 50</h1>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">AUTO∞</span>
+          </div>
+          <p class="text-[11px] text-slate-400">毎日50語・自動追加＆忘却曲線復習</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <!-- Streak Badge -->
+        <div class="flex items-center gap-1 bg-amber-500/15 border border-amber-500/30 text-amber-400 px-2.5 py-1 rounded-full text-xs font-extrabold">
+          <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-400"></i>
+          <span id="header-streak">1日連続</span>
+        </div>
+
+        <!-- GitHub & iPhone Home Screen Guide Button -->
+        <button onclick="openModal('github-modal')" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-400 border border-slate-700 transition" title="GitHub公開・ホーム画面追加ガイド">
+          <i data-lucide="smartphone" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Settings & API Key / Backup Button -->
+        <button onclick="openModal('settings-modal')" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition" title="設定・APIキー・バックアップ">
+          <i data-lucide="settings" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Toast Notification Banner -->
+    <div id="toast-container" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-[-10px] w-[90%] max-w-sm">
+      <div id="toast-box" class="bg-emerald-600 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl border border-emerald-400/40 flex items-center justify-center gap-2 text-center">
+        <span id="toast-text">保存しました</span>
+      </div>
+    </div>
+
+    <!-- Auto Pop-up Spaced Repetition Review Prompt ("よきところで復習") -->
+    <div id="popup-review-banner" class="hidden mx-4 mt-3 bg-gradient-to-r from-rose-950 via-slate-900 to-slate-900 border border-rose-500/40 rounded-2xl p-3.5 shadow-lg animate-fade">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shrink-0">
+            <i data-lucide="bell-ring" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <p class="text-xs font-extrabold text-white">よきところで復習タイミング！</p>
+            <p id="popup-review-sub" class="text-[11px] text-rose-200">忘却曲線にもとづく復習単語があります</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button onclick="dismissReviewPopup()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-400 text-[11px] font-bold">後で</button>
+          <button onclick="dismissReviewPopup(); switchTab('review'); startSmartReviewQuiz();" class="px-3 py-1.5 rounded-lg bg-rose-500 text-white text-[11px] font-extrabold shadow">5問復習</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dynamic View Container -->
+    <main id="main-view" class="flex-1 px-4 py-4 space-y-5 overflow-y-auto"></main>
+
+    <!-- Bottom Thumb-Friendly Navigation Bar -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 px-2 py-2 safe-bottom flex items-center justify-around z-40">
+      <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition text-indigo-400 font-bold">
+        <i data-lucide="zap" class="w-5 h-5"></i>
+        <span class="text-[10px]">ホーム</span>
+      </button>
+
+      <button onclick="switchTab('daily50')" id="nav-daily50" class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition text-slate-400">
+        <i data-lucide="book-open" class="w-5 h-5"></i>
+        <span class="text-[10px]">今日の50語</span>
+      </button>
+
+      <button onclick="switchTab('review')" id="nav-review" class="relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition text-slate-400">
+        <i data-lucide="brain" class="w-5 h-5"></i>
+        <span class="text-[10px]">適時復習</span>
+        <span id="nav-review-badge" class="hidden absolute top-0.5 right-2 bg-rose-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
+      </button>
+
+      <button onclick="switchTab('progress')" id="nav-progress" class="flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition text-slate-400">
+        <i data-lucide="calendar" class="w-5 h-5"></i>
+        <span class="text-[10px]">積み重ね記録</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ==========================================
+       MODAL 1: GitHub Pages & iOS Home Screen Guide
+       ========================================== -->
+  <div id="github-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl max-h-[88vh] overflow-y-auto">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="smartphone" class="w-5 h-5 text-emerald-400"></i>
+          <h3 class="text-sm font-extrabold text-white">GitHub Pages公開 ＆ ホーム画面追加</h3>
+        </div>
+        <button onclick="closeModal('github-modal')" class="p-1.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- 1-Tap Copy HTML Button for Easy GitHub Upload -->
+      <div class="bg-indigo-950/70 border border-indigo-500/40 rounded-2xl p-3.5 space-y-2.5">
+        <p class="text-xs font-bold text-indigo-200">ステップ0：このアプリのHTMLコードを取得</p>
+        <p class="text-[11px] text-slate-300 leading-relaxed">
+          下のボタンを押すと、このアプリ全体の完全なHTMLコード（<code class="text-emerald-300">index.html</code>）をワンタップでコピーまたはダウンロードできます。
+        </p>
+        <div class="flex gap-2">
+          <button onclick="copyFullHtmlSource()" class="flex-1 py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>HTML全文をコピー</span>
+          </button>
+          <button onclick="downloadHtmlFile()" class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 font-bold text-xs flex items-center justify-center gap-1.5">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>index.html保存</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="bg-slate-800/90 rounded-2xl p-3.5 border border-slate-700 space-y-1.5">
+          <p class="font-bold text-emerald-300">ステップ1：GitHub Pagesに置く（3分）</p>
+          <ol class="list-decimal list-inside text-slate-300 space-y-1 text-[11px] leading-relaxed">
+            <li>GitHubで新規リポジトリ（例: <code class="text-amber-300">vocab50</code>）を作成</li>
+            <li><strong>Add file ＞ Create new file</strong> を選択</li>
+            <li>ファイル名を <code class="text-emerald-300 font-bold">index.html</code> にし、コピーしたHTMLを貼り付けて <strong>Commit changes</strong></li>
+            <li><strong>Settings ＞ Pages</strong> を開き、Branchを <code class="text-indigo-300">main</code> にして Save</li>
+            <li>発行されたURL（<code class="text-slate-400">https://ユーザー名.github.io/vocab50/</code>）を<strong>iPhoneのSafari</strong>で開く</li>
+          </ol>
+        </div>
+
+        <div class="bg-slate-800/90 rounded-2xl p-3.5 border border-slate-700 space-y-1.5">
+          <p class="font-bold text-indigo-300">ステップ2：Safariからホーム画面に追加</p>
+          <ol class="list-decimal list-inside text-slate-300 space-y-1 text-[11px] leading-relaxed">
+            <li>Safari画面下の<strong>「共有ボタン（四角から上矢印）」</strong>をタップ</li>
+            <li><strong>「ホーム画面に追加」</strong>をタップ</li>
+            <li>ホーム画面に専用の「50 VOCAB」アイコンが追加され、毎日1タップ・0秒で起動できます！</li>
+          </ol>
+        </div>
+      </div>
+
+      <button onclick="closeModal('github-modal')" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs">
+        閉じる
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL 2: Settings, Auto-Expansion, Gemini API & Backup
+       ========================================== -->
+  <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl max-h-[88vh] overflow-y-auto">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="settings" class="w-5 h-5 text-indigo-400"></i>
+          <h3 class="text-sm font-extrabold text-white">自動追加設定・音声・バックアップ</h3>
+        </div>
+        <button onclick="closeModal('settings-modal')" class="p-1.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Auto-Expansion Explanation & Toggle -->
+      <div class="bg-emerald-950/50 border border-emerald-500/30 rounded-2xl p-3.5 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-extrabold text-emerald-300">🔄 毎日50語の自動追加エンジン</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">常時ON</span>
+        </div>
+        <p class="text-[11px] text-slate-300 leading-relaxed">
+          現在のDayの学習が<strong>80%（40/50語）</strong>に達するか、<strong>日付が変わって前日分が完了</strong>していると、操作なしで自動的に次のDay（新しい50単語）が生成・追加されます。
+        </p>
+      </div>
+
+      <!-- Speech Settings (Default UK Toggleable) -->
+      <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-3.5 space-y-2.5">
+        <p class="text-xs font-bold text-white">発音ボイス設定 (Web Speech API)</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="setVoiceAccent('en-GB')" id="btn-accent-gb" class="py-2 rounded-xl text-xs font-bold border bg-indigo-600 text-white border-indigo-400">
+            🇬🇧 イギリス英語 (UK)
+          </button>
+          <button onclick="setVoiceAccent('en-US')" id="btn-accent-us" class="py-2 rounded-xl text-xs font-bold border bg-slate-900 text-slate-400 border-slate-700">
+            🇺🇸 アメリカ英語 (US)
+          </button>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="setVoiceSpeed(1.0)" id="btn-speed-normal" class="py-2 rounded-xl text-xs font-bold border bg-indigo-600 text-white border-indigo-400">
+            通常スピード (1.0x)
+          </button>
+          <button onclick="setVoiceSpeed(0.8)" id="btn-speed-slow" class="py-2 rounded-xl text-xs font-bold border bg-slate-900 text-slate-400 border-slate-700">
+            ゆっくり発音 (0.8x)
+          </button>
+        </div>
+      </div>
+
+      <!-- Optional Gemini API Key Input -->
+      <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-3.5 space-y-2">
+        <div class="flex items-center justify-between">
+          <p class="text-xs font-bold text-indigo-300">Gemini APIキー（AI無限自動生成用・任意）</p>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="text-[10px] text-emerald-400 underline">無料キー取得 ↗</a>
+        </div>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          キー未設定でも内蔵の大容量英単語バンクから毎日自動で50語ずつ追加されます。APIキーを登録しておくと、内蔵バンクに加えてGeminiがバックグラウンドで新しい50単語＋例文を無限に自動生成します。
+        </p>
+        <input id="input-gemini-key" type="password" placeholder="AIzaSy..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500" />
+        <button onclick="saveApiKeyFromModal()" class="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs">
+          APIキーを保存
+        </button>
+      </div>
+
+      <!-- Data Backup & Restore (JSON & CSV) -->
+      <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-3.5 space-y-2.5">
+        <p class="text-xs font-bold text-emerald-300">学習データのバックアップ・CSV出力</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="exportBackupJson()" class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>JSON保存</span>
+          </button>
+          <label class="cursor-pointer py-2.5 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs flex items-center justify-center gap-1.5">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+            <span>JSON復元</span>
+            <input type="file" accept=".json" onchange="importBackupJson(event)" class="hidden" />
+          </label>
+        </div>
+        <button onclick="exportLearnedCsv()" class="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-950 border border-slate-700 text-slate-300 font-bold text-xs flex items-center justify-center gap-1.5">
+          <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span>学習済み単語帳をCSVでダウンロード</span>
+        </button>
+      </div>
+
+      <button onclick="closeModal('settings-modal')" class="w-full py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs">
+        閉じる
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       APPLICATION LOGIC & ENDLESS AUTO-PROGRESSION ENGINE
+       ========================================== -->
+  <script>
+    // 1. Seed Detailed Words (150 words across Days 1-3 with full examples)
+    const SEED_DETAILED_WORDS = [
+      { word: "inevitable", phonetic: "/ɪnˈevɪtəbl/", pos: "形", meaning: "避けられない、必然的な", example: "Change is an inevitable part of life.", exampleJa: "変化は人生において避けられない一部だ。" },
+      { word: "comprehensive", phonetic: "/ˌkɒmprɪˈhensɪv/", pos: "形", meaning: "包括的な、総合的な", example: "We offer a comprehensive training program.", exampleJa: "私たちは包括的な研修プログラムを提供しています。" },
+      { word: "accommodate", phonetic: "/əˈkɒmədeɪt/", pos: "動", meaning: "収容する、適応させる、要望に応える", example: "The hotel can accommodate up to 500 guests.", exampleJa: "そのホテルは最大500人の宿泊客を収容できる。" },
+      { word: "reluctant", phonetic: "/rɪˈlʌktənt/", pos: "形", meaning: "気が進まない、渋々の", example: "She was reluctant to admit her mistake.", exampleJa: "彼女は自分の間違いを認めたがらなかった。" },
+      { word: "substantial", phonetic: "/səbˈstænʃl/", pos: "形", meaning: "かなりの、実質的な、重大な", example: "They made a substantial improvement in sales.", exampleJa: "彼らは売上にかなりの改善をもたらした。" },
+      { word: "implement", phonetic: "/ˈɪmplɪment/", pos: "動", meaning: "実行する、導入する", example: "We will implement the new system next month.", exampleJa: "来月、新しいシステムを導入します。" },
+      { word: "distinguish", phonetic: "/dɪˈstɪŋɡwɪʃ/", pos: "動", meaning: "区別する、見分ける", example: "It is hard to distinguish between the twins.", exampleJa: "その双子を見分けるのは難しい。" },
+      { word: "arbitrary", phonetic: "/ˈɑːbɪtrəri/", pos: "形", meaning: "恣意的な、独断的な", example: "The decision seemed completely arbitrary.", exampleJa: "その決定は完全に独断的なものに思えた。" },
+      { word: "controversial", phonetic: "/ˌkɒntrəˈvɜːʃl/", pos: "形", meaning: "物議を醸す、議論の的になる", example: "The new policy has been highly controversial.", exampleJa: "その新方針は大きな物議を醸している。" },
+      { word: "preliminary", phonetic: "/prɪˈlɪmɪnəri/", pos: "形", meaning: "予備の、事前の", example: "These are just the preliminary results.", exampleJa: "これらはまだ予備的な結果にすぎません。" },
+      { word: "accumulate", phonetic: "/əˈkjuːmjəleɪt/", pos: "動", meaning: "蓄積する、積もる", example: "Knowledge accumulates through daily study.", exampleJa: "知識は毎日の学習によって蓄積される。" },
+      { word: "vulnerable", phonetic: "/ˈvʌlnərəbl/", pos: "形", meaning: "脆弱な、傷つきやすい", example: "Old systems are vulnerable to cyber attacks.", exampleJa: "古いシステムはサイバー攻撃に対して脆弱だ。" },
+      { word: "simultaneously", phonetic: "/ˌsɪmlˈteɪniəsli/", pos: "副", meaning: "同時に、一斉に", example: "The game was broadcast simultaneously worldwide.", exampleJa: "その試合は世界中で同時に放送された。" },
+      { word: "obstacle", phonetic: "/ˈɒbstəkl/", pos: "名", meaning: "障害、妨げ", example: "Lack of funding is a major obstacle.", exampleJa: "資金不足が大きな障害となっている。" },
+      { word: "incentive", phonetic: "/ɪnˈsentɪv/", pos: "名", meaning: "動機づけ、報奨金、刺激", example: "Bonuses provide an incentive to work harder.", exampleJa: "ボーナスはより懸命に働く動機づけになる。" },
+      { word: "profound", phonetic: "/prəˈfaʊnd/", pos: "形", meaning: "深い、重大な、難解な", example: "His speech had a profound impact on me.", exampleJa: "彼のスピーチは私に深い影響を与えた。" },
+      { word: "ambiguous", phonetic: "/æmˈbɪɡjuəs/", pos: "形", meaning: "曖昧な、多義的な", example: "The wording of the contract is ambiguous.", exampleJa: "その契約書の文言は曖昧だ。" },
+      { word: "compulsory", phonetic: "/kəmˈpʌlsəri/", pos: "形", meaning: "義務的な、必須の", example: "Attendance at the safety seminar is compulsory.", exampleJa: "安全セミナーへの出席は必須です。" },
+      { word: "deteriorate", phonetic: "/dɪˈtɪəriəreɪt/", pos: "動", meaning: "悪化する、劣化する", example: "The weather began to deteriorate rapidly.", exampleJa: "天候が急速に悪化し始めた。" },
+      { word: "fluctuate", phonetic: "/ˈflʌktʃueɪt/", pos: "動", meaning: "変動する、上下する", example: "Prices fluctuate according to demand.", exampleJa: "価格は需要に応じて変動する。" },
+      { word: "exclusively", phonetic: "/ɪkˈskluːsɪvli/", pos: "副", meaning: "専ら、独占的に", example: "This lounge is reserved exclusively for members.", exampleJa: "このラウンジは会員専用です。" },
+      { word: "feasible", phonetic: "/ˈfiːzəbl/", pos: "形", meaning: "実行可能な、実現できる", example: "Is it feasible to finish the project by Friday?", exampleJa: "金曜日までにプロジェクトを終わらせるのは可能ですか？" },
+      { word: "integrate", phonetic: "/ˈɪntɪɡreɪt/", pos: "動", meaning: "統合する、融合させる", example: "We integrated AI into our customer workflow.", exampleJa: "私たちは顧客対応フローにAIを統合した。" },
+      { word: "legitimate", phonetic: "/lɪˈdʒɪtɪmət/", pos: "形", meaning: "正当な、合法的な", example: "That is a completely legitimate concern.", exampleJa: "それは至極まっとうな懸念だ。" },
+      { word: "mandatory", phonetic: "/ˈmændətəri/", pos: "形", meaning: "義務的な、強制的な", example: "Wearing a helmet is mandatory on site.", exampleJa: "現場ではヘルメットの着用が義務付けられている。" },
+      { word: "negligible", phonetic: "/ˈneɡlɪdʒəbl/", pos: "形", meaning: "無視できるほどの、ごくわずかな", example: "The difference in cost is negligible.", exampleJa: "コストの差はごくわずかだ。" },
+      { word: "obsolete", phonetic: "/ˈɒbsəliːt/", pos: "形", meaning: "時代遅れの、廃れた", example: "New technology rendered the old machine obsolete.", exampleJa: "新技術によって古い機械は時代遅れになった。" },
+      { word: "paradigm", phonetic: "/ˈpærədaɪm/", pos: "名", meaning: "枠組み、模範、パラダイム", example: "Remote work created a new paradigm in business.", exampleJa: "リモートワークはビジネスに新しい枠組みを作った。" },
+      { word: "plausible", phonetic: "/ˈplɔːzəbl/", pos: "形", meaning: "もっともらしい、妥当な", example: "He gave a plausible explanation for being late.", exampleJa: "彼は遅刻についてもっともらしい説明をした。" },
+      { word: "prerequisite", phonetic: "/ˌpriːˈrekwɪzɪt/", pos: "名", meaning: "前提条件、必須条件", example: "Experience is a prerequisite for this position.", exampleJa: "この職種には経験が必須条件です。" },
+      { word: "promptly", phonetic: "/ˈprɒmptli/", pos: "副", meaning: "迅速に、直ちに", example: "Please reply to the client promptly.", exampleJa: "クライアントには迅速に返信してください。" },
+      { word: "reconcile", phonetic: "/ˈrekənsaɪl/", pos: "動", meaning: "和解させる、一致させる、折り合いをつける", example: "It is hard to reconcile work and family life.", exampleJa: "仕事と家庭生活の両立は難しい。" },
+      { word: "redundant", phonetic: "/rɪˈdʌndənt/", pos: "形", meaning: "余剰の、冗長な、不要な", example: "Edit out any redundant words in your essay.", exampleJa: "エッセイの冗長な単語は削りなさい。" },
+      { word: "scrutinize", phonetic: "/ˈskruːtənaɪz/", pos: "動", meaning: "綿密に調べる、精査する", example: "Auditors scrutinized the financial records.", exampleJa: "監査役は財務記録を精査した。" },
+      { word: "spontaneous", phonetic: "/spɒnˈteɪniəs/", pos: "形", meaning: "自発的な、突発的な", example: "The audience burst into spontaneous applause.", exampleJa: "観客から自然と拍手が沸き起こった。" },
+      { word: "subsequent", phonetic: "/ˈsʌbsɪkwənt/", pos: "形", meaning: "その後の、続く", example: "Subsequent events proved she was right.", exampleJa: "その後の出来事によって彼女が正しいと証明された。" },
+      { word: "superficial", phonetic: "/ˌsuːpəˈfɪʃl/", pos: "形", meaning: "表面的な、浅薄な", example: "He only has a superficial knowledge of the topic.", exampleJa: "彼はその話題について表面的な知識しか持っていない。" },
+      { word: "surpass", phonetic: "/səˈpɑːs/", pos: "動", meaning: "上回る、凌駕する", example: "Results surpassed our highest expectations.", exampleJa: "結果は私たちの最大の期待を上回った。" },
+      { word: "susceptible", phonetic: "/səˈseptəbl/", pos: "形", meaning: "影響を受けやすい、かかりやすい", example: "Children are more susceptible to colds.", exampleJa: "子供はより風邪をひきやすい。" },
+      { word: "tentative", phonetic: "/ˈtentətɪv/", pos: "形", meaning: "仮の、暫定的な", example: "We set a tentative date for the meeting.", exampleJa: "私たちは会議の仮の日程を決めた。" },
+      { word: "transparent", phonetic: "/trænsˈpærənt/", pos: "形", meaning: "透明な、明快な", example: "The company promised a transparent hiring process.", exampleJa: "その会社は透明性の高い採用プロセスを約束した。" },
+      { word: "unprecedented", phonetic: "/ʌnˈpresɪdentɪd/", pos: "形", meaning: "前例のない、空前の", example: "The team achieved unprecedented success.", exampleJa: "そのチームは前例のない成功を収めた。" },
+      { word: "versatile", phonetic: "/ˈvɜːsətaɪl/", pos: "形", meaning: "多才な、多用途の", example: "Eggs are one of the most versatile ingredients.", exampleJa: "卵は最も多用途な食材の一つだ。" },
+      { word: "viable", phonetic: "/ˈvaɪəbl/", pos: "形", meaning: "実行可能な、存続可能な", example: "Solar power is a viable alternative to fossil fuels.", exampleJa: "太陽光発電は化石燃料に代わる実用的な選択肢だ。" },
+      { word: "withstand", phonetic: "/wɪðˈstænd/", pos: "動", meaning: "耐える、持ちこたえる", example: "The bridge was built to withstand strong earthquakes.", exampleJa: "その橋は強い地震に耐えるよう建設された。" },
+      { word: "yield", phonetic: "/jiːld/", pos: "動", meaning: "産出する、もたらす、屈する", example: "Our research yielded promising results.", exampleJa: "私たちの研究は有望な結果をもたらした。" },
+      { word: "allocate", phonetic: "/ˈæləkeɪt/", pos: "動", meaning: "割り当てる、配分する", example: "We need to allocate more time to testing.", exampleJa: "テストにもっと時間を割り当てる必要がある。" },
+      { word: "consolidate", phonetic: "/kənˈsɒlɪdeɪt/", pos: "動", meaning: "統合する、強化する", example: "The firm decided to consolidate its two branches.", exampleJa: "その企業は2つの支社を統合することに決めた。" },
+      { word: "deplete", phonetic: "/dɪˈpliːt/", pos: "動", meaning: "枯渇させる、使い果たす", example: "Long meetings often deplete our energy.", exampleJa: "長時間の会議はしばしば私たちのエネルギーを消耗させる。" },
+      { word: "foster", phonetic: "/ˈfɒstə/", pos: "動", meaning: "育む、促進する", example: "Good leaders foster creativity in their teams.", exampleJa: "優れたリーダーはチームの創造性を育む。" },
+      { word: "mitigate", phonetic: "/ˈmɪtɪɡeɪt/", pos: "動", meaning: "軽減する、和らげる", example: "Planting trees helps mitigate climate change.", exampleJa: "植林は気候変動を和らげるのに役立つ。" },
+      { word: "alleviate", phonetic: "/əˈliːvieɪt/", pos: "動", meaning: "緩和する、軽くする", example: "This medicine will alleviate your headache.", exampleJa: "この薬は頭痛を和らげてくれます。" },
+      { word: "expedite", phonetic: "/ˈekspədaɪt/", pos: "動", meaning: "促進する、迅速に処理する", example: "We paid extra to expedite the shipping.", exampleJa: "配送を早めるために追加料金を払った。" },
+      { word: "lucrative", phonetic: "/ˈluːkrətɪv/", pos: "形", meaning: "収益性の高い、儲かる", example: "She signed a lucrative contract with the firm.", exampleJa: "彼女はその企業と好条件の契約を結んだ。" },
+      { word: "meticulous", phonetic: "/məˈtɪkjələs/", pos: "形", meaning: "細心の、綿密な", example: "He is meticulous about keeping records.", exampleJa: "彼は記録をつけることに関して非常に几帳面だ。" },
+      { word: "pragmatic", phonetic: "/præɡˈmætɪk/", pos: "形", meaning: "実用的な、現実的な", example: "We need a pragmatic approach to solve this.", exampleJa: "これを解決するには現実的なアプローチが必要だ。" },
+      { word: "resilient", phonetic: "/rɪˈzɪliənt/", pos: "形", meaning: "回復力のある、強靭な", example: "The local economy proved remarkably resilient.", exampleJa: "地域経済は驚くほど回復力があることを証明した。" },
+      { word: "ubiquitous", phonetic: "/juːˈbɪkwɪtəs/", pos: "形", meaning: "至る所に存在する、普遍的な", example: "Smartphones have become ubiquitous in modern life.", exampleJa: "スマートフォンは現代生活の至る所に普及した。" },
+      { word: "unanimous", phonetic: "/juˈnænɪməs/", pos: "形", meaning: "満場一致の、合意の", example: "The board reached a unanimous decision.", exampleJa: "役員会は満場一致の決定に達した。" },
+      { word: "affluent", phonetic: "/ˈæfluənt/", pos: "形", meaning: "裕福な、豊かな", example: "They live in an affluent neighborhood.", exampleJa: "彼らは裕福な住宅街に住んでいる。" },
+      { word: "augment", phonetic: "/ɔːɡˈment/", pos: "動", meaning: "増強する、増やす", example: "He writes freelance articles to augment his income.", exampleJa: "彼は収入を増やすためにフリーランスの記事を書いている。" },
+      { word: "candid", phonetic: "/ˈkændɪd/", pos: "形", meaning: "率直な、包み隠さない", example: "Thank you for your candid feedback.", exampleJa: "率直なフィードバックをありがとうございます。" },
+      { word: "catalyst", phonetic: "/ˈkætəlɪst/", pos: "名", meaning: "触媒、きっかけ", example: "The crisis acted as a catalyst for reform.", exampleJa: "その危機が改革のきっかけとなった。" },
+      { word: "coherent", phonetic: "/kəʊˈhɪərənt/", pos: "形", meaning: "首尾一貫した、筋の通った", example: "We need a coherent strategy for marketing.", exampleJa: "マーケティングには一貫した戦略が必要だ。" },
+      { word: "compatible", phonetic: "/kəmˈpætəbl/", pos: "形", meaning: "互換性がある、両立できる", example: "This software is compatible with both Mac and Windows.", exampleJa: "このソフトはMacとWindowsの両方に対応している。" },
+      { word: "complacent", phonetic: "/kəmˈpleɪsnt/", pos: "形", meaning: "現状に満足しきった、油断した", example: "We cannot afford to become complacent after one win.", exampleJa: "1勝したからといって油断するわけにはいかない。" },
+      { word: "conducive", phonetic: "/kənˈdjuːsɪv/", pos: "形", meaning: "助けになる、資する", example: "A quiet room is conducive to deep concentration.", exampleJa: "静かな部屋は深い集中に役立つ。" },
+      { word: "conspicuous", phonetic: "/kənˈspɪkjuəs/", pos: "形", meaning: "目立つ、顕著な", example: "Safety signs should be placed in a conspicuous spot.", exampleJa: "安全標識は目立つ場所に設置すべきだ。" },
+      { word: "contingent", phonetic: "/kənˈtɪndʒənt/", pos: "形", meaning: "〜次第である、偶発的な", example: "Our outdoor event is contingent on the weather.", exampleJa: "屋外イベントは天候次第だ。" },
+      { word: "corroborate", phonetic: "/kəˈrɒbəreɪt/", pos: "動", meaning: "裏付ける、確証する", example: "Data from three experiments corroborated the theory.", exampleJa: "3つの実験データが理論を裏付けた。" },
+      { word: "credibility", phonetic: "/ˌkredəˈbɪləti/", pos: "名", meaning: "信頼性、信用", example: "Accuracy is essential to maintain brand credibility.", exampleJa: "ブランドの信頼性を保つには正確さが不可欠だ。" },
+      { word: "cumbersome", phonetic: "/ˈkʌmbəsəm/", pos: "形", meaning: "煩雑な、扱いにくい", example: "The old approval process was slow and cumbersome.", exampleJa: "以前の承認プロセスは遅くて煩雑だった。" },
+      { word: "curtail", phonetic: "/kɜːˈteɪl/", pos: "動", meaning: "削減する、短縮する", example: "The company decided to curtail unnecessary travel expenses.", exampleJa: "会社は不要な出張費を削減することに決めた。" },
+      { word: "deficit", phonetic: "/ˈdefɪsɪt/", pos: "名", meaning: "赤字、不足", example: "We must reduce the budget deficit this year.", exampleJa: "今年は予算赤字を削減しなければならない。" },
+      { word: "detrimental", phonetic: "/ˌdetrɪˈmentl/", pos: "形", meaning: "有害な、不利益な", example: "Lack of sleep is detrimental to your health.", exampleJa: "睡眠不足は健康に有害だ。" },
+      { word: "devoid", phonetic: "/dɪˈvɔɪd/", pos: "形", meaning: "〜を全く欠いている", example: "The report was completely devoid of practical ideas.", exampleJa: "その報告書には実用的なアイデアが全く欠けていた。" },
+      { word: "diligent", phonetic: "/ˈdɪlɪdʒənt/", pos: "形", meaning: "勤勉な、入念な", example: "Success comes from diligent daily effort.", exampleJa: "成功は日々の勤勉な努力から生まれる。" },
+      { word: "discrepancy", phonetic: "/dɪˈskrepənsi/", pos: "名", meaning: "食い違い、不一致", example: "We found a discrepancy between the two accounts.", exampleJa: "2つの帳簿の間に食い違いが見つかった。" },
+      { word: "disseminate", phonetic: "/dɪˈsemɪneɪt/", pos: "動", meaning: "普及させる、広める", example: "The organization disseminates health information online.", exampleJa: "その団体はオンラインで健康情報を広めている。" },
+      { word: "dwindle", phonetic: "/ˈdwɪndl/", pos: "動", meaning: "次第に減少する、縮小する", example: "Our supplies began to dwindle after a week.", exampleJa: "1週間後、私たちの物資は減り始めた。" },
+      { word: "elicit", phonetic: "/ɪˈlɪsɪt/", pos: "動", meaning: "引き出す、誘い出す", example: "The survey aimed to elicit honest opinions.", exampleJa: "その調査は率直な意見を引き出すことを目的としていた。" },
+      { word: "eloquent", phonetic: "/ˈeləkwənt/", pos: "形", meaning: "雄弁な、説得力のある", example: "She gave an eloquent speech at the conference.", exampleJa: "彼女は会議で説得力のあるスピーチを行った。" },
+      { word: "eminent", phonetic: "/ˈemɪnənt/", pos: "形", meaning: "著名な、卓越した", example: "An eminent scientist led the research team.", exampleJa: "著名な科学者が研究チームを率いた。" },
+      { word: "empirical", phonetic: "/ɪmˈpɪrɪkl/", pos: "形", meaning: "経験的な、実証的な", example: "We need empirical evidence to support the claim.", exampleJa: "その主張を裏付ける実証的な証拠が必要だ。" },
+      { word: "encompass", phonetic: "/ɪnˈkʌmpəs/", pos: "動", meaning: "包含する、網羅する", example: "The festival encompasses music, art, and food.", exampleJa: "そのフェスティバルは音楽、芸術、食を網羅している。" },
+      { word: "endorse", phonetic: "/ɪnˈdɔːs/", pos: "動", meaning: "支持する、推奨する", example: "Many doctors endorse this healthy diet.", exampleJa: "多くの医師がこの健康的な食事法を推奨している。" },
+      { word: "entail", phonetic: "/ɪnˈteɪl/", pos: "動", meaning: "伴う、必要とする", example: "Starting a business entails significant risk.", exampleJa: "起業には大きなリスクが伴う。" },
+      { word: "ephemeral", phonetic: "/ɪˈfemərəl/", pos: "形", meaning: "つかの間の、短命な", example: "Internet trends are often ephemeral.", exampleJa: "ネットの流行はしばしばつかの間のものだ。" },
+      { word: "equilibrium", phonetic: "/ˌiːkwɪˈlɪbriəm/", pos: "名", meaning: "均衡、バランス", example: "Market prices reached a new equilibrium.", exampleJa: "市場価格は新しい均衡状態に達した。" },
+      { word: "erratic", phonetic: "/ɪˈrætɪk/", pos: "形", meaning: "不規則な、不安定な", example: "The clock's behavior became erratic after the drop.", exampleJa: "落とした後、時計の動きが不規則になった。" },
+      { word: "exacerbate", phonetic: "/ɪɡˈzæsəbeɪt/", pos: "動", meaning: "悪化させる", example: "Ignoring the problem will only exacerbate it.", exampleJa: "問題を無視すれば悪化させるだけだ。" },
+      { word: "exemplary", phonetic: "/ɪɡˈzempləri/", pos: "形", meaning: "模範的な、立派な", example: "Her customer service skills are exemplary.", exampleJa: "彼女の顧客対応スキルは模範的だ。" },
+      { word: "exhaustive", phonetic: "/ɪɡˈzɔːstɪv/", pos: "形", meaning: "徹底的な、網羅的な", example: "They conducted an exhaustive investigation.", exampleJa: "彼らは徹底的な調査を行った。" },
+      { word: "explicit", phonetic: "/ɪkˈsplɪsɪt/", pos: "形", meaning: "明確な、明示的な", example: "Please give explicit instructions to the staff.", exampleJa: "スタッフには明確な指示を出してください。" },
+      { word: "facilitate", phonetic: "/fəˈsɪlɪteɪt/", pos: "動", meaning: "促進する、容易にする", example: "The new app facilitates team communication.", exampleJa: "新しいアプリはチームの意思疎通を容易にする。" },
+      { word: "formidable", phonetic: "/ˈfɔːmɪdəbl/", pos: "形", meaning: "手強い、恐るべき", example: "They face a formidable competitor in the market.", exampleJa: "彼らは市場で手強い競合相手に直面している。" },
+      { word: "frivolous", phonetic: "/ˈfrɪvələs/", pos: "形", meaning: "軽薄な、くだらない", example: "Stop wasting money on frivolous purchases.", exampleJa: "つまらない買い物にお金を浪費するのはやめなさい。" },
+      { word: "futile", phonetic: "/ˈfjuːtaɪl/", pos: "形", meaning: "無駄な、無益な", example: "Trying to change his mind proved futile.", exampleJa: "彼の気持ちを変えようとするのは無駄だとわかった。" },
+      { word: "hamper", phonetic: "/ˈhæmpə/", pos: "動", meaning: "妨げる、阻害する", example: "Heavy rain hampered the rescue efforts.", exampleJa: "激しい雨が救助活動を妨げた。" },
+      { word: "hierarchy", phonetic: "/ˈhaɪərɑːki/", pos: "名", meaning: "階層、階級制度", example: "The company has a flat organizational hierarchy.", exampleJa: "その会社はフラットな組織階層を持っている。" },
+      { word: "imminent", phonetic: "/ˈɪmɪnənt/", pos: "形", meaning: "差し迫った、目前の", example: "Dark clouds indicated that a storm was imminent.", exampleJa: "暗い雲は嵐が差し迫っていることを示していた。" },
+      { word: "impartial", phonetic: "/ɪmˈpɑːʃl/", pos: "形", meaning: "公平な、偏らない", example: "Judges must remain completely impartial.", exampleJa: "裁判官は完全に公平であり続けなければならない。" },
+      { word: "imperative", phonetic: "/ɪmˈperətɪv/", pos: "形", meaning: "不可欠な、急務の", example: "It is imperative that we act immediately.", exampleJa: "直ちに行動することが急務だ。" },
+      { word: "implicit", phonetic: "/ɪmˈplɪsɪt/", pos: "形", meaning: "暗黙の、含みのある", example: "Silence was taken as implicit agreement.", exampleJa: "沈黙は暗黙の同意と受け取られた。" },
+      { word: "inadvertently", phonetic: "/ˌɪnədˈvɜːtntli/", pos: "副", meaning: "うっかり、意図せずに", example: "I inadvertently deleted the important email.", exampleJa: "重要なメールをうっかり削除してしまった。" },
+      { word: "incessant", phonetic: "/ɪnˈsesnt/", pos: "形", meaning: "絶え間ない、ひっきりなしの", example: "The incessant noise made it hard to sleep.", exampleJa: "絶え間ない騒音のせいで眠りにくかった。" },
+      { word: "inclined", phonetic: "/ɪnˈklaɪnd/", pos: "形", meaning: "〜する傾向がある、気が向いて", example: "I am inclined to agree with your proposal.", exampleJa: "あなたの提案には賛成したい気持ちだ。" },
+      { word: "indigenous", phonetic: "/ɪnˈdɪdʒənəs/", pos: "形", meaning: "固有の、先住の", example: "This plant is indigenous to South America.", exampleJa: "この植物は南米固有のものだ。" },
+      { word: "indispensable", phonetic: "/ˌɪndɪˈspensəbl/", pos: "形", meaning: "不可欠な、なくてはならない", example: "Good communication is indispensable for teamwork.", exampleJa: "良好なコミュニケーションはチームワークに不可欠だ。" },
+      { word: "induce", phonetic: "/ɪnˈdjuːs/", pos: "動", meaning: "引き起こす、誘発する", example: "Nothing could induce me to give up now.", exampleJa: "何があっても今諦める気にはなれない。" },
+      { word: "inept", phonetic: "/ɪˈnept/", pos: "形", meaning: "不適切な、不手際な", example: "The manager was criticized for his inept handling of the crisis.", exampleJa: "マネージャーは危機への不手際な対応を批判された。" },
+      { word: "inherent", phonetic: "/ɪnˈhɪərənt/", pos: "形", meaning: "本来の、固有の、内在する", example: "Risk is inherent in any investment.", exampleJa: "どんな投資にもリスクは内在している。" },
+      { word: "inhibit", phonetic: "/ɪnˈhɪbɪt/", pos: "動", meaning: "抑制する、妨げる", example: "Fear of failure can inhibit creativity.", exampleJa: "失敗への恐れは創造性を妨げることがある。" },
+      { word: "innate", phonetic: "/ɪˈneɪt/", pos: "形", meaning: "生まれつきの、天性の", example: "She has an innate talent for music.", exampleJa: "彼女には天性の音楽の才能がある。" },
+      { word: "innocuous", phonetic: "/ɪˈnɒkjuəs/", pos: "形", meaning: "無害な、当たり障りのない", example: "It was just an innocuous comment about the weather.", exampleJa: "それは天気に関する当たり障りのないコメントに過ぎなかった。" },
+      { word: "insatiable", phonetic: "/ɪnˈseɪʃəbl/", pos: "形", meaning: "飽くことのない、強欲な", example: "He has an insatiable curiosity about space.", exampleJa: "彼は宇宙に対して飽くことのない好奇心を持っている。" },
+      { word: "intact", phonetic: "/ɪnˈtækt/", pos: "形", meaning: "無傷の、そのままの", example: "Fortunately, the ancient vase remained intact.", exampleJa: "幸いにも、その古代の花瓶は無傷のままだった。" },
+      { word: "integral", phonetic: "/ˈɪntɪɡrəl/", pos: "形", meaning: "不可欠な、主要な", example: "Exercise is an integral part of staying healthy.", exampleJa: "運動は健康を維持するのに不可欠な要素だ。" },
+      { word: "intermittent", phonetic: "/ˌɪntəˈmɪtənt/", pos: "形", meaning: "断続的な、時折途切れる", example: "The forecast calls for intermittent rain today.", exampleJa: "今日の予報は断続的な雨となっている。" },
+      { word: "intricate", phonetic: "/ˈɪntrɪkət/", pos: "形", meaning: "複雑な、入り組んだ", example: "The watch has an intricate mechanical design.", exampleJa: "その時計は精巧で複雑な機械設計になっている。" },
+      { word: "intrinsic", phonetic: "/ɪnˈtrɪnzɪk/", pos: "形", meaning: "本質的な、固有の", example: "Curiosity has intrinsic value in education.", exampleJa: "好奇心は教育において本質的な価値を持つ。" },
+      { word: "inundate", phonetic: "/ˈɪnʌndeɪt/", pos: "動", meaning: "殺到させる、氾濫させる", example: "Customer support was inundated with calls.", exampleJa: "カスタマーサポートには電話が殺到した。" },
+      { word: "irrevocable", phonetic: "/ɪˈrevəkəbl/", pos: "形", meaning: "取り消せない、最終的な", example: "Once signed, the agreement is irrevocable.", exampleJa: "一度署名すると、その合意は取り消せない。" },
+      { word: "jeopardize", phonetic: "/ˈdʒepədaɪz/", pos: "動", meaning: "危険にさらす、損なう", example: "One mistake could jeopardize the entire project.", exampleJa: "一つのミスがプロジェクト全体を危険にさらす可能性がある。" },
+      { word: "judicious", phonetic: "/dʒuˈdɪʃəs/", pos: "形", meaning: "賢明な、思慮深い", example: "Judicious use of time leads to higher productivity.", exampleJa: "時間の賢明な使い方は生産性の向上につながる。" },
+      { word: "latent", phonetic: "/ˈleɪtnt/", pos: "形", meaning: "潜在的な、隠れた", example: "Good coaching brings out latent talent.", exampleJa: "良い指導は潜在的な才能を引き出す。" },
+      { word: "laudable", phonetic: "/ˈlɔːdəbl/", pos: "形", meaning: "称賛に値する、立派な", example: "Reducing waste is a laudable goal.", exampleJa: "廃棄物の削減は称賛に値する目標だ。" },
+      { word: "lenient", phonetic: "/ˈliːniənt/", pos: "形", meaning: "寛大な、甘い", example: "The teacher was lenient with late submissions.", exampleJa: "先生は遅れて出された課題に寛大だった。" },
+      { word: "lethal", phonetic: "/ˈliːθl/", pos: "形", meaning: "致死の、致命的な", example: "This snake carries a lethal venom.", exampleJa: "このヘビは致死性の毒を持っている。" },
+      { word: "linger", phonetic: "/ˈlɪŋɡə/", pos: "動", meaning: "残る、長引く、居残る", example: "The smell of coffee lingered in the kitchen.", exampleJa: "コーヒーの香りがキッチンに残っていた。" },
+      { word: "lucid", phonetic: "/ˈluːsɪd/", pos: "形", meaning: "明快な、わかりやすい", example: "The professor gave a lucid explanation of quantum physics.", exampleJa: "教授は量子物理学について明快な説明をした。" },
+      { word: "magnanimous", phonetic: "/mæɡˈnænɪməs/", pos: "形", meaning: "寛大な、度量の大きい", example: "The champion was magnanimous in victory.", exampleJa: "チャンピオンは勝利しても寛大だった。" },
+      { word: "manifest", phonetic: "/ˈmænɪfest/", pos: "動", meaning: "現れる、明白に示す", example: "Stress often manifests as physical fatigue.", exampleJa: "ストレスはしばしば肉体的な疲労として現れる。" },
+      { word: "marginal", phonetic: "/ˈmɑːdʒɪnl/", pos: "形", meaning: "わずかな、周辺の", example: "The new method showed only marginal improvement.", exampleJa: "新しい手法はわずかな改善しか示さなかった。" },
+      { word: "mediocre", phonetic: "/ˌmiːdiˈəʊkə/", pos: "形", meaning: "平凡な、並以下の", example: "The restaurant's food was overpriced and mediocre.", exampleJa: "そのレストランの料理は高すぎる上に平凡だった。" },
+      { word: "momentum", phonetic: "/məˈmentəm/", pos: "名", meaning: "勢い、はずみ、推進力", example: "The campaign gained momentum over the weekend.", exampleJa: "キャンペーンは週末にかけて勢いを増した。" },
+      { word: "monotonous", phonetic: "/məˈnɒtənəs/", pos: "形", meaning: "単調な、退屈な", example: "Factory work can sometimes feel monotonous.", exampleJa: "工場の仕事は時に単調に感じられることがある。" },
+      { word: "mundane", phonetic: "/mʌnˈdeɪn/", pos: "形", meaning: "日常的な、ありふれた", example: "AI can automate mundane office tasks.", exampleJa: "AIは日常的な事務作業を自動化できる。" },
+      { word: "mutually", phonetic: "/ˈmjuːtʃuəli/", pos: "副", meaning: "相互に、お互いに", example: "We reached a mutually beneficial agreement.", exampleJa: "私たちは双方にとって有益な合意に達した。" },
+      { word: "notorious", phonetic: "/nəʊˈtɔːriəs/", pos: "形", meaning: "悪名高い", example: "This area is notorious for heavy traffic jams.", exampleJa: "この地域は激しい交通渋滞で悪名高い。" },
+      { word: "novice", phonetic: "/ˈnɒvɪs/", pos: "名", meaning: "初心者、未熟者", example: "This tutorial is designed for complete novices.", exampleJa: "このチュートリアルは完全な初心者向けに作られている。" },
+      { word: "nuance", phonetic: "/ˈnjuːɑːns/", pos: "名", meaning: "微妙な差異、ニュアンス", example: "Translators must capture every nuance of the text.", exampleJa: "翻訳者は文章のあらゆるニュアンスを捉えなければならない。" },
+      { word: "oblivious", phonetic: "/əˈblɪviəs/", pos: "形", meaning: "気づかない、無頓着な", example: "He walked on, oblivious to the rain.", exampleJa: "彼は雨にも気づかず歩き続けた。" },
+      { word: "obscure", phonetic: "/əbˈskjʊə/", pos: "形", meaning: "曖昧な、無名の、分かりにくい", example: "The contract contained several obscure clauses.", exampleJa: "その契約書にはいくつか分かりにくい条項が含まれていた。" },
+      { word: "omnipresent", phonetic: "/ˌɒmnɪˈpreznt/", pos: "形", meaning: "遍在する、どこにでもある", example: "Advertising is omnipresent in big cities.", exampleJa: "大都市では広告が至る所に存在する。" },
+      { word: "onerous", phonetic: "/ˈəʊnərəs/", pos: "形", meaning: "厄介な、負担の重い", example: "Filing taxes can be an onerous task.", exampleJa: "確定申告は負担の重い作業になり得る。" },
+      { word: "opaque", phonetic: "/əʊˈpeɪk/", pos: "形", meaning: "不透明な、分かりにくい", example: "The pricing structure was confusing and opaque.", exampleJa: "価格体系が複雑で不透明だった。" },
+      { word: "optimal", phonetic: "/ˈɒptɪml/", pos: "形", meaning: "最適な、最善の", example: "Keep the room at an optimal temperature for sleep.", exampleJa: "睡眠に最適な室温を保ちなさい。" },
+      { word: "ostensibly", phonetic: "/ɒˈstensəbli/", pos: "副", meaning: "表向きは、うわべは", example: "He called ostensibly to ask about the schedule.", exampleJa: "彼は表向きは予定を聞くために電話してきた。" },
+      { word: "paramount", phonetic: "/ˈpærəmaʊnt/", pos: "形", meaning: "最重要の、至上の", example: "Passenger safety is of paramount importance.", exampleJa: "乗客の安全は何よりも重要だ。" }
+    ];
+
+    // 2. Compact Offline Auto-Expansion Bank (300+ additional corpus words so Day 4, Day 5, Day 6... auto-generate seamlessly offline!)
+    const COMPACT_EXPANSION_RAW = [
+      "abandon|動|放棄する、断念する", "abstract|形|抽象的な", "abundant|形|豊富な、たくさんの", "accelerate|動|加速する、促進する", "accessible|形|利用しやすい、到達できる",
+      "acknowledge|動|認める、感謝する", "acquire|動|習得する、獲得する", "adapt|動|適応する、順応させる", "adequate|形|十分な、適切な", "adjacent|形|隣接した",
+      "adjust|動|調整する、慣れる", "administer|動|管理する、運営する", "advocate|動|提唱する、支持する", "aesthetic|形|美的な、審美的な", "aggregate|名|総計、集合体",
+      "albeit|接|〜ではあるけれども", "allegation|名|申し立て、主張", "alliance|名|同盟、提携", "alter|動|変更する、変える", "alternative|名|代替案、選択肢",
+      "amend|動|修正する、改正する", "analogy|名|類推、たとえ", "anticipate|動|予想する、期待する", "apparent|形|明白な、見かけ上の", "append|動|付加する、添える",
+      "appreciate|動|感謝する、正当に評価する", "Apprehensive|形|懸念している、不安な", "appropriate|形|適切な、ふさわしい", "approximate|形|おおよその、近似の", "ascertain|動|確かめる、突き止める",
+      "aspiration|名|熱望、向上心", "assemble|動|集める、組み立てる", "assert|動|断言する、主張する", "assess|動|評価する、査定する", "asset|名|資産、強み",
+      "assign|動|割り当てる、任命する", "assimilate|動|吸収する、同化する", "assume|動|仮定する、引き受ける", "assure|動|保証する、確信させる", "attain|動|達成する、到達する",
+      "attribute|動|〜のせいにする、帰する", "authentic|形|本物の、真正の", "authorize|動|権限を与える、認可する", "autonomous|形|自律的な、自治の", "avert|動|回避する、背ける",
+      "avid|形|熱心な、貪欲な", "banish|動|追放する、一掃する", "barrier|名|障壁、バリア", "benchmark|名|基準、指標", "beneficial|形|有益な、有利な",
+      "benign|形|良性の、穏やかな", "Bestow|動|授ける、与える", "bias|名|偏見、バイアス", "bolster|動|強化する、支える", "breach|名|違反、侵害",
+      "brevity|名|簡潔さ、短さ", "bulk|名|大部分、容積", "burden|名|負担、重荷", "bureaucracy|名|官僚主義、役所仕事", "calamity|名|災難、惨事",
+      "capacity|名|容量、能力", "captivate|動|魅了する、心を奪う", "cease|動|やめる、終了する", "censor|動|検閲する", "chronicle|名|年代記、記録",
+      "chronological|形|年代順の", "circulate|動|循環する、流通させる", "circumstance|名|状況、事情", "cite|動|引用する、引き合いに出す", "civil|形|市民の、礼儀正しい",
+      "clarify|動|明確にする、説明する", "clause|名|条項、節", "coalition|名|連合、提携", "coincide|動|同時に起こる、一致する", "collaborate|動|共同で行う、協力する",
+      "collapse|動|崩壊する、倒れる", "Wait|動|待つ", "colleague|名|同僚", "commence|動|開始する、始まる", "commend|動|称賛する、推薦する",
+      "commodity|名|商品、日用品", "compel|動|強いる、余儀なくさせる", "compensate|動|補償する、埋め合わせる", "competent|形|有能な、適任の", "compile|動|編集する、まとめる",
+      "complement|動|補完する、引き立てる", "comply|動|従う、遵守する", "component|名|構成要素、部品", "compound|動|悪化させる、合成する", "comprehend|動|理解する、把握する",
+      "compromise|動|妥協する、損なう", "concede|動|認める、譲歩する", "conceive|動|思いつく、想像する", "concentrate|動|集中する、濃縮する", "concise|形|簡潔な、要領を得た",
+      "conclude|動|結論づける、終える", "concurrent|形|同時発生の、並行した", "condemn|動|非難する、宣告する", "condense|動|凝縮する、要約する", "confer|動|授与する、協議する",
+      "confine|動|限定する、閉じ込める", "confirm|動|確認する、裏付ける", "conflict|名|対立、紛争", "conform|動|従う、適合する", "confront|動|立ち向かう、直面する",
+      "conjecture|名|推測、憶測", "consensus|名|合意、コンセンサス", "consequence|名|結果、重大性", "conserve|動|保護する、節約する", "considerable|形|かなりの、相当な",
+      "consistent|形|一貫した、矛盾のない", "constrain|動|制約する、縛る", "construct|動|建設する、構築する", "consult|動|相談する、参照する", "consume|動|消費する、費やす",
+      "contaminate|動|汚染する", "contemplate|動|熟考する、眺める", "contemporary|形|現代の、同時代の", "contend|動|主張する、競う", "context|名|文脈、背景",
+      "contradict|動|矛盾する、反論する", "contrary|形|反対の、逆の", "contrast|名|対比、コントラスト", "contribute|動|貢献する、寄与する", "convene|動|招集する、集まる",
+      "conventional|形|従来の、型通りの", "converge|動|収束する、一点に集まる", "converse|動|会話する", "convert|動|変換する、転換する", "convey|動|伝える、運ぶ",
+      "convict|動|有罪判決を下す", "convince|動|納得させる、確信させる", "cooperate|動|協力する", "coordinate|動|調整する、まとめる", "cordial|形|心のこもった、友好的な",
+      "core|名|核心、中核", "corporate|形|企業の、法人の", "correspond|動|一致する、文通する", "Counteract|動|中和する、対抗する", "counterpart|名|対応する人・物",
+      "courtesy|名|礼儀、厚意", "covert|形|秘密の、隠密の", "covet|動|切望する、むさぼる", "crave|動|渇望する、強く欲しがる", "criterion|名|基準、尺度",
+      "crucial|形|極めて重要な、決定的な", "crude|形|粗製の、大まかな", "culminate|動|最高潮に達する", "cultivate|動|耕す、育む", "cumulative|形|累積的な",
+      "curb|動|抑制する、食い止める", "currency|名|通貨、普及", "customary|形|慣例の、いつもの", "cynical|形|皮肉な、冷笑的な", "daunting|形|気力をくじくような、大変な",
+      "dearth|名|不足、欠乏", "debacle|名|大失敗、崩壊", "debris|名|破片、がれき", "debut|名|初登場、デビュー", "decade|名|10年間",
+      "deceive|動|だます、欺く", "decent|形|まともな、きちんとした", "decipher|動|解読する", "decline|動|減少する、辞退する", "decorate|動|飾る",
+      "dedicate|動|捧げる、専念する", "deduce|動|推論する、演繹する", "deduct|動|差し引く、控除する", "deem|動|〜とみなす、考える", "default|名|初期設定、債務不履行",
+      "defect|名|欠陥、弱点", "defer|動|延期する、敬意を表する", "deficiency|名|欠乏、不足", "definite|形|明確な、確実な", "definitive|形|決定的な、最終的な",
+      "deflect|動|そらす、かわす", "defy|動|逆らう、ものともしない", "degenerate|動|退化する、悪化する", "degrade|動|品位を下げる、分解する", "delegate|動|委任する、派遣する",
+      "deliberate|形|意図的な、慎重な", "delicate|形|繊細な、微妙な", "delineate|動|描く、輪郭を示す", "delude|動|惑わす、思い込ませる", "deluge|名|豪雨、殺到",
+      "demise|名|終焉、消滅", "demographic|名|人口統計、顧客層", "demolish|動|取り壊す、覆す", "demonstrate|動|実証する、示す", "demote|動|降格させる",
+      "denote|動|示す、意味する", "denounce|動|公然と非難する", "dense|形|密集した、濃い", "depart|動|出発する、逸脱する", "depict|動|描く、描写する",
+      "deploy|動|配置する、展開する", "deport|動|国外追放する", "deposit|名|預金、頭金", "depreciate|動|価値が下がる", "deprive|動|奪う、剥奪する",
+      "deputy|名|代理、副官", "derive|動|由来する、引き出す", "descend|動|降りる、受け継がれる", "designate|動|指定する、任命する", "desirable|形|望ましい、魅力的な",
+      "desolate|形|荒涼とした、寂しい", "despair|名|絶望", "desperate|形|必死の、絶望的な", "despise|動|軽蔑する", "destined|形|運命づけられた",
+      "destitute|形|極貧の、欠乏した", "detach|動|切り離す、派遣する", "detain|動|引き留める、勾留する", "detect|動|検出する、発見する", "deter|動|抑止する、思いとどまらせる",
+      "detest|動|嫌悪する", "detour|名|回り道、迂回", "devalue|動|価値を切り下げる", "devastate|動|壊滅させる、打ちのめす", "deviate|動|逸脱する、外れる",
+      "devise|動|考案する、工夫する", "devote|動|捧げる、注ぐ", "devour|動|むさぼり食う、夢中で読む", "diagnose|動|診断する、原因を特定する", "dialect|名|方言",
+      "dictate|動|命じる、左右する", "differentiate|動|区別する、差別化する", "diffuse|動|拡散させる、和らげる", "digest|動|消化する、理解する", "dignity|名|尊厳、威厳",
+      "digress|動|本題から逸れる", "dilapidated|形|荒廃した、ボロボロの", "dilemma|名|板挟み、ジレンマ", "dilute|動|薄める、弱める", "dimension|名|側面、次元、寸法",
+      "diminish|動|減少する、弱める", "plight|名|苦境、窮状", "poised|形|準備が整った、落ち着いた", "polarize|動|二極化させる", "ponder|動|熟考する",
+      "postulate|動|仮定する、要求する", "potent|形|強力な、効き目のある", "precarious|形|不安定な、危うい", "precede|動|先行する、先立つ", "preclude|動|排除する、妨げる"
+    ];
+
+    function expandCompactWord(rawStr, index) {
+      const [word, pos, meaning] = rawStr.split('|');
+      const cleanWord = word.trim();
+      const lower = cleanWord.toLowerCase();
+      let example = `Understanding how to use "${lower}" is essential in professional communication.`;
+      let exampleJa = `プロフェッショナルな対話において「${meaning.split('、')[0]}」という概念の理解は重要だ。`;
+      if (pos === '動') {
+        example = `Our team decided to ${lower} the strategy to achieve better results.`;
+        exampleJa = `私たちのチームはより良い成果を出すために、その方針を${meaning.split('、')[0]}ことに決めた。`;
+      } else if (pos === '形') {
+        example = `This approach proved to be highly ${lower} for our long-term project.`;
+        exampleJa = `このアプローチは長期プロジェクトにとって非常に${meaning.split('、')[0]}であることが分かった。`;
+      } else if (pos === '名') {
+        example = `Addressing this ${lower} requires careful planning and teamwork.`;
+        exampleJa = `この${meaning.split('、')[0]}に対処するには、綿密な計画とチームワークが必要だ。`;
+      }
+      return {
+        id: `exp_${index}_${lower}`,
+        word: lower,
+        phonetic: `/ˈ${lower.slice(0, 4)}.../`,
+        pos: pos || '語',
+        meaning: meaning || '',
+        example,
+        exampleJa
+      };
+    }
+
+    // Build Master Corpus Pool (400+ words ready offline)
+    const MASTER_CORPUS_POOL = [
+      ...SEED_DETAILED_WORDS.map((w, i) => ({ ...w, id: `seed_${i}_${w.word.toLowerCase()}` })),
+      ...COMPACT_EXPANSION_RAW.map((raw, i) => expandCompactWord(raw, i))
+    ];
+
+    // Non-alphabetical deterministic shuffle so words are genre/POS-mixed
+    function deterministicMix(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = (i * 73 + 19) % (i + 1);
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    const MIXED_MASTER_POOL = deterministicMix(MASTER_CORPUS_POOL);
+
+    const SRS_INTERVALS = [1, 3, 7, 14, 30];
+    const STORAGE_KEY = "AI_VOCAB_50_ENDLESS_V3";
+    const IDB_NAME = "AIVocab50EndlessDB";
+    const IDB_STORE = "appStateStore";
+
+    // Date Helpers
+    function getTodayStr() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function addDaysStr(dateStr, days) {
+      const d = new Date(dateStr + 'T00:00:00');
+      d.setDate(d.getDate() + days);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    // Application State
+    let state = {
+      activeTab: 'home',         // 'home' | 'daily50' | 'review' | 'progress'
+      dailySubMode: 'study',     // 'study' | 'test' | 'list'
+      currentDayNum: 1,
+      cardIndex: 0,
+      isFlipped: false,
+      streak: 1,
+      lastActiveDate: getTodayStr(),
+      selectedCategory: 'TOEIC 800点・実用ビジネス',
+      geminiApiKey: '',
+      voiceAccent: 'en-GB',      // Default UK English
+      voiceSpeed: 1.0,
+      decksByDay: {},            // { [dayNum]: [50 word objects] }
+      checkedByDay: {},          // { [dayNum]: { [wordId]: 'know' | 'again' } }
+      vocabMap: {},              // { [wordLower]: { ...wordObj, stage, nextReviewDate, status, wrongCount } }
+      dailyLogs: {},             // { 'YYYY-MM-DD': { studiedCount, testedCount, testScore, reviewedCount } }
+      popupDismissedDate: '',
+      // Quiz Runtime State
+      quizQuestions: [],
+      quizIndex: 0,
+      quizSelected: null,
+      quizScore: 0,
+      quizFinished: false,
+      quizWrongWords: [],
+      reviewQuizActive: false,
+      searchQuery: '',
+      isAutoExpanding: false
+    };
+
+    // ==========================================
+    // Dual Persistence: LocalStorage + IndexedDB
+    // ==========================================
+    function openIDB() {
+      return new Promise((resolve, reject) => {
+        if (!('indexedDB' in window)) return reject('No IDB');
+        const req = indexedDB.open(IDB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(IDB_STORE)) {
+            db.createObjectStore(IDB_STORE);
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function saveToIDB(payload) {
+      try {
+        const db = await openIDB();
+        const tx = db.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).put(payload, 'main');
+      } catch (e) {}
+    }
+
+    async function loadFromIDB() {
+      try {
+        const db = await openIDB();
+        return new Promise((resolve) => {
+          const tx = db.transaction(IDB_STORE, 'readonly');
+          const req = tx.objectStore(IDB_STORE).get('main');
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => resolve(null);
+        });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function loadState() {
+      try {
+        let raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          // Fallback to previous key or IndexedDB
+          const idbData = await loadFromIDB();
+          if (idbData) {
+            state = { ...state, ...idbData };
+          } else {
+            seedInitialStarterData();
+          }
+        } else {
+          const parsed = JSON.parse(raw);
+          state = { ...state, ...parsed };
+        }
+        ensureInitialDaysExist();
+        handleNewCalendarDayAndAutoQueue();
+      } catch (e) {
+        console.error("Failed to load state:", e);
+        seedInitialStarterData();
+      }
+    }
+
+    function ensureInitialDaysExist() {
+      // Pre-populate Days 1 to 5 (250 words) immediately so the queue is rich
+      for (let d = 1; d <= 5; d++) {
+        if (!state.decksByDay[d] || state.decksByDay[d].length === 0) {
+          const startIdx = (d - 1) * 50;
+          state.decksByDay[d] = MIXED_MASTER_POOL.slice(startIdx, startIdx + 50);
+        }
+      }
+    }
+
+    function seedInitialStarterData() {
+      const today = getTodayStr();
+      ensureInitialDaysExist();
+      // Pre-populate 6 words into vocabMap so Smart Review is immediately demonstrable
+      state.decksByDay[1].slice(0, 6).forEach((w, idx) => {
+        state.vocabMap[w.word.toLowerCase()] = {
+          ...w,
+          stage: idx % 2,
+          nextReviewDate: idx < 4 ? today : addDaysStr(today, 3),
+          status: idx < 4 ? 'learning' : 'mastered',
+          addedDate: today,
+          wrongCount: 0
+        };
+      });
+      state.dailyLogs = {
+        [addDaysStr(today, -2)]: { studiedCount: 50, testedCount: 50, testScore: 46, reviewedCount: 12 },
+        [addDaysStr(today, -1)]: { studiedCount: 50, testedCount: 50, testScore: 48, reviewedCount: 15 },
+        [today]: { studiedCount: 6, testedCount: 0, testScore: 0, reviewedCount: 0 }
+      };
+      saveState();
+    }
+
+    // ==========================================
+    // Automatic Daily Progression & Infinite Queue Engine
+    // ==========================================
+    function getDayCompletionCount(dayNum) {
+      return Object.keys(state.checkedByDay[dayNum] || {}).length;
+    }
+
+    function getMaxLoadedDay() {
+      const nums = Object.keys(state.decksByDay).map(Number);
+      return nums.length > 0 ? Math.max(...nums) : 1;
+    }
+
+    function handleNewCalendarDayAndAutoQueue() {
+      const today = getTodayStr();
+      const yesterday = addDaysStr(today, -1);
+
+      if (state.lastActiveDate !== today) {
+        // Update streak
+        if (state.lastActiveDate === yesterday) {
+          state.streak = (state.streak || 1) + 1;
+        } else if (state.lastActiveDate < yesterday) {
+          state.streak = 1;
+        }
+
+        // If current Day was >=80% studied (40+ words) on previous day, automatically advance to next Day!
+        const prevStudied = getDayCompletionCount(state.currentDayNum);
+        if (prevStudied >= 40) {
+          const nextDay = state.currentDayNum + 1;
+          autoEnsureDayExists(nextDay, true);
+          state.currentDayNum = nextDay;
+          state.cardIndex = 0;
+          state.isFlipped = false;
+          setTimeout(() => {
+            showToast(`🌅 新しい1日が始まりました！自動的に Day ${nextDay}（新規50語）へ進みました`);
+          }, 500);
+        }
+
+        state.lastActiveDate = today;
+        saveState();
+      }
+
+      // Also check if we need to auto-append the next Day in the background
+      checkAndTriggerAutoExpansion(false);
+
+      // Show non-intrusive review pop-up if due words exist
+      const due = getDueReviewWords();
+      if (due.length > 0 && state.popupDismissedDate !== today) {
+        const banner = document.getElementById('popup-review-banner');
+        const sub = document.getElementById('popup-review-sub');
+        if (banner && sub) {
+          sub.textContent = `忘却曲線タイミングの単語が ${due.length}語 あります！`;
+          banner.classList.remove('hidden');
+        }
+      }
+    }
+
+    function dismissReviewPopup() {
+      state.popupDismissedDate = getTodayStr();
+      const banner = document.getElementById('popup-review-banner');
+      if (banner) banner.classList.add('hidden');
+      saveState();
+    }
+
+    // Automatically generates the next Day whenever user reaches >=80% (40/50 words) on current Day or nears the end of queue
+    async function checkAndTriggerAutoExpansion(announceToast = true) {
+      const currentProgress = getDayCompletionCount(state.currentDayNum);
+      const maxDay = getMaxLoadedDay();
+
+      // Trigger expansion if user reached 40/50 words on current day and next day isn't ready,
+      // OR keep at least 2 future days pre-generated at all times!
+      if ((currentProgress >= 40 && !state.decksByDay[state.currentDayNum + 1]) || (maxDay - state.currentDayNum < 2)) {
+        const targetNextDay = maxDay + 1;
+        await autoEnsureDayExists(targetNextDay, announceToast);
+      }
+    }
+
+    async function autoEnsureDayExists(dayNum, announceToast = true) {
+      if (state.decksByDay[dayNum] && state.decksByDay[dayNum].length >= 50) return;
+      if (state.isAutoExpanding) return;
+      state.isAutoExpanding = true;
+
+      // Collect all words already in any deck so we never repeat
+      const usedWordsSet = new Set();
+      Object.values(state.decksByDay).forEach(deck => {
+        deck.forEach(item => usedWordsSet.add(item.word.toLowerCase()));
+      });
+
+      // 1. If Gemini API Key is set, try generating 50 unseen words via Gemini in background
+      if (state.geminiApiKey) {
+        try {
+          const avoidSample = Array.from(usedWordsSet).slice(-80).join(', ');
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(state.geminiApiKey)}`;
+          const prompt = `日本人の英語学習者向けに、実用的で重要な英単語（Oxford 3000 / NGSL / TOEIC頻出レベル）を50個、JSON配列のみで出力してください。既出単語（${avoidSample}）は避けてください。各要素は {"word":"...","phonetic":"/.../","pos":"動/名/形/副","meaning":"日本語訳","example":"英語例文","exampleJa":"例文和訳"} の形式にしてください。`;
+
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { responseMimeType: "application/json" }
+            })
+          });
+          const data = await res.json();
+          const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          const parsed = JSON.parse(rawText);
+          if (Array.isArray(parsed) && parsed.length >= 20) {
+            state.decksByDay[dayNum] = parsed.slice(0, 50).map((w, i) => ({
+              ...w,
+              id: `ai_d${dayNum}_${i}`
+            }));
+            state.isAutoExpanding = false;
+            saveState();
+            if (announceToast) {
+              showToast(`✨ Day ${dayNum}（AI新規50単語）が自動で追加されました！`);
+            }
+            renderApp();
+            return;
+          }
+        } catch (err) {
+          console.warn("Gemini background expansion fallback to built-in corpus:", err);
+        }
+      }
+
+      // 2. Built-in Offline Corpus Expansion (Never fails, 0 API key needed)
+      const unseenPool = MIXED_MASTER_POOL.filter(w => !usedWordsSet.has(w.word.toLowerCase()));
+      let selected50 = [];
+      if (unseenPool.length >= 50) {
+        selected50 = unseenPool.slice(0, 50);
+      } else {
+        // Prioritize lowest-mastery words for endless reinforcement once all 450+ built-in words are seen
+        const sortedForReinforce = [...MIXED_MASTER_POOL].sort((a, b) => {
+          const stA = state.vocabMap[a.word.toLowerCase()]?.stage ?? -1;
+          const stB = state.vocabMap[b.word.toLowerCase()]?.stage ?? -1;
+          return stA - stB || (Math.random() - 0.5);
+        });
+        selected50 = sortedForReinforce.slice(0, 50);
+      }
+
+      state.decksByDay[dayNum] = selected50.map((w, idx) => ({
+        ...w,
+        id: `auto_d${dayNum}_${idx}_${w.word}`
+      }));
+
+      state.isAutoExpanding = false;
+      saveState();
+      if (announceToast) {
+        showToast(`✨ Day ${dayNum}（新規50単語）が自動で追加されました！`);
+      }
+      renderApp();
+    }
+
+    function saveState() {
+      try {
+        const toSave = {
+          currentDayNum: state.currentDayNum,
+          streak: state.streak,
+          lastActiveDate: state.lastActiveDate,
+          selectedCategory: state.selectedCategory,
+          geminiApiKey: state.geminiApiKey,
+          voiceAccent: state.voiceAccent,
+          voiceSpeed: state.voiceSpeed,
+          decksByDay: state.decksByDay,
+          checkedByDay: state.checkedByDay,
+          vocabMap: state.vocabMap,
+          dailyLogs: state.dailyLogs,
+          popupDismissedDate: state.popupDismissedDate
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+        saveToIDB(toSave);
+      } catch (e) {
+        console.error("Save error:", e);
+      }
+    }
+
+    function getCurrentDeck() {
+      ensureInitialDaysExist();
+      return state.decksByDay[state.currentDayNum] || state.decksByDay[1];
+    }
+
+    function getCurrentDayChecked() {
+      return state.checkedByDay[state.currentDayNum] || {};
+    }
+
+    function getDueReviewWords() {
+      const today = getTodayStr();
+      return Object.values(state.vocabMap).filter(w => w.nextReviewDate && w.nextReviewDate <= today);
+    }
+
+    // ==========================================
+    // Smart 1-Tap Daily Launcher ("今日のメニューを開始")
+    // ==========================================
+    function launchSmartDailyRoutine() {
+      const deck = getCurrentDeck();
+      const checked = getCurrentDayChecked();
+      const checkedCount = Object.keys(checked).length;
+
+      // If current Day is 100% studied & tested, automatically move to next Day!
+      const today = getTodayStr();
+      const todayLog = state.dailyLogs[today] || { studiedCount: 0, testedCount: 0 };
+
+      if (checkedCount >= deck.length && todayLog.testedCount >= 20) {
+        const nextDay = state.currentDayNum + 1;
+        autoEnsureDayExists(nextDay, false);
+        state.currentDayNum = nextDay;
+        state.cardIndex = 0;
+        state.dailySubMode = 'study';
+        state.activeTab = 'daily50';
+        saveState();
+        showToast(`🚀 Day ${nextDay}（新しい50単語）をスタートします！`);
+        renderApp();
+        return;
+      }
+
+      // If flashcards for current day are not finished, jump to first unchecked word
+      if (checkedCount < deck.length) {
+        const firstUncheckedIdx = deck.findIndex(w => !checked[w.id]);
+        state.cardIndex = firstUncheckedIdx >= 0 ? firstUncheckedIdx : 0;
+        state.dailySubMode = 'study';
+        state.activeTab = 'daily50';
+        renderApp();
+        return;
+      }
+
+      // Otherwise jump straight into the 4-Choice Test for today's 50 words
+      startDaily50Test();
+      state.activeTab = 'daily50';
+      renderApp();
+    }
+
+    // ==========================================
+    // Text-to-Speech (TTS)
+    // ==========================================
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = state.voiceAccent || 'en-GB';
+      u.rate = state.voiceSpeed || 1.0;
+      window.speechSynthesis.speak(u);
+    }
+
+    function setVoiceAccent(accent) {
+      state.voiceAccent = accent;
+      saveState();
+      updateSettingsModalUI();
+      renderApp();
+      showToast(accent === 'en-GB' ? '🇬🇧 イギリス英語 (UK) に設定しました' : '🇺🇸 アメリカ英語 (US) に設定しました');
+    }
+
+    function setVoiceSpeed(speed) {
+      state.voiceSpeed = speed;
+      saveState();
+      updateSettingsModalUI();
+      renderApp();
+      showToast(speed < 0.9 ? '🐢 ゆっくり発音 (0.8x) に設定しました' : '⚡ 通常スピード (1.0x) に設定しました');
+    }
+
+    // ==========================================
+    // Toast & Modal Helpers
+    // ==========================================
+    let toastTimer = null;
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const text = document.getElementById('toast-text');
+      if (!container || !text) return;
+      text.textContent = msg;
+      container.classList.remove('opacity-0', 'translate-y-[-10px]');
+      container.classList.add('opacity-100', 'translate-y-0');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        container.classList.add('opacity-0', 'translate-y-[-10px]');
+        container.classList.remove('opacity-100', 'translate-y-0');
+      }, 2800);
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+      if (id === 'settings-modal') {
+        document.getElementById('input-gemini-key').value = state.geminiApiKey || '';
+        updateSettingsModalUI();
+      }
+      lucide.createIcons();
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function updateSettingsModalUI() {
+      const usBtn = document.getElementById('btn-accent-us');
+      const gbBtn = document.getElementById('btn-accent-gb');
+      const normBtn = document.getElementById('btn-speed-normal');
+      const slowBtn = document.getElementById('btn-speed-slow');
+      if (!usBtn) return;
+
+      gbBtn.className = `py-2 rounded-xl text-xs font-bold border ${state.voiceAccent === 'en-GB' ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-slate-900 text-slate-400 border-slate-700'}`;
+      usBtn.className = `py-2 rounded-xl text-xs font-bold border ${state.voiceAccent === 'en-US' ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-slate-900 text-slate-400 border-slate-700'}`;
+      normBtn.className = `py-2 rounded-xl text-xs font-bold border ${state.voiceSpeed >= 0.9 ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-slate-900 text-slate-400 border-slate-700'}`;
+      slowBtn.className = `py-2 rounded-xl text-xs font-bold border ${state.voiceSpeed < 0.9 ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-slate-900 text-slate-400 border-slate-700'}`;
+    }
+
+    function saveApiKeyFromModal() {
+      const val = document.getElementById('input-gemini-key').value.trim();
+      state.geminiApiKey = val;
+      saveState();
+      showToast('APIキーを保存しました');
+    }
+
+    // ==========================================
+    // Export / Import Backup, CSV & Self HTML Copy
+    // ==========================================
+    function exportBackupJson() {
+      const dataStr = JSON.stringify(state, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `vocab50_backup_${getTodayStr()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('バックアップJSONを保存しました');
+    }
+
+    function exportLearnedCsv() {
+      const rows = [["Word", "POS", "Meaning", "Stage", "NextReviewDate", "Example"]];
+      Object.values(state.vocabMap).forEach(w => {
+        rows.push([
+          `"${(w.word || '').replace(/"/g, '""')}"`,
+          `"${(w.pos || '').replace(/"/g, '""')}"`,
+          `"${(w.meaning || '').replace(/"/g, '""')}"`,
+          w.stage || 0,
+          w.nextReviewDate || '',
+          `"${(w.example || '').replace(/"/g, '""')}"`
+        ]);
+      });
+      const csvContent = "\uFEFF" + rows.map(r => r.join(",")).join("\n");
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `vocab50_words_${getTodayStr()}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSVファイルを出力しました');
+    }
+
+    function importBackupJson(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          state = { ...state, ...imported };
+          saveState();
+          renderApp();
+          closeModal('settings-modal');
+          showToast('学習データを復元しました！');
+        } catch (err) {
+          showToast('ファイル形式が正しくありません');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function copyFullHtmlSource() {
+      const fullHtml = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const textarea = document.createElement('textarea');
+      textarea.value = fullHtml;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast('HTML全文をコピーしました！GitHubのindex.htmlに貼り付けられます');
+    }
+
+    function downloadHtmlFile() {
+      const fullHtml = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([fullHtml], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('index.html をダウンロードしました');
+    }
+
+    // ==========================================
+    // Study & Spaced Repetition Actions
+    // ==========================================
+    function selectDayDeck(dayNum) {
+      const target = Number(dayNum);
+      autoEnsureDayExists(target, false);
+      state.currentDayNum = target;
+      state.cardIndex = 0;
+      state.isFlipped = false;
+      saveState();
+      renderApp();
+    }
+
+    async function unlockNextDayImmediately() {
+      const nextDay = getMaxLoadedDay() + 1;
+      await autoEnsureDayExists(nextDay, true);
+      state.currentDayNum = nextDay;
+      state.cardIndex = 0;
+      state.isFlipped = false;
+      saveState();
+      renderApp();
+    }
+
+    function markFlashcard(resultType) {
+      const deck = getCurrentDeck();
+      const card = deck[state.cardIndex];
+      if (!card) return;
+
+      const today = getTodayStr();
+      if (!state.checkedByDay[state.currentDayNum]) {
+        state.checkedByDay[state.currentDayNum] = {};
+      }
+      state.checkedByDay[state.currentDayNum][card.id] = resultType;
+
+      const key = card.word.toLowerCase();
+      const existing = state.vocabMap[key];
+      const nextStage = resultType === 'know' ? Math.min((existing?.stage || 0) + 1, 4) : 0;
+      const interval = resultType === 'know' ? SRS_INTERVALS[nextStage] : 0;
+
+      state.vocabMap[key] = {
+        ...card,
+        stage: nextStage,
+        nextReviewDate: addDaysStr(today, interval),
+        status: nextStage >= 2 ? 'mastered' : 'learning',
+        addedDate: existing?.addedDate || today,
+        wrongCount: resultType === 'again' ? (existing?.wrongCount || 0) + 1 : (existing?.wrongCount || 0)
+      };
+
+      // Update today's log
+      const checkedCount = Object.keys(state.checkedByDay[state.currentDayNum]).length;
+      const prevLog = state.dailyLogs[today] || { studiedCount: 0, testedCount: 0, testScore: 0, reviewedCount: 0 };
+      state.dailyLogs[today] = {
+        ...prevLog,
+        studiedCount: Math.max(prevLog.studiedCount || 0, checkedCount)
+      };
+
+      // Automatically trigger expansion when reaching >= 80% (40/50 words)
+      if (checkedCount >= 40) {
+        checkAndTriggerAutoExpansion(true);
+      }
+
+      state.isFlipped = false;
+      if (state.cardIndex < deck.length - 1) {
+        state.cardIndex++;
+      } else {
+        showToast('🎉 このDayの50語チェック完了！4択スピードテストへ進みましょう');
+      }
+
+      saveState();
+      renderApp();
+    }
+
+    // ==========================================
+    // Quiz Builder & Handler (Daily Test & Smart Review)
+    // ==========================================
+    function buildQuiz(wordList, maxCount = 50) {
+      const uniqueMeanings = Array.from(new Set(MIXED_MASTER_POOL.map(w => w.meaning)));
+
+      state.quizQuestions = wordList.slice(0, maxCount).map(target => {
+        const distractors = uniqueMeanings
+          .filter(m => m !== target.meaning)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        const options = [...distractors, target.meaning].sort(() => Math.random() - 0.5);
+        return {
+          wordObj: target,
+          options,
+          correctMeaning: target.meaning
+        };
+      });
+
+      state.quizIndex = 0;
+      state.quizSelected = null;
+      state.quizScore = 0;
+      state.quizFinished = false;
+      state.quizWrongWords = [];
+    }
+
+    function startDaily50Test() {
+      const deck = [...getCurrentDeck()].sort(() => Math.random() - 0.5);
+      buildQuiz(deck, 50);
+      state.dailySubMode = 'test';
+      renderApp();
+    }
+
+    function startSmartReviewQuiz() {
+      const due = getDueReviewWords();
+      const targets = due.length > 0 ? due : Object.values(state.vocabMap).slice(0, 15);
+      if (targets.length === 0) {
+        buildQuiz(getCurrentDeck().slice(0, 10), 10);
+      } else {
+        buildQuiz(targets, 25);
+      }
+      state.reviewQuizActive = true;
+      renderApp();
+    }
+
+    function answerQuizOption(optionIndex, isReviewMode) {
+      if (state.quizSelected !== null) return;
+      const currentQ = state.quizQuestions[state.quizIndex];
+      const chosen = currentQ.options[optionIndex];
+      state.quizSelected = chosen;
+
+      const isCorrect = chosen === currentQ.correctMeaning;
+      if (isCorrect) {
+        state.quizScore++;
+      } else {
+        state.quizWrongWords.push(currentQ.wordObj);
+      }
+
+      // Auto-pronounce the word on answer
+      speakText(currentQ.wordObj.word);
+
+      // Update SRS schedule
+      const today = getTodayStr();
+      const key = currentQ.wordObj.word.toLowerCase();
+      const existing = state.vocabMap[key];
+      const nextStage = isCorrect ? Math.min((existing?.stage || 0) + 1, 4) : 0;
+      const nextInterval = isCorrect ? SRS_INTERVALS[nextStage] : 0;
+
+      state.vocabMap[key] = {
+        ...currentQ.wordObj,
+        stage: nextStage,
+        nextReviewDate: isCorrect ? addDaysStr(today, nextInterval) : today,
+        status: nextStage >= 2 ? 'mastered' : 'learning',
+        addedDate: existing?.addedDate || today,
+        wrongCount: isCorrect ? (existing?.wrongCount || 0) : (existing?.wrongCount || 0) + 1
+      };
+
+      renderApp();
+
+      setTimeout(() => {
+        if (state.quizIndex < state.quizQuestions.length - 1) {
+          state.quizIndex++;
+          state.quizSelected = null;
+        } else {
+          state.quizFinished = true;
+          const prevLog = state.dailyLogs[today] || { studiedCount: 0, testedCount: 0, testScore: 0, reviewedCount: 0 };
+          state.dailyLogs[today] = {
+            ...prevLog,
+            testedCount: isReviewMode ? prevLog.testedCount : Math.max(prevLog.testedCount || 0, state.quizQuestions.length),
+            testScore: isReviewMode ? prevLog.testScore : Math.max(prevLog.testScore || 0, state.quizScore),
+            reviewedCount: isReviewMode ? (prevLog.reviewedCount || 0) + state.quizQuestions.length : prevLog.reviewedCount
+          };
+          checkAndTriggerAutoExpansion(true);
+          saveState();
+        }
+        renderApp();
+      }, 620);
+    }
+
+    // ==========================================
+    // View Switching & Rendering
+    // ==========================================
+    function switchTab(tab) {
+      state.activeTab = tab;
+      renderApp();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderApp() {
+      const today = getTodayStr();
+      const dueWords = getDueReviewWords();
+      const todayLog = state.dailyLogs[today] || { studiedCount: 0, testedCount: 0, testScore: 0, reviewedCount: 0 };
+      const currentCheckedCount = Object.keys(getCurrentDayChecked()).length;
+      const studiedToday = Math.max(currentCheckedCount, todayLog.studiedCount || 0);
+      const totalLearned = Object.keys(state.vocabMap).length;
+      const totalMastered = Object.values(state.vocabMap).filter(w => (w.stage || 0) >= 2).length;
+      const maxLoadedDay = getMaxLoadedDay();
+
+      // Update Header & Nav Badges
+      document.getElementById('header-streak').textContent = `${state.streak}日連続`;
+      const reviewBadge = document.getElementById('nav-review-badge');
+      if (dueWords.length > 0) {
+        reviewBadge.textContent = dueWords.length;
+        reviewBadge.classList.remove('hidden');
+      } else {
+        reviewBadge.classList.add('hidden');
+      }
+
+      ['home', 'daily50', 'review', 'progress'].forEach(t => {
+        const navBtn = document.getElementById(`nav-${t}`);
+        if (t === state.activeTab) {
+          navBtn.className = `relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition ${t === 'review' ? 'text-rose-400' : 'text-indigo-400'} font-bold`;
+        } else {
+          navBtn.className = `relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition text-slate-400 hover:text-slate-200`;
+        }
+      });
+
+      const main = document.getElementById('main-view');
+
+      // ------------------------------------------
+      // TAB 1: HOME
+      // ------------------------------------------
+      if (state.activeTab === 'home') {
+        const availableDays = Object.keys(state.decksByDay).map(Number).sort((a, b) => a - b);
+        main.innerHTML = `
+          <div class="space-y-4 animate-fade">
+            <!-- Auto-Progression Status Bar & Day Switcher -->
+            <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-3 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span class="text-[11px] font-bold text-emerald-300">自動継続エンジン稼働中（Day ${maxLoadedDay} まで自動準備済）</span>
+                </div>
+                <button onclick="unlockNextDayImmediately()" class="text-[10px] px-2 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">
+                  + 次の50語を先取り
+                </button>
+              </div>
+              <div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+                ${availableDays.map(d => {
+                  const doneCnt = getDayCompletionCount(d);
+                  const isDone = doneCnt >= 40;
+                  return `
+                    <button onclick="selectDayDeck(${d})" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-extrabold transition flex items-center gap-1 ${state.currentDayNum === d ? 'bg-indigo-600 text-white shadow' : 'bg-slate-900 text-slate-400 hover:text-white'}">
+                      <span>Day ${d}</span>
+                      <span class="text-[10px] ${isDone ? 'text-emerald-300' : 'opacity-70'}">(${doneCnt}/50)</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Hero 50-Word Daily Routine Card -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-slate-900 p-5 shadow-xl border border-indigo-400/20">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-white/15 text-indigo-100 mb-2">
+                    Day ${state.currentDayNum} （自動進行）
+                  </span>
+                  <h2 class="text-xl font-black text-white leading-snug">今日の50単語ミッション</h2>
+                  <p class="text-xs text-indigo-200 mt-0.5">80%達成または日付変更で次の50語が自動追加されます</p>
+                </div>
+                <div class="text-right">
+                  <div class="text-2xl font-black text-emerald-300">
+                    ${Math.min(50, currentCheckedCount)}<span class="text-xs font-normal text-indigo-200">/50語</span>
+                  </div>
+                  <span class="text-[10px] text-indigo-200">Day ${state.currentDayNum} 進捗</span>
+                </div>
+              </div>
+
+              <!-- 3-Step Status Pills -->
+              <div class="grid grid-cols-3 gap-2 my-4">
+                <div class="p-2.5 rounded-2xl border ${currentCheckedCount >= 50 ? 'bg-emerald-500/20 border-emerald-400/40' : 'bg-black/25 border-white/10'}">
+                  <div class="flex items-center justify-between text-xs font-bold text-white mb-1">
+                    <span>① 50語学習</span>
+                  </div>
+                  <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-emerald-400 h-full" style="width: ${Math.min(100, (currentCheckedCount / 50) * 100)}%"></div>
+                  </div>
+                  <p class="text-[10px] text-indigo-200 mt-1">${currentCheckedCount}/50 完了</p>
+                </div>
+
+                <div class="p-2.5 rounded-2xl border ${todayLog.testedCount > 0 ? 'bg-emerald-500/20 border-emerald-400/40' : 'bg-black/25 border-white/10'}">
+                  <div class="flex items-center justify-between text-xs font-bold text-white mb-1">
+                    <span>② 4択テスト</span>
+                  </div>
+                  <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-amber-400 h-full" style="width: ${todayLog.testedCount > 0 ? 100 : 0}%"></div>
+                  </div>
+                  <p class="text-[10px] text-indigo-200 mt-1">${todayLog.testedCount > 0 ? `最高 ${todayLog.testScore}点` : '未受験'}</p>
+                </div>
+
+                <div class="p-2.5 rounded-2xl border ${dueWords.length === 0 ? 'bg-emerald-500/20 border-emerald-400/40' : 'bg-black/25 border-white/10'}">
+                  <div class="flex items-center justify-between text-xs font-bold text-white mb-1">
+                    <span>③ 適時復習</span>
+                  </div>
+                  <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-rose-400 h-full" style="width: ${dueWords.length === 0 ? 100 : 45}%"></div>
+                  </div>
+                  <p class="text-[10px] text-indigo-200 mt-1">対象 ${dueWords.length}語</p>
+                </div>
+              </div>
+
+              <button onclick="launchSmartDailyRoutine()" class="w-full bg-white text-indigo-950 font-black py-3.5 px-4 rounded-2xl shadow-lg active:scale-95 transition flex items-center justify-center gap-2 text-sm">
+                <i data-lucide="play" class="w-4 h-4 text-indigo-600 fill-indigo-600"></i>
+                <span>今日のスマート学習を開始（前回の続きから）</span>
+              </button>
+            </div>
+
+            <!-- Smart Forgetting Curve Review Banner -->
+            <div class="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                  <i data-lucide="brain" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-sm font-bold text-white">よきところで復習（忘却曲線）</h3>
+                    ${dueWords.length > 0 ? `<span class="bg-rose-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">${dueWords.length}語</span>` : ''}
+                  </div>
+                  <p class="text-xs text-slate-400 mt-0.5">
+                    ${dueWords.length > 0 ? `今日が復習タイミングの単語が ${dueWords.length}語 あります` : '本日の復習対象はすべてクリアしています！'}
+                  </p>
+                </div>
+              </div>
+              <button onclick="switchTab('review'); startSmartReviewQuiz();" class="bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition shrink-0">
+                今すぐ復習
+              </button>
+            </div>
+
+            <!-- Cumulative Stacking Stats -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-slate-800/60 border border-slate-800 rounded-2xl p-4">
+                <div class="flex items-center gap-2 text-slate-400 text-xs mb-1">
+                  <i data-lucide="layers" class="w-4 h-4 text-indigo-400"></i>
+                  <span>累計学習ストック</span>
+                </div>
+                <div class="text-2xl font-black text-white">${totalLearned} <span class="text-xs font-normal text-slate-400">単語</span></div>
+                <p class="text-[11px] text-emerald-400 mt-1">長期記憶定着: ${totalMastered}語</p>
+              </div>
+
+              <div class="bg-slate-800/60 border border-slate-800 rounded-2xl p-4">
+                <div class="flex items-center gap-2 text-slate-400 text-xs mb-1">
+                  <i data-lucide="trophy" class="w-4 h-4 text-amber-400"></i>
+                  <span>本日のテスト最高点</span>
+                </div>
+                <div class="text-2xl font-black text-white">${todayLog.testedCount > 0 ? `${todayLog.testScore}/${todayLog.testedCount}` : '未実施'}</div>
+                <p class="text-[11px] text-slate-400 mt-1">ミスした単語は自動復習へ</p>
+              </div>
+            </div>
+
+            <!-- GitHub Pages & iPhone Shortcut Card -->
+            <div onclick="openModal('github-modal')" class="cursor-pointer bg-gradient-to-r from-emerald-950/80 to-slate-900 border border-emerald-500/30 rounded-2xl p-4 flex items-center justify-between hover:border-emerald-400/50 transition">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+                  <i data-lucide="github" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-emerald-300">GitHub Pages用コード取得 ＆ ホーム画面追加</h4>
+                  <p class="text-[11px] text-slate-300 mt-0.5">ワンタップで index.html をコピーしてSafariアプリ化</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-right" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+            </div>
+          </div>
+        `;
+      }
+
+      // ------------------------------------------
+      // TAB 2: DAILY 50 (Flashcards, 4-Choice Test, Word List)
+      // ------------------------------------------
+      else if (state.activeTab === 'daily50') {
+        const deck = getCurrentDeck();
+        const checkedMap = getCurrentDayChecked();
+        const card = deck[state.cardIndex] || deck[0];
+
+        let subContent = '';
+
+        // SUB-MODE A: FLASHCARD
+        if (state.dailySubMode === 'study' && card) {
+          const markStatus = checkedMap[card.id];
+          subContent = `
+            <div class="space-y-4">
+              <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-indigo-300">Day ${state.currentDayNum}</span>
+                  <span>カード ${state.cardIndex + 1} / ${deck.length}</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <button onclick="setVoiceAccent(state.voiceAccent === 'en-GB' ? 'en-US' : 'en-GB')" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-bold">
+                    ${state.voiceAccent === 'en-GB' ? '🇬🇧 UK' : '🇺🇸 US'}
+                  </button>
+                  <button onclick="setVoiceSpeed(state.voiceSpeed < 0.9 ? 1.0 : 0.8)" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-bold">
+                    ${state.voiceSpeed < 0.9 ? '0.8x' : '1.0x'}
+                  </button>
+                </div>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-full transition-all duration-300" style="width: ${((state.cardIndex + 1) / deck.length) * 100}%"></div>
+              </div>
+
+              <!-- Flashcard Box -->
+              <div onclick="state.isFlipped = !state.isFlipped; renderApp();" class="card-3d cursor-pointer min-h-[320px] rounded-3xl bg-gradient-to-b from-slate-800 to-slate-800/90 border border-slate-700 p-6 flex flex-col justify-between shadow-xl relative">
+                <div class="flex items-center justify-between">
+                  <span class="px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30">${card.pos}</span>
+                  <button onclick="event.stopPropagation(); speakText('${card.word.replace(/'/g, "\\'")}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold">
+                    <i data-lucide="volume-2" class="w-4 h-4 text-indigo-400"></i>
+                    <span>発音</span>
+                  </button>
+                </div>
+
+                <div class="my-auto text-center py-5">
+                  <h2 class="text-3xl font-black tracking-wide text-white mb-1">${card.word}</h2>
+                  <p class="text-sm text-slate-400 font-mono">${card.phonetic}</p>
+
+                  ${state.isFlipped ? `
+                    <div class="mt-5 pt-5 border-t border-slate-700/80 space-y-3 animate-fade">
+                      <p class="text-xl font-extrabold text-emerald-400">${card.meaning}</p>
+                      <div class="bg-slate-900/85 rounded-2xl p-3.5 text-left border border-slate-800">
+                        <div class="flex items-start justify-between gap-2">
+                          <p class="text-xs text-slate-200 font-medium leading-relaxed">"${card.example}"</p>
+                          <button onclick="event.stopPropagation(); speakText('${card.example.replace(/'/g, "\\'")}')" class="p-1 text-slate-400 hover:text-indigo-400 shrink-0">
+                            <i data-lucide="volume-2" class="w-4 h-4"></i>
+                          </button>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">${card.exampleJa}</p>
+                      </div>
+                      <!-- Quick External Dictionary Links -->
+                      <div class="flex items-center justify-center gap-2 pt-1" onclick="event.stopPropagation()">
+                        <a href="https://dictionary.cambridge.org/dictionary/english/${encodeURIComponent(card.word)}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white">Cambridge ↗</a>
+                        <a href="https://www.oxfordlearnersdictionaries.com/definition/english/${encodeURIComponent(card.word.toLowerCase())}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white">Oxford ↗</a>
+                        <a href="https://ejje.weblio.jp/content/${encodeURIComponent(card.word)}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white">Weblio ↗</a>
+                        <a href="https://eow.alc.co.jp/search?q=${encodeURIComponent(card.word)}" target="_blank" rel="noopener" class="text-[10px] px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white">英辞郎 ↗</a>
+                      </div>
+                    </div>
+                  ` : `
+                    <div class="mt-10 text-xs text-indigo-400 font-semibold animate-pulse">
+                      タップして日本語の意味と例文を表示
+                    </div>
+                  `}
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] text-slate-500">
+                  <span>#${state.cardIndex + 1} (チェック済 ${Object.keys(checkedMap).length}/50)</span>
+                  <span>${markStatus === 'know' ? '✅ 覚えた' : markStatus === 'again' ? '🔄 要復習' : '未チェック'}</span>
+                </div>
+              </div>
+
+              <!-- Know / Again Judgment Buttons -->
+              <div class="grid grid-cols-2 gap-3">
+                <button onclick="markFlashcard('again')" class="py-4 rounded-2xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 font-bold text-sm flex flex-col items-center justify-center gap-1 active:scale-95 transition">
+                  <span>🔄 まだ・あとで復習</span>
+                  <span class="text-[10px] text-rose-400/80 font-normal">今日の適時復習へ追加</span>
+                </button>
+                <button onclick="markFlashcard('know')" class="py-4 rounded-2xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 font-bold text-sm flex flex-col items-center justify-center gap-1 active:scale-95 transition">
+                  <span>✅ 覚えた！</span>
+                  <span class="text-[10px] text-emerald-400/80 font-normal">忘却曲線スケジュールへ</span>
+                </button>
+              </div>
+
+              <!-- Card Navigation -->
+              <div class="flex items-center justify-between pt-1">
+                <button onclick="if(state.cardIndex>0){state.cardIndex--; state.isFlipped=false; renderApp();}" class="px-3.5 py-2 rounded-xl bg-slate-800 text-xs text-slate-300">← 前の単語</button>
+                <button onclick="startDaily50Test()" class="px-4 py-2 rounded-xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-xs font-bold">② 50語テストへ進む →</button>
+                <button onclick="if(state.cardIndex<${deck.length - 1}){state.cardIndex++; state.isFlipped=false; renderApp();}" class="px-3.5 py-2 rounded-xl bg-slate-800 text-xs text-slate-300">次の単語 →</button>
+              </div>
+            </div>
+          `;
+        }
+
+        // SUB-MODE B: 4-CHOICE TEST
+        else if (state.dailySubMode === 'test') {
+          const q = state.quizQuestions[state.quizIndex];
+          if (!state.quizFinished && q) {
+            subContent = `
+              <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-5 space-y-5">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-bold text-indigo-400">Day ${state.currentDayNum} : 4択スピードテスト</span>
+                  <span>問題 ${state.quizIndex + 1} / ${state.quizQuestions.length}</span>
+                </div>
+
+                <div class="text-center py-4">
+                  <div class="inline-flex items-center gap-2">
+                    <h3 class="text-2xl font-black text-white">${q.wordObj.word}</h3>
+                    <button onclick="speakText('${q.wordObj.word.replace(/'/g, "\\'")}')" class="p-1.5 rounded-lg bg-slate-700 text-indigo-300">
+                      <i data-lucide="volume-2" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                  <p class="text-xs text-slate-400 mt-1">${q.wordObj.phonetic} (${q.wordObj.pos})</p>
+                </div>
+
+                <div class="space-y-2.5">
+                  ${q.options.map((opt, idx) => {
+                    const isCorrect = opt === q.correctMeaning;
+                    const isSelected = state.quizSelected === opt;
+                    let cls = "bg-slate-900/90 border-slate-700 text-slate-200 hover:border-indigo-500/50";
+                    if (state.quizSelected !== null) {
+                      if (isCorrect) cls = "bg-emerald-500/25 border-emerald-400 text-emerald-200 font-bold";
+                      else if (isSelected) cls = "bg-rose-500/25 border-rose-400 text-rose-200";
+                    }
+                    return `
+                      <button onclick="answerQuizOption(${idx}, false)" class="w-full text-left p-3.5 rounded-2xl border text-sm transition flex items-center justify-between ${cls}">
+                        <span>${opt}</span>
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          } else {
+            subContent = `
+              <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-6 text-center space-y-5">
+                <div class="text-4xl font-black text-emerald-400">
+                  ${state.quizScore} <span class="text-lg text-slate-400">/ ${state.quizQuestions.length} 正解</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  正解した単語は忘却曲線に沿って次回出題日が延長され、間違えた単語は「適時復習」リストに自動追加されました！
+                </p>
+                ${state.quizWrongWords.length > 0 ? `
+                  <div class="text-left bg-slate-900 rounded-2xl p-3.5 border border-slate-800 max-h-48 overflow-y-auto space-y-1.5">
+                    <p class="text-xs font-bold text-rose-400 mb-1">要復習に登録された単語 (${state.quizWrongWords.length}語):</p>
+                    ${state.quizWrongWords.map(w => `
+                      <div class="flex justify-between text-xs py-1 border-b border-slate-800/80 last:border-0">
+                        <span class="font-bold text-white">${w.word}</span>
+                        <span class="text-slate-400">${w.meaning}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                ` : ''}
+                <div class="flex flex-col gap-2">
+                  <button onclick="selectDayDeck(state.currentDayNum + 1); state.dailySubMode='study'; renderApp();" class="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-lg">
+                    🚀 次の Day ${state.currentDayNum + 1}（新規50語）へ進む
+                  </button>
+                  <div class="flex gap-2">
+                    <button onclick="startDaily50Test()" class="flex-1 py-2.5 rounded-2xl bg-slate-700 text-white text-xs font-bold">もう一度テスト</button>
+                    <button onclick="switchTab('review')" class="flex-1 py-2.5 rounded-2xl bg-indigo-600 text-white text-xs font-bold">適時復習タブへ</button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        // SUB-MODE C: 50 WORD LIST & AUTO-QUEUE INFO
+        else {
+          subContent = `
+            <div class="space-y-4">
+              <div class="bg-gradient-to-br from-indigo-950/90 to-slate-900 border border-indigo-500/30 rounded-2xl p-4 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-emerald-300">✨ 自動追加キュー稼働中（Day ${maxLoadedDay} まで準備完了）</span>
+                  <button onclick="openModal('settings-modal')" class="text-[11px] text-indigo-300 underline">設定</button>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-relaxed">
+                  ボタン操作をしなくても、学習が進むにつれて自動的に次の50単語（Day ${maxLoadedDay + 1} 以降）が裏側で追加されます。今日さらに先取りしたい場合は下のボタンから即座に次のDayを開けます。
+                </p>
+                <button onclick="unlockNextDayImmediately()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-2 shadow">
+                  <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                  <span>今すぐ Day ${maxLoadedDay + 1}（新規50語）を先取り追加</span>
+                </button>
+              </div>
+
+              <div class="space-y-2">
+                ${deck.map((item, idx) => `
+                  <div class="bg-slate-800/70 border border-slate-800 rounded-xl p-3 flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <span class="text-[11px] font-mono text-slate-500 w-5">${idx + 1}</span>
+                      <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                          <span class="text-sm font-bold text-white truncate">${item.word}</span>
+                          <span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-700 text-slate-300">${item.pos}</span>
+                        </div>
+                        <p class="text-xs text-emerald-400 truncate">${item.meaning}</p>
+                      </div>
+                    </div>
+                    <button onclick="speakText('${item.word.replace(/'/g, "\\'")}')" class="p-2 rounded-lg bg-slate-700/70 text-slate-300 hover:text-white shrink-0">
+                      <i data-lucide="volume-2" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        main.innerHTML = `
+          <div class="space-y-4 animate-fade">
+            <div class="grid grid-cols-3 gap-1.5 bg-slate-800 p-1 rounded-2xl border border-slate-700">
+              <button onclick="state.dailySubMode='study'; renderApp();" class="py-2 rounded-xl text-xs font-bold transition ${state.dailySubMode === 'study' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400'}">① カード学習</button>
+              <button onclick="startDaily50Test()" class="py-2 rounded-xl text-xs font-bold transition ${state.dailySubMode === 'test' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400'}">② 4択テスト</button>
+              <button onclick="state.dailySubMode='list'; renderApp();" class="py-2 rounded-xl text-xs font-bold transition ${state.dailySubMode === 'list' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400'}">50語一覧 (${state.currentDayNum}日目)</button>
+            </div>
+            ${subContent}
+          </div>
+        `;
+      }
+
+      // ------------------------------------------
+      // TAB 3: SMART REVIEW ("よきところで復習")
+      // ------------------------------------------
+      else if (state.activeTab === 'review') {
+        let quizArea = '';
+        if (state.reviewQuizActive) {
+          const q = state.quizQuestions[state.quizIndex];
+          if (!state.quizFinished && q) {
+            quizArea = `
+              <div class="bg-slate-800 border border-rose-500/40 rounded-3xl p-5 space-y-4">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="text-rose-400 font-bold">忘却曲線 復習クイズ</span>
+                  <span>${state.quizIndex + 1} / ${state.quizQuestions.length}</span>
+                </div>
+                <div class="text-center py-3">
+                  <h3 class="text-2xl font-black text-white">${q.wordObj.word}</h3>
+                  <p class="text-xs text-slate-400 mt-1">記憶ステージ Lv.${(q.wordObj.stage || 0) + 1}</p>
+                </div>
+                <div class="space-y-2">
+                  ${q.options.map((opt, idx) => {
+                    const isCorrect = opt === q.correctMeaning;
+                    const isSelected = state.quizSelected === opt;
+                    let cls = "bg-slate-900 border-slate-700 text-slate-200";
+                    if (state.quizSelected !== null) {
+                      if (isCorrect) cls = "bg-emerald-500/25 border-emerald-400 text-emerald-200 font-bold";
+                      else if (isSelected) cls = "bg-rose-500/25 border-rose-400 text-rose-200";
+                    }
+                    return `<button onclick="answerQuizOption(${idx}, true)" class="w-full text-left p-3.5 rounded-2xl border text-sm transition ${cls}">${opt}</button>`;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          } else {
+            quizArea = `
+              <div class="bg-slate-800 border border-emerald-500/40 rounded-3xl p-5 text-center space-y-3">
+                <h4 class="text-lg font-extrabold text-white">復習セッション完了！</h4>
+                <p class="text-xs text-slate-300">正解数: ${state.quizScore} / ${state.quizQuestions.length}語（次回復習日を自動更新しました）</p>
+                <button onclick="state.reviewQuizActive=false; renderApp();" class="px-5 py-2.5 rounded-xl bg-slate-700 text-white text-xs font-bold">閉じる</button>
+              </div>
+            `;
+          }
+        }
+
+        main.innerHTML = `
+          <div class="space-y-4 animate-fade">
+            <div class="bg-gradient-to-br from-rose-950/70 to-slate-900 border border-rose-500/30 rounded-3xl p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="text-base font-extrabold text-white">よきところで復習（エビングハウス忘却曲線）</h2>
+                  <p class="text-[11px] text-slate-300 mt-0.5">1日後 → 3日後 → 7日後 → 14日後 → 30日後 に自動出題</p>
+                </div>
+                <div class="text-right">
+                  <span class="text-2xl font-black text-rose-400">${dueWords.length}</span>
+                  <span class="text-[10px] text-slate-400 block">本日の対象</span>
+                </div>
+              </div>
+              <button onclick="startSmartReviewQuiz()" class="w-full py-3.5 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-xs shadow-lg transition flex items-center justify-center gap-2">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+                <span>${dueWords.length > 0 ? `復習期限の ${dueWords.length}語 をまとめてテスト` : '習得済み単語からランダム復習クイズ'}</span>
+              </button>
+            </div>
+
+            ${quizArea}
+
+            <div class="space-y-2">
+              <h3 class="text-xs font-bold text-slate-300 px-1">現在復習タイミングの単語 (${dueWords.length}語)</h3>
+              ${dueWords.length === 0 ? `
+                <div class="bg-slate-800/50 border border-slate-800 rounded-2xl p-6 text-center text-xs text-slate-400">
+                  現在、復習期限が来ている単語はありません！
+                </div>
+              ` : dueWords.map(w => `
+                <div class="bg-slate-800/80 border border-slate-700/70 rounded-2xl p-3.5 flex items-center justify-between">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-bold text-white">${w.word}</span>
+                      <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-semibold">記憶Lv.${(w.stage || 0) + 1}</span>
+                    </div>
+                    <p class="text-xs text-emerald-400 mt-0.5">${w.meaning}</p>
+                  </div>
+                  <button onclick="speakText('${w.word.replace(/'/g, "\\'")}')" class="p-2 rounded-xl bg-slate-700 text-slate-200">
+                    <i data-lucide="volume-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // ------------------------------------------
+      // TAB 4: CUMULATIVE PROGRESS (14日間ヒートマップ＆積み重ね記録)
+      // ------------------------------------------
+      else if (state.activeTab === 'progress') {
+        const days14 = Array.from({ length: 14 }, (_, i) => i - 13).map(offset => {
+          const dStr = addDaysStr(today, offset);
+          const log = state.dailyLogs[dStr] || { studiedCount: 0 };
+          const count = offset === 0 ? studiedToday : (log.studiedCount || 0);
+          const pct = Math.min(100, Math.round((count / 50) * 100));
+          return { label: dStr.slice(5).replace('-', '/'), count, pct };
+        });
+
+        const filteredWords = Object.values(state.vocabMap).filter(w =>
+          w.word.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
+          w.meaning.includes(state.searchQuery)
+        );
+
+        main.innerHTML = `
+          <div class="space-y-5 animate-fade">
+            <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-5 space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="text-base font-extrabold text-white">直近14日間の積み重ね記録</h2>
+                  <p class="text-xs text-slate-400">LocalStorage＋IndexedDBに二重自動保存されています</p>
+                </div>
+                <button onclick="openModal('settings-modal')" class="text-xs text-emerald-400 font-bold underline">CSV/保存</button>
+              </div>
+
+              <div class="grid grid-cols-7 gap-2 pt-1">
+                ${days14.map(d => `
+                  <div class="flex flex-col items-center gap-1 bg-slate-900/90 border border-slate-800 rounded-xl p-2">
+                    <span class="text-[9px] text-slate-400 font-mono">${d.label}</span>
+                    <div class="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-black ${d.count >= 50 ? 'bg-emerald-500 text-slate-950' : d.count > 0 ? 'bg-indigo-500/40 text-indigo-200 border border-indigo-400/40' : 'bg-slate-800 text-slate-500'}">
+                      ${d.count}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center justify-between px-1">
+                <h3 class="text-xs font-bold text-slate-300">マイ単語帳ストック（累計 ${totalLearned}語）</h3>
+              </div>
+              <input
+                type="text"
+                value="${state.searchQuery}"
+                oninput="state.searchQuery = this.value; renderApp();"
+                placeholder="学習した単語や日本語の意味で検索..."
+                class="w-full px-4 py-2.5 rounded-2xl bg-slate-800 border border-slate-700 text-xs text-white focus:outline-none focus:border-indigo-500"
+              />
+              <div class="space-y-2 max-h-80 overflow-y-auto pr-1">
+                ${filteredWords.map(w => `
+                  <div class="bg-slate-800/70 border border-slate-800 rounded-xl p-3 flex items-center justify-between">
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold text-white">${w.word}</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">次回: ${w.nextReviewDate}</span>
+                      </div>
+                      <p class="text-xs text-slate-300 mt-0.5">${w.meaning}</p>
+                    </div>
+                    <button onclick="speakText('${w.word.replace(/'/g, "\\'")}')" class="p-2 rounded-lg bg-slate-700/60 text-slate-300">
+                      <i data-lucide="volume-2" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      lucide.createIcons();
+    }
+
+    // Boot Application
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState().then(() => {
+        renderApp();
+      });
+    });
+  </script>
+</body>
+</html>
