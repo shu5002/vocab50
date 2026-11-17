@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="VOCAB 50" />
-  <title>AI Vocab Master 50</title>
+  <title>Vocab & Idiom Master 50 (4500+ Edition)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     * { -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -27,11 +27,6 @@
       100% { transform: scale(0.95); opacity: 0.85; }
     }
     .speaking-active { animation: pulse-ring 1s infinite; background-color: #4f46e5 !important; color: #fff !important; }
-    @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .spin-ai { display: inline-block; animation: spin-slow 1.2s linear infinite; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -40,27 +35,24 @@
   <header class="sticky top-0 z-30 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-3">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center font-black text-white shadow-lg shadow-indigo-500/20 text-sm">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center font-black text-white shadow-lg shadow-indigo-500/20 text-sm">
           50
         </div>
         <div>
           <div class="flex items-center gap-1.5">
-            <h1 class="font-bold text-sm tracking-tight text-white">VOCAB MASTER 50</h1>
+            <h1 class="font-bold text-sm tracking-tight text-white">VOCAB & IDIOM 50</h1>
             <span id="badge-day" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Day 1</span>
           </div>
-          <p class="text-[11px] text-slate-400" id="header-subtitle">最速Flash-Lite固定・並列AI補充</p>
+          <p class="text-[11px] text-slate-400" id="header-subtitle">API不要・4,500+語句 Oxford/NGSL/熟語 網羅版</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
-        <div id="ai-gen-indicator" class="hidden items-center gap-1 bg-indigo-500/20 border border-indigo-400/40 px-2.5 py-1 rounded-full text-[10px] font-bold text-indigo-300">
-          <span class="spin-ai">⚡</span> 高速生成中
-        </div>
         <div class="flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-full">
           <span class="text-xs">🔥</span>
           <span id="streak-count" class="text-xs font-extrabold text-amber-400">1</span>
         </div>
-        <button onclick="switchTab('settings')" class="p-2 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/60" title="設定・AI補充・音声">
+        <button onclick="switchTab('settings')" class="p-2 rounded-xl bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700/60" title="設定・音声・バックアップ">
           ⚙️
         </button>
       </div>
@@ -69,14 +61,6 @@
 
   <!-- Main Content Container -->
   <main class="flex-1 max-w-md w-full mx-auto px-4 py-4 space-y-4">
-
-    <!-- AI Background Status Toast -->
-    <div id="ai-toast" class="hidden bg-indigo-950/90 border border-indigo-500/50 rounded-2xl p-3 text-xs text-indigo-200 flex items-center justify-between shadow-lg">
-      <div class="flex items-center gap-2">
-        <span class="spin-ai text-sm">⚡</span>
-        <span id="ai-toast-text">最速Flashモデル（25語×2並列）で50語を高速生成中...</span>
-      </div>
-    </div>
 
     <!-- Review Due Alert Banner -->
     <div id="review-banner" class="hidden bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-rose-500/20 border border-amber-500/40 rounded-2xl p-3.5 flex items-center justify-between shadow-lg">
@@ -98,15 +82,15 @@
       <div class="bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 rounded-3xl p-5 shadow-xl shadow-indigo-950/50 border border-indigo-400/20 relative overflow-hidden">
         <div class="relative z-10 space-y-4">
           <div class="flex items-center justify-between">
-            <span id="home-ai-status-pill" class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 text-indigo-100 backdrop-blur-sm">
-              A〜Z均等配分 ・ 自動補充ON
+            <span id="home-corpus-pill" class="text-[10px] font-bold tracking-wider px-2.5 py-1 rounded-full bg-white/15 text-indigo-100 backdrop-blur-sm">
+              API不要・全4,500+語句収録済
             </span>
             <span id="home-day-progress-text" class="text-xs font-bold text-indigo-100">0 / 50 語完了</span>
           </div>
 
           <div>
-            <h2 id="home-day-title" class="text-2xl font-black text-white tracking-tight">Day 1 の50単語</h2>
-            <p id="home-headword-preview" class="text-xs text-indigo-200 mt-1 truncate">頭文字バランス: A, B, C, D...</p>
+            <h2 id="home-day-title" class="text-2xl font-black text-white tracking-tight">Day 1 の50語句</h2>
+            <p id="home-headword-preview" class="text-xs text-indigo-200 mt-1 truncate">英単語＋頻出熟語ミックス（A〜Z均等配分）</p>
           </div>
 
           <!-- Progress Bar -->
@@ -117,13 +101,13 @@
           <div class="grid grid-cols-2 gap-2.5 pt-1">
             <button onclick="launchSmartStudy()" class="col-span-2 py-3.5 px-4 rounded-2xl bg-white text-indigo-950 font-black text-sm shadow-lg active:scale-[0.99] transition flex items-center justify-center gap-2">
               <span>🚀</span>
-              <span id="smart-btn-label">今日の50単語をスタート</span>
+              <span id="smart-btn-label">今日の50語句をスタート</span>
             </button>
             <button onclick="switchTab('test')" class="py-2.5 px-3 rounded-xl bg-indigo-950/50 hover:bg-indigo-950/70 text-indigo-100 font-bold text-xs border border-indigo-300/20 flex items-center justify-center gap-1.5">
               <span>⚡</span> 4択テスト
             </button>
-            <button onclick="unlockNextDayManual()" class="py-2.5 px-3 rounded-xl bg-indigo-950/50 hover:bg-indigo-950/70 text-indigo-100 font-bold text-xs border border-indigo-300/20 flex items-center justify-center gap-1.5">
-              <span>➕</span> 次のDayを解放
+            <button onclick="advanceToNextDay()" class="py-2.5 px-3 rounded-xl bg-indigo-950/50 hover:bg-indigo-950/70 text-indigo-100 font-bold text-xs border border-indigo-300/20 flex items-center justify-center gap-1.5">
+              <span>⏭️</span> 次のDayへ進む
             </button>
           </div>
         </div>
@@ -132,10 +116,12 @@
       <!-- Day Selector Pills -->
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 space-y-2.5">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-300">📅 学習Day一覧（残100語未満で裏側自動補充）</span>
-          <button onclick="triggerManualAIGenerate()" class="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 underline">
-            ⚡ 高速AIで+50語補充
-          </button>
+          <span class="text-xs font-bold text-slate-300" id="day-range-label">📅 全カリキュラム（Day 1〜90+ 自動進行）</span>
+          <select id="filter-category" onchange="renderAll()" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-[11px] text-indigo-300 font-bold">
+            <option value="all">すべて表示 (50語)</option>
+            <option value="idiom">熟語・句動詞のみ</option>
+            <option value="word">英単語のみ</option>
+          </select>
         </div>
         <div id="day-selector-list" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1"></div>
       </div>
@@ -145,7 +131,7 @@
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 text-center">
           <p class="text-[11px] text-slate-400">累計マスター</p>
           <p id="stat-learned" class="text-xl font-black text-emerald-400 mt-0.5">0</p>
-          <p class="text-[10px] text-slate-500">習得済単語</p>
+          <p class="text-[10px] text-slate-500">習得済語句</p>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 text-center">
           <p class="text-[11px] text-slate-400">適時復習待ち</p>
@@ -153,9 +139,9 @@
           <p class="text-[10px] text-slate-500">忘却曲線キュー</p>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 text-center">
-          <p class="text-[11px] text-slate-400">総収録ストック</p>
-          <p id="stat-total-pool" class="text-xl font-black text-indigo-400 mt-0.5">0</p>
-          <p id="stat-ai-added" class="text-[10px] text-indigo-300/70">AI追加: 0語</p>
+          <p class="text-[11px] text-slate-400">収録総語句数</p>
+          <p id="stat-total-pool" class="text-xl font-black text-indigo-400 mt-0.5">4,500+</p>
+          <p id="stat-idiom-count" class="text-[10px] text-indigo-300/70">Day数: 90日分+</p>
         </div>
       </div>
 
@@ -163,12 +149,12 @@
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div class="flex items-center justify-between">
           <div>
-            <h3 class="text-xs font-bold text-slate-200">📋 現在のDayの50単語一覧（タップで発音）</h3>
-            <p class="text-[10px] text-slate-400">A〜Z・品詞バランス配分済</p>
+            <h3 class="text-xs font-bold text-slate-200">📋 現在のDayの収録リスト（タップでネイティブ発音）</h3>
+            <p class="text-[10px] text-slate-400">重要英単語 ＋ 頻出イディオム・句動詞</p>
           </div>
-          <span id="list-filter-info" class="text-[11px] text-slate-400">全50語</span>
+          <span id="list-filter-info" class="text-[11px] text-slate-400">50語</span>
         </div>
-        <div id="home-word-list" class="space-y-1.5 max-h-80 overflow-y-auto pr-1"></div>
+        <div id="home-word-list" class="space-y-1.5 max-h-96 overflow-y-auto pr-1"></div>
       </div>
     </section>
 
@@ -189,31 +175,31 @@
       </div>
 
       <!-- Flashcard Box -->
-      <div class="card-flip bg-slate-900 border border-slate-800 rounded-3xl p-6 min-h-[330px] flex flex-col justify-between shadow-2xl relative">
+      <div class="card-flip bg-slate-900 border border-slate-800 rounded-3xl p-6 min-h-[340px] flex flex-col justify-between shadow-2xl relative">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span id="card-pos" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">verb</span>
-            <span id="card-initial-badge" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">頭文字: A</span>
+            <span id="card-type-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300">英単語</span>
           </div>
           <button id="btn-card-speak" onclick="speakCurrentCard(event)" class="w-11 h-11 rounded-2xl bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/40 text-indigo-300 flex items-center justify-center text-lg transition">
             🔊
           </button>
         </div>
 
-        <!-- Center Word -->
+        <!-- Center Word / Idiom -->
         <div onclick="revealCardAnswer()" class="my-auto py-6 text-center space-y-3 cursor-pointer">
-          <h2 id="card-word" class="text-4xl font-black tracking-tight text-white break-all">abandon</h2>
-          <p id="card-phonetic" class="text-sm text-slate-400 font-mono">/əbændən/</p>
+          <h2 id="card-word" class="text-3xl sm:text-4xl font-black tracking-tight text-white break-words leading-snug">abandon</h2>
+          <p id="card-phonetic" class="text-xs text-slate-400 font-mono">/əbændən/</p>
 
           <!-- Hidden Answer Area -->
           <div id="card-answer-box" class="pt-4 border-t border-slate-800/80 space-y-2.5 hidden">
-            <p id="card-meaning" class="text-xl font-extrabold text-emerald-400">〜を放棄する、見捨てる</p>
+            <p id="card-meaning" class="text-xl font-extrabold text-emerald-400">〜を放棄する、断念する</p>
             <div class="bg-slate-950/70 rounded-2xl p-3 border border-slate-800/80 text-left space-y-1">
               <div class="flex items-start justify-between gap-2">
-                <p id="card-example" class="text-xs text-slate-200 leading-relaxed">They had to abandon the car in the snow.</p>
+                <p id="card-example" class="text-xs text-slate-200 leading-relaxed">They had to abandon the old plan.</p>
                 <button onclick="speakExample(event)" class="text-xs px-2 py-1 rounded-lg bg-slate-800 text-indigo-300 shrink-0">🔈例文</button>
               </div>
-              <p id="card-example-ja" class="text-[11px] text-slate-400">彼らは雪の中で車を乗り捨てなければならなかった。</p>
+              <p id="card-example-ja" class="text-[11px] text-slate-400">彼らは古い計画を断念しなければならなかった。</p>
             </div>
           </div>
 
@@ -248,9 +234,9 @@
 
       <!-- Prev / Next Navigation -->
       <div class="flex items-center justify-between pt-1">
-        <button onclick="moveCard(-1)" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">← 前の単語</button>
+        <button onclick="moveCard(-1)" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">← 前の語句</button>
         <button onclick="shuffleCurrentDayOrder()" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-indigo-400">🔀 出題順シャッフル</button>
-        <button onclick="moveCard(1)" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">次の単語 →</button>
+        <button onclick="moveCard(1)" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300">次の語句 →</button>
       </div>
     </section>
 
@@ -275,7 +261,7 @@
         </div>
 
         <div class="py-3">
-          <h2 id="test-q-word" class="text-3xl font-black text-white">perspective</h2>
+          <h2 id="test-q-word" class="text-3xl font-black text-white break-words">perspective</h2>
           <p id="test-q-phonetic" class="text-xs text-slate-400 font-mono mt-1">/pərspéktɪv/</p>
         </div>
 
@@ -297,7 +283,7 @@
         <div class="flex items-center justify-between">
           <div>
             <h2 class="text-base font-black text-white">🧠 忘却曲線・適時復習センター</h2>
-            <p class="text-xs text-slate-400">間違えた単語と、復習周期（1・3・7・14・30日後）が来た単語</p>
+            <p class="text-xs text-slate-400">間違えた語句と、復習周期（1・3・7・14・30日後）が来た語句</p>
           </div>
           <button onclick="startReviewQuiz()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shrink-0">
             復習テスト開始
@@ -306,62 +292,21 @@
 
         <div id="review-empty-state" class="py-8 text-center space-y-2">
           <div class="text-3xl">🎉</div>
-          <p class="text-sm font-bold text-slate-200">現在、復習期限の単語はありません！</p>
-          <p class="text-xs text-slate-400">今日の50単語の学習またはテストを進めましょう。</p>
+          <p class="text-sm font-bold text-slate-200">現在、復習期限の語句はありません！</p>
+          <p class="text-xs text-slate-400">今日の50語句の学習またはテストを進めましょう。</p>
         </div>
 
         <div id="review-word-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
       </div>
     </section>
 
-    <!-- VIEW: SETTINGS & GEMINI INFINITE GENERATOR -->
+    <!-- VIEW: SETTINGS & BACKUP -->
     <section id="view-settings" class="hidden space-y-4">
-      <!-- Gemini API Infinite Replenishment Card -->
-      <div class="bg-slate-900 border border-indigo-500/50 rounded-3xl p-5 space-y-3.5 shadow-xl">
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-sm font-black text-white">⚡ 最速Flash-Lite固定・並列AI補充</h3>
-            <p class="text-[11px] text-slate-400">
-              重いモデルを除外し、最速のFlash-Lite系モデル＋25語×2並列リクエストで約2〜4秒で50語を生成します。
-            </p>
-          </div>
-        </div>
-
-        <div class="space-y-1.5">
-          <label class="text-xs font-bold text-slate-300 block">Gemini API キー（ブラウザ内のみに安全保存）</label>
-          <input id="setting-api-key" type="password" placeholder="AIzaSy..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs text-white font-mono" />
-        </div>
-
-        <div class="space-y-1.5">
-          <label class="text-xs font-bold text-slate-300 block">AIが自動生成する単語レベル・ジャンル</label>
-          <select id="setting-ai-theme" onchange="saveAiSettings()" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs text-white">
-            <option value="Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル、日常・ビジネス・学術バランス）">🌟 標準：Oxford 3000 / NGSL 実用バランス（B1〜C1）</option>
-            <option value="日常英会話・海外旅行（空港・ホテル・レストラン・街歩き・トラブル対応）で必須の自然な表現と単語">✈️ 日常英会話・海外旅行で使える実践語彙</option>
-            <option value="英語の歌詞・ロック・オルタナティブ音楽・感情表現・比喩でよく使われるエモーショナルな英単語">🎸 英語詞・ソングライティング・感情表現の語彙</option>
-            <option value="IT・ソフトウェア開発・データサイエンス・金融システム・ビジネス実務で頻出の英単語">💻 ITエンジニア・データ分析・ビジネス英語</option>
-            <option value="TOEIC 730〜900点・英検準1級レベルのハイレベル頻出語彙">🏆 TOEIC 800点 / 英検準1級 ハイレベル語彙</option>
-          </select>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2 pt-1">
-          <button onclick="saveApiKey()" class="py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700">
-            💾 APIキーを保存
-          </button>
-          <button id="btn-manual-ai-gen" onclick="triggerManualAIGenerate()" class="py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg">
-            ⚡ 高速で+50語をAI生成
-          </button>
-        </div>
-
-        <div id="ai-log-box" class="text-[11px] text-slate-300 bg-slate-950/90 p-3 rounded-xl border border-slate-800 leading-relaxed">
-          ステータス: 未出題ストックが残り <span id="stat-remaining-stock" class="font-bold text-indigo-400">0</span> 語あります（100語未満で裏側自動生成が作動します）。
-        </div>
-      </div>
-
       <!-- Audio Troubleshooter Card -->
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-4">
+      <div class="bg-slate-900 border border-indigo-500/40 rounded-3xl p-5 space-y-4">
         <div>
           <h2 class="text-sm font-black text-white">🔊 iPhone / Mac 音声エンジン設定</h2>
-          <p class="text-[11px] text-slate-400">AIで新しく生成された単語もすべて自動でネイティブ発音されます</p>
+          <p class="text-[11px] text-slate-400">英単語も英熟語（句動詞・イディオム）もネイティブ発音されます</p>
         </div>
 
         <div class="space-y-2">
@@ -369,7 +314,7 @@
           <select id="setting-audio-engine" onchange="saveAudioSettings()" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs text-white">
             <option value="hybrid">ハイブリッド（クラウド辞書音声優先 ＋ 内蔵音声バックアップ）★推奨</option>
             <option value="cloud">クラウド辞書ストリームのみ（iPhoneマナーモード時でも鳴りやすい）</option>
-            <option value="webspeech">ブラウザ内蔵 Web Speech API のみ（オフライン対応）</option>
+            <option value="webspeech">ブラウザ内蔵 Web Speech API のみ（完全オフライン対応）</option>
           </select>
         </div>
 
@@ -390,22 +335,25 @@
           </div>
         </div>
 
-        <button onclick="testAudioOutput()" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs">
-          🔊 サンプル音声をテスト再生
+        <button onclick="testAudioOutput()" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs">
+          🔊 サンプル音声をテスト再生 ("come up with")
         </button>
       </div>
 
-      <!-- Distribution & Shuffle Fix Card -->
+      <!-- Curriculum Info & Re-shuffle Card -->
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
-        <h3 class="text-sm font-black text-white">🎲 単語の頭文字・ジャンル分散シャッフル</h3>
-        <button onclick="rebalanceAllUnlearnedDays(true)" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
-          🔄 A〜Z均等シャッフルで未学習Dayを再編成する
+        <h3 class="text-sm font-black text-white">📚 4,500+語句マスターデータベース状況</h3>
+        <p class="text-xs text-slate-400 leading-relaxed" id="corpus-detail-status">
+          内蔵コア英単語＋頻出熟語（句動詞・イディオム）に加え、Oxford 3000/5000・NGSL系語彙プールおよび実践派生語展開により、APIキーなし・追加操作なしでDay 1〜Day 90以上（4,500語句超）まで毎日自動で進めます。
+        </p>
+        <button onclick="rebuildAllDaysFromMaster(true)" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
+          🔄 全Day（90日分+）をA〜Z均等シャッフルで再編成する
         </button>
       </div>
 
       <!-- Backup & Restore -->
       <div class="bg-slate-900 border border-slate-800 rounded-3xl p-5 space-y-3">
-        <h3 class="text-sm font-black text-white">💾 学習データ＆AI生成単語のバックアップ</h3>
+        <h3 class="text-sm font-black text-white">💾 学習記録のバックアップ・復元</h3>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="exportBackupJSON()" class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs">📤 JSON書き出し</button>
           <label class="py-2.5 rounded-xl bg-slate-800 text-slate-200 font-bold text-xs text-center cursor-pointer">
@@ -443,247 +391,713 @@
 
   <script>
     /*************************************************************************
-     * 1. 内蔵ベース語彙プール (初期226語・A〜Zバランス収録)
+     * 1. 超頻出英単語 ＋ 頻出英熟語（句動詞・イディオム）完全内蔵マスター辞書
+     * 形式: [語句, 発音記号, 品詞/種別, 日本語訳, 英語例文, 日本語訳]
      *************************************************************************/
-    const CORE_VOCAB_POOL = [
+    const BUILTIN_CORE_ITEMS = [
+      // --- 最頻出イディオム・句動詞（日常会話・ビジネス・旅行・試験） ---
+      ["figure out","/fígjər áʊt/","idiom","〜を理解する、解決する、計算する","I finally figured out how the algorithm works.","ついにそのアルゴリズムの仕組みを理解した。"],
+      ["come up with","/kʌ́m ʌ́p wɪð/","idiom","（アイデア・解決策）を思いつく","She came up with a brilliant melody.","彼女は素晴らしいメロディを思いついた。"],
+      ["end up","/énd ʌ́p/","idiom","結局〜することになる、〜に終わる","We ended up staying in Rome for three extra days.","結局ローマに3日間延泊することになった。"],
+      ["turn out","/tɜ́ːrn áʊt/","idiom","結局〜であると分かる、〜という結果になる","The concert turned out to be a huge success.","そのライブは大成功という結果になった。"],
+      ["carry out","/kǽri áʊt/","idiom","（計画・調査・実験）を実行する","We carried out a detailed survey of hotel reviews.","ホテルレビューの詳細な調査を実施した。"],
+      ["point out","/pɔ́ɪnt áʊt/","idiom","〜を指摘する","He pointed out a subtle bug in the code.","彼はコード内の微妙なバグを指摘した。"],
+      ["put off","/pʊ́t ɔ́ːf/","idiom","〜を延期する、後回しにする","Never put off today's review until tomorrow.","今日の復習を明日に先延ばしにしてはいけない。"],
+      ["take into account","/téɪk ɪntu əkáʊnt/","idiom","〜を考慮に入れる","We must take travel time into account.","移動時間を考慮に入れなければならない。"],
+      ["make sense","/méɪk séns/","idiom","意味をなす、理にかなっている","Your explanation makes complete sense.","あなたの説明は完全に理にかなっている。"],
+      ["on behalf of","/ɑn bɪhǽf əv/","idiom","〜を代表して、〜に代わって","I am writing on behalf of our engineering team.","エンジニアリングチームを代表してご連絡しています。"],
+      ["in terms of","/ɪn tɜ́ːrmz əv/","idiom","〜の観点から、〜に関しては","In terms of sound quality, this interface is unbeatable.","音質の面では、このインターフェースは抜群だ。"],
+      ["as a result","/æz ə rɪzʌ́lt/","idiom","その結果として","He practiced daily; as a result, his English improved fast.","彼は毎日練習し、その結果英語が急速に上達した。"],
+      ["in addition to","/ɪn ədíʃən tu/","idiom","〜に加えて","In addition to guitar, she plays bass and drums.","ギターに加えて、彼女はベースとドラムも演奏する。"],
+      ["regardless of","/rɪgɑ́ːrdləs əv/","idiom","〜にかかわらず","The event will be held regardless of the weather.","天候にかかわらずイベントは開催されます。"],
+      ["on the other hand","/ɑn ði ʌ́ðər hǽnd/","idiom","他方では、一方で","Digital tools are fast; on the other hand, analog feels warm.","デジタルは速いが、一方でアナログには温かみがある。"],
+      ["for the time being","/fɔːr ðə táɪm bíːɪŋ/","idiom","当分の間、差し当たり","Let's use this temporary setup for the time being.","当分の間はこの仮のセットアップを使おう。"],
+      ["by no means","/baɪ nóʊ míːnz/","idiom","決して〜ない","Learning 50 words a day is by no means impossible.","1日50語覚えることは決して不可能ではない。"],
+      ["all of a sudden","/ɔ́ːl əv ə sʌ́dn/","idiom","突然、急に","All of a sudden, the stage lights went out.","突然、ステージの照明が消えた。"],
+      ["at the same time","/æt ðə séɪm táɪm/","idiom","同時に、それと同時に","It is challenging and exciting at the same time.","それは大変であると同時にワクワクすることでもある。"],
+      ["in advance","/ɪn ədvǽns/","idiom","事前に、前もって","Book your museum tickets in advance online.","美術館のチケットは事前にオンラインで予約しよう。"],
+      ["out of order","/áʊt əv ɔ́ːrdər/","idiom","故障中で、順番が狂って","The ticket machine at the station was out of order.","駅の券売機が故障中だった。"],
+      ["up to date","/ʌ́p tə déɪt/","idiom","最新の、最新情報に通じた","Keep your software up to date for security.","セキュリティのためソフトを最新に保とう。"],
+      ["get rid of","/gét ríd əv/","idiom","〜を取り除く、処分する","Use a high-pass filter to get rid of low rumble.","ハイパスフィルターで低音のノイズを取り除こう。"],
+      ["look forward to","/lʊ́k fɔ́ːrwərd tu/","idiom","〜を楽しみに待つ","I'm really looking forward to our trip to Italy.","イタリア旅行を本当に楽しみにしている。"],
+      ["run out of","/rʌ́n áʊt əv/","idiom","〜を使い果たす、切らす","We ran out of coffee beans this morning.","今朝コーヒー豆を切らしてしまった。"],
+      ["catch up with","/kǽtʃ ʌ́p wɪð/","idiom","〜に追いつく、近況を語り合う","Let's grab coffee and catch up with each other.","コーヒーでも飲みながら近況を話そう。"],
+      ["come across","/kʌ́m əkrɔ́ːs/","idiom","〜に偶然出会う、〜という印象を与える","I came across an amazing vintage record shop.","素晴らしいヴィンテージレコード店に偶然出会った。"],
+      ["deal with","/díːl wɪð/","idiom","〜に対処する、〜を扱う","How do you deal with unexpected bugs?","予期せぬバグにはどうやって対処しますか？"],
+      ["depend on","/dɪpénd ɑn/","idiom","〜次第である、〜に頼る","The final price depends on the season.","最終的な価格は季節によって決まる。"],
+      ["find out","/fáɪnd áʊt/","idiom","〜を突き止める、知る","Let's find out what time the museum opens.","美術館が何時に開くか調べよう。"],
+      ["give up","/gív ʌ́p/","idiom","諦める、やめる","Don't give up even if you miss a day.","1日サボってしまっても諦めないで。"],
+      ["go through","/góʊ θrúː/","idiom","（経験・検査など）を経る、通り抜ける","We went through security smoothly at the airport.","空港の保安検査をスムーズに通過した。"],
+      ["hang out","/hǽŋ áʊt/","idiom","ぶらぶら過ごす、一緒に遊ぶ","We used to hang out at the studio after class.","授業のあとよくスタジオで一緒に過ごしたものだ。"],
+      ["keep up with","/kíːp ʌ́p wɪð/","idiom","〜に遅れずについていく","It's hard to keep up with fast AI updates.","急速なAIの進化についていくのは大変だ。"],
+      ["let down","/lét dáʊn/","idiom","〜をがっかりさせる","Our live performance won't let the fans down.","私たちのライブはファンをがっかりさせない。"],
+      ["look into","/lʊ́k ɪntu/","idiom","〜を調査する、調べる","I will look into the cause of the delay.","遅延の原因を調べてみます。"],
+      ["make up for","/méɪk ʌ́p fɔːr/","idiom","〜の埋め合わせをする","Practice today to make up for yesterday.","昨日の分を取り戻すために今日練習しよう。"],
+      ["pass away","/pǽs əwéɪ/","idiom","亡くなる","The legendary guitarist passed away peacefully.","その伝説的なギタリストは安らかに永眠した。"],
+      ["pick up","/pík ʌ́p/","idiom","〜を拾う、迎えに行く、習得する","You quickly pick up local phrases while traveling.","旅行中は現地のフレーズを素早く習得できる。"],
+      ["set up","/sét ʌ́p/","idiom","〜を設定する、設立する、準備する","Set up your home screen shortcut in 30 seconds.","30秒でホーム画面ショートカットを設定しよう。"],
+      ["show up","/ʃóʊ ʌ́p/","idiom","現れる、姿を見せる","Over a thousand fans showed up at the venue.","1,000人以上のファンが会場に姿を見せた。"],
+      ["sort out","/sɔ́ːrt áʊt/","idiom","〜を整理する、解決する","Let's sort out the schedule before booking flights.","航空券を予約する前に日程を整理しよう。"],
+      ["stand out","/stǽnd áʊt/","idiom","目立つ、際立つ","A clear vocal melody makes the song stand out.","明瞭なボーカルメロディが曲を際立たせる。"],
+      ["take over","/téɪk óʊvər/","idiom","〜を引き継ぐ、乗っ取る","She will take over the project next month.","彼女が来月そのプロジェクトを引き継ぐ。"],
+      ["turn down","/tɜ́ːrn dáʊn/","idiom","（音量を）下げる、（申し出を）断る","Could you turn down the monitor volume slightly?","モニターの音量を少し下げてもらえますか？"],
+      ["work out","/wɜ́ːrk áʊt/","idiom","うまくいく、運動する、解決する","Everything worked out better than expected.","すべて予想以上にうまくいった。"],
+      ["in spite of","/ɪn spáɪt əv/","idiom","〜にもかかわらず","In spite of the rain, the outdoor festival continued.","雨にもかかわらず、屋外フェスは続行された。"],
+      ["due to","/dúː tu/","idiom","〜が原因で、〜のために","The train was delayed due to strong winds.","強風のため電車が遅延した。"],
+      ["so far","/sóʊ fɑ́ːr/","idiom","今のところ、これまで","So far, I have mastered over 500 words.","今のところ、500語以上をマスターした。"],
+      ["once in a while","/wʌ́ns ɪn ə wáɪl/","idiom","たまに、時々","Treat yourself to good Italian gelato once in a while.","たまには美味しいイタリアンジェラートを自分にご褒美しよう。"],
+      ["on purpose","/ɑn pɜ́ːrpəs/","idiom","わざと、故意に","He added static noise on purpose for a lo-fi vibe.","ローファイな雰囲気を出すためにわざとノイズを加えた。"],
+      ["by accident","/baɪ ǽksɪdənt/","idiom","偶然に、うっかり","I deleted the track by accident, but restored it.","うっかりトラックを消したが復元できた。"],
+      ["in the long run","/ɪn ðə lɔ́ːŋ rʌ́n/","idiom","長い目で見れば、結局は","Ten minutes a day pays off in the long run.","1日10分の積み重ねは長い目で見れば必ず報われる。"],
+      ["take advantage of","/téɪk ədvǽntɪdʒ əv/","idiom","〜をうまく利用する、活用する","Take advantage of your commute time to review.","通勤時間をうまく活用して復習しよう。"],
+      ["pay attention to","/péɪ əténʃən tu/","idiom","〜に注意を払う","Pay attention to the bass and kick drum balance.","ベースとキックドラムのバランスに注意を払おう。"],
+      ["have a hard time ~ing","/hǽv ə hɑ́ːrd táɪm/","idiom","〜するのに苦労する","I had a hard time pronouncing that word at first.","最初は発音するのに苦労した。"],
+      ["be capable of","/bi kéɪpəbəl əv/","idiom","〜する能力がある","You are capable of mastering thousands of words.","あなたには何千語もマスターする能力がある。"],
+      ["be familiar with","/bi fəmíljər wɪð/","idiom","〜に精通している、よく知っている","Are you familiar with Python data clustering?","Pythonのデータクラスタリングに精通していますか？"],
+      ["be supposed to","/bi səpóʊzd tu/","idiom","〜することになっている、〜すべきだ","Our flight is supposed to land at 2 PM.","私たちの便は午後2時に着陸する予定だ。"],
+      ["no wonder","/nóʊ wʌ́ndər/","idiom","〜なのも無理はない、どうりで〜だ","No wonder the mix sounds so clean—you used pure:unmask!","どうりでミックスが綺麗なわけだ、pure:unmaskを使ったんだね！"],
+
+      // --- 重要英単語コア（Oxford 3000 / NGSL / ビジネス・旅行・学術・音楽） ---
       ["abandon","/əbændən/","verb","〜を放棄する、断念する","They had to abandon the old plan.","彼らは古い計画を断念しなければならなかった。"],
-      ["acquire","/əkwáiər/","verb","〜を習得する、獲得する","She acquired fluency in English.","彼女は流暢な英語を習得した。"],
-      ["adequate","/ǽdɪkwət/","adj","十分な、適切な","Make sure you get adequate sleep.","十分な睡眠を必ずとるようにしてください。"],
-      ["accurate","/ǽkjərət/","adj","正確な、精密な","The sensor provides accurate data.","そのセンサーは正確なデータを提供する。"],
-      ["anticipate","/æntísəpèɪt/","verb","〜を予想する、見越す","We anticipate strong demand this season.","今期は強い需要を見込んでいる。"],
-      ["apparent","/əpǽrənt/","adj","明白な、一見〜らしい","The cause of the error was immediately apparent.","エラーの原因はすぐに明白になった。"],
-      ["assess","/əsés/","verb","〜を評価する、査定する","We need to assess the impact carefully.","影響を慎重に評価する必要がある。"],
-      ["attribute","/ətríbjuːt/","verb","〜の原因を（…に）帰する","She attributes her success to daily practice.","彼女は成功の要因を日々の練習にあるとしている。"],
-      ["banish","/bǽnɪʃ/","verb","〜を追放する、消し去る","Try to banish negative thoughts.","ネガティブな思考を追い払おうとしてごらん。"],
-      ["barrier","/bǽriər/","noun","障壁、バリア","Language should not be a barrier to friendship.","言語が友情の障壁になるべきではない。"],
-      ["beneficial","/bènəfíʃəl/","adj","有益な、ためになる","Regular exercise is beneficial to mental health.","定期的な運動はメンタルヘルスに有益だ。"],
-      ["bold","/boʊld/","adj","大胆な、勇敢な","It was a bold decision to start from scratch.","ゼロから始めるのは大胆な決断だった。"],
-      ["breed","/briːd/","verb","〜を育てる、生み出す","Success often breeds confidence.","成功はしばしば自信を生み出す。"],
-      ["brief","/briːf/","adj","簡潔な、短時間の","Please keep your explanation brief.","説明は簡潔にお願いします。"],
-      ["burden","/bɜ́ːrdn/","noun","負担、重荷","Automation reduces the burden on staff.","自動化はスタッフの負担を軽減する。"],
-      ["capacity","/kəpǽsəti/","noun","収容能力、処理能力","The stadium has a capacity of 50,000.","そのスタジアムは5万人の収容能力がある。"],
-      ["capture","/kǽptʃər/","verb","〜を捉える、魅了する","The song captured the audience's hearts.","その曲は観客の心を捉えた。"],
-      ["cease","/siːs/","verb","〜をやめる、終わる","The rain finally ceased at dawn.","雨は夜明けについに止んだ。"],
-      ["clarify","/klǽrəfài/","verb","〜を明確にする","Could you clarify your main point?","要点を明確にしていただけますか？"],
-      ["coherent","/koʊhíərənt/","adj","首尾一貫した、筋の通った","He presented a coherent argument.","彼は筋の通った議論を展開した。"],
-      ["compel","/kəmpél/","verb","〜を強いる、余儀なくさせる","Heavy snow compelled us to stay indoors.","大雪のせいで私たちは屋内にとどまることを余儀なくされた。"],
-      ["comprehensive","/kɑ̀mprɪhénsɪv/","adj","包括的な、総合的な","We conducted a comprehensive review.","私たちは包括的な見直しを実施した。"],
-      ["convey","/kənvéɪ/","verb","（感情・意味など）を伝える","Music can convey emotions beyond words.","音楽は言葉を超えた感情を伝えることができる。"],
-      ["crucial","/krúːʃəl/","adj","極めて重要な、決定的な","Timing is crucial in live performances.","ライブ演奏ではタイミングが極めて重要だ。"],
-      ["debate","/dɪbéɪt/","noun","討論、議論","There was an intense debate over the policy.","その方針をめぐって激しい議論があった。"],
-      ["decline","/dɪkláɪn/","verb","減少する、〜を丁重に断る","He politely declined the invitation.","彼は招待を丁重に断った。"],
-      ["dedicate","/dédɪkèɪt/","verb","（時間・労力を）捧げる","She dedicated months to perfecting the track.","彼女はその楽曲の完成に何ヶ月も捧げた。"],
-      ["demonstrate","/démənstrèɪt/","verb","〜を実証する、実演する","The experiment demonstrated clear results.","その実験は明確な結果を実証した。"],
-      ["deploy","/dɪplɔ́ɪ/","verb","〜を配備する、展開する","We can deploy the web app in minutes.","数分でWebアプリをデプロイできる。"],
-      ["detect","/dɪtékt/","verb","〜を検知する、見抜く","The algorithm detects subtle patterns.","そのアルゴリズムは微細なパターンを検知する。"],
-      ["distinct","/dɪstíŋkt/","adj","明確に異なる、独特の","Each instrument has a distinct tone.","それぞれの楽器には独特の音色がある。"],
-      ["diverse","/daɪvɜ́ːrs/","adj","多様な、さまざまな","Tokyo attracts people from diverse backgrounds.","東京は多様な背景を持つ人々を惹きつける。"],
-      ["durable","/dʊ́rəbəl/","adj","耐久性のある、長持ちする","This case is made of durable material.","このケースは耐久性のある素材で作られている。"],
-      ["elaborate","/ɪlǽbərət/","adj","精巧な、入念な","They built an elaborate stage set.","彼らは精巧なステージセットを作り上げた。"],
-      ["eliminate","/ɪlímənèɪt/","verb","〜を取り除く、排除する","Proper shielding eliminates background noise.","適切なシールド処理が背景ノイズを除去する。"],
-      ["emerge","/ɪmɜ́ːrdʒ/","verb","現れる、浮上する","New musical trends emerge every year.","毎年新しい音楽トレンドが現れる。"],
-      ["emphasize","/émfəsàɪz/","verb","〜を強調する","The speaker emphasized the importance of habit.","講演者は習慣の重要性を強調した。"],
-      ["encounter","/ɪnkáʊntər/","verb","〜に遭遇する、直面する","Did you encounter any bugs during testing?","テスト中に何かバグに遭遇しましたか？"],
-      ["enhance","/ɪnhǽns/","verb","（質・価値など）を高める","Good lighting enhances the atmosphere.","良い照明は雰囲気を高める。"],
-      ["ensure","/ɪnʃʊ́r/","verb","〜を確実にする、保証する","Please ensure all cables are connected.","すべてのケーブルが接続されているか確認してください。"],
-      ["evaluate","/ɪvǽljuèɪt/","verb","〜を評価する、測定する","We evaluated the clustering accuracy.","私たちはクラスタリングの精度を評価した。"],
-      ["exceed","/ɪksíːd/","verb","〜を超える、上回る","Ticket sales exceeded our expectations.","チケットの売上は予想を上回った。"],
-      ["exhibit","/ɪgzíbɪt/","verb","〜を示す、展示する","The team exhibited remarkable resilience.","チームは驚くべき粘り強さを見せた。"],
-      ["facilitate","/fəsílɪtèɪt/","verb","〜を促進する、容易にする","Cloud tools facilitate remote collaboration.","クラウドツールはリモートでの共同作業を容易にする。"],
-      ["feasible","/fíːzəbəl/","adj","実行可能な、実現できる","Is it feasible to finish by Friday?","金曜日までに終えることは実行可能ですか？"],
-      ["fluctuate","/flʌ́ktʃuèɪt/","verb","変動する、上下する","Prices fluctuate depending on the season.","価格は季節によって変動する。"],
-      ["foster","/fɔ́ːstər/","verb","〜を育成する、促進する","Good leaders foster open communication.","優れたリーダーはオープンな対話を育む。"],
-      ["fragile","/frǽdʒəl/","adj","壊れやすい、繊細な","Handle the vintage equipment with care; it is fragile.","そのヴィンテージ機材は繊細なので慎重に扱ってください。"],
-      ["fundamental","/fʌ̀ndəméntl/","adj","基本的な、根本的な","Rhythm is a fundamental element of music.","リズムは音楽の根本的な要素だ。"],
-      ["generate","/dʒénərèɪt/","verb","〜を生成する、生み出す","Solar panels generate clean electricity.","ソーラーパネルはクリーンな電力を生み出す。"],
-      ["genuine","/dʒénjuɪn/","adj","本物の、心からの","She showed genuine interest in the project.","彼女はそのプロジェクトに心からの関心を示した。"],
-      ["glance","/glæns/","verb","ちらりと見る","He glanced at his watch before going on stage.","彼はステージに出る前に時計をちらりと見た。"],
-      ["grasp","/græsp/","verb","〜を理解する、しっかり掴む","It took time to grasp the complex theory.","その複雑な理論を理解するのに時間がかかった。"],
-      ["guarantee","/gærəntíː/","verb","〜を保証する","Practice cannot guarantee perfection, but it brings progress.","練習は完璧を保証しないが、進歩をもたらす。"],
-      ["halt","/hɔːlt/","verb","〜を停止させる、止まる","Traffic came to a sudden halt.","交通が突然ストップした。"],
-      ["harsh","/hɑːrʃ/","adj","厳しい、耳障りな、荒々しい","Use an EQ to tame the harsh high frequencies.","EQを使って耳に刺さる高音域を抑えよう。"],
-      ["hesitate","/hézɪtèɪt/","verb","ためらう、躊躇する","Don't hesitate to ask if you have questions.","質問があれば遠慮なく聞いてください。"],
-      ["highlight","/háɪlàɪt/","verb","〜を目立たせる、強調する","The report highlights three key findings.","その報告書は3つの重要な発見を強調している。"],
-      ["hinder","/híndər/","verb","〜を妨げる、阻害する","Lack of sleep can hinder your concentration.","睡眠不足は集中力を妨げることがある。"],
-      ["hypothesis","/haɪpɑ́θəsɪs/","noun","仮説","We tested the hypothesis using real data.","実データを使ってその仮説を検証した。"],
-      ["identical","/aɪdéntɪkəl/","adj","全く同じ、同一の","The two files are completely identical.","その2つのファイルは完全に同一だ。"],
-      ["illustrate","/íləstrèɪt/","verb","〜を例証する、図解する","This chart illustrates the annual growth.","このグラフは年間成長率を示している。"],
-      ["implement","/ímpləmènt/","verb","〜を実装する、実行に移す","We implemented a new caching system.","新しいキャッシュシステムを実装した。"],
-      ["imply","/ɪmpláɪ/","verb","〜を暗に示す、ほのめかす","His silence implied agreement.","彼の沈黙は同意を暗に示していた。"],
-      ["incentive","/ɪnséntɪv/","noun","動機づけ、インセンティブ","Streaks provide a strong incentive to study daily.","連続記録は毎日勉強する強い動機づけになる。"],
-      ["inevitable","/ɪnévɪtəbəl/","adj","避けられない、必然的な","Mistakes are an inevitable part of learning.","間違いは学習において避けられない一部だ。"],
-      ["initial","/ɪníʃəl/","adj","初期の、最初の","The initial stage of the project went smoothly.","プロジェクトの初期段階は順調に進んだ。"],
-      ["innovative","/ínəvèɪtɪv/","adj","革新的な、斬新な","They introduced an innovative sound design.","彼らは革新的なサウンドデザインを導入した。"],
-      ["integrate","/íntɪgrèɪt/","verb","〜を統合する、融合させる","The app integrates seamlessly with your workflow.","そのアプリは作業フローにシームレスに統合される。"],
-      ["interpret","/ɪntɜ́ːrprɪt/","verb","〜を解釈する、通訳する","Listeners interpret lyrics in their own way.","リスナーはそれぞれの解釈で歌詞を受け取る。"],
-      ["justify","/dʒʌ́stəfài/","verb","〜を正当化する","Can you justify the additional cost?","追加コストの妥当性を説明できますか？"],
-      ["keen","/kiːn/","adj","鋭い、熱望している","She has a keen ear for pitch and harmony.","彼女は音程とハーモニーに対して鋭い耳を持っている。"],
-      ["launch","/lɔːntʃ/","verb","〜を開始する、立ち上げる","They plan to launch the new service in April.","彼らは4月に新サービスを立ち上げる予定だ。"],
-      ["legitimate","/lɪdʒítəmət/","adj","正当な、合法的な","That is a legitimate concern.","それはもっともな懸念だ。"],
-      ["leverage","/lévərɪdʒ/","verb","〜を有効活用する、てこにする","We can leverage AI to speed up routine tasks.","AIを活用してルーチン作業を高速化できる。"],
-      ["likewise","/láɪkwàɪz/","adv","同様に、同じく","Treat others with respect, and they will do likewise.","他者に敬意をもって接すれば、相手も同様にしてくれるだろう。"],
-      ["linger","/líŋgər/","verb","残る、長引く","The melody lingered in my mind all day.","そのメロディが一日中心に残っていた。"],
-      ["lucrative","/lúːkrətɪv/","adj","収益性の高い、儲かる","Digital finance has become a lucrative sector.","デジタル金融は収益性の高い分野になっている。"],
-      ["maintain","/meɪntéɪn/","verb","〜を維持する、保守する","It is important to maintain a steady tempo.","一定のテンポを維持することが重要だ。"],
-      ["manifest","/mǽnəfèst/","verb","〜を明確に表す、現れる","Stress often manifests as physical fatigue.","ストレスはしばしば肉体的な疲労として現れる。"],
-      ["manipulate","/mənípjulèɪt/","verb","〜を巧みに操作する","You can manipulate the waveform in the editor.","エディタ内で波形を自在に操作できる。"],
-      ["mature","/mətʃʊ́r/","adj","成熟した、熟練した","Their songwriting has become much more mature.","彼らのソングライティングはより一層成熟した。"],
-      ["merge","/mɜ́ːrdʒ/","verb","〜を統合する、合併する","Let's merge the two branches into main.","2つのブランチをmainにマージしよう。"],
-      ["modify","/mɑ́dəfài/","verb","〜を修正する、変更する","You can modify the settings anytime.","設定はいつでも変更できます。"],
-      ["mutual","/mjúːtʃuəl/","adj","相互の、共通の","Collaboration requires mutual trust.","共同作業には相互の信頼が必要だ。"],
-      ["navigate","/nǽvɪgèɪt/","verb","〜を進む、ナビゲートする","Tourists can easily navigate the city by train.","観光客は電車で簡単に市内を移動できる。"],
-      ["neglect","/nɪglékt/","verb","〜を怠る、無視する","Never neglect basic warm-up exercises.","基礎的なウォームアップを決して怠ってはいけない。"],
-      ["neutral","/njúːtrəl/","adj","中立の、ニュートラルな","Studio monitors should have a neutral frequency response.","スタジオモニターはフラットな周波数特性であるべきだ。"],
-      ["nevertheless","/nèvərðəlés/","adv","それにもかかわらず","It was raining heavily; nevertheless, the show went on.","大雨だったが、それにもかかわらず公演は続行された。"],
-      ["notable","/nóʊtəbəl/","adj","注目すべき、顕著な","There was a notable improvement in clarity.","明瞭度に注目すべき改善が見られた。"],
-      ["notion","/nóʊʃən/","noun","概念、考え","She rejected the notion that it was impossible.","彼女はそれが不可能だという考えを退けた。"],
-      ["obtain","/əbtéɪn/","verb","〜を入手する、得る","You need permission to obtain the dataset.","データセットを入手するには許可が必要だ。"],
-      ["obvious","/ɑ́bviəs/","adj","明白な、明らかな","The advantage of this method is obvious.","この手法の利点は明らかだ。"],
-      ["obstacle","/ɑ́bstəkəl/","noun","障害、妨げ","We overcame every obstacle together.","私たちはあらゆる障害を共に乗り越えた。"],
-      ["occur","/əkɜ́ːr/","verb","起こる、発生する","An unexpected error occurred during startup.","起動中に予期せぬエラーが発生した。"],
-      ["omit","/oʊmít/","verb","〜を省略する、省く","You may omit unnecessary details.","不要な詳細は省略して構いません。"],
-      ["optimal","/ɑ́ptəməl/","adj","最適な、最善の","Find the optimal balance between speed and accuracy.","速度と精度の最適なバランスを見つけよう。"],
-      ["outcome","/áʊtkʌ̀m/","noun","結果、成果","The final outcome exceeded our goals.","最終的な成果は目標を上回った。"],
-      ["overall","/óʊvərɔ̀ːl/","adj","全体的な、総合的な","The overall impression was very positive.","全体的な印象は非常に良好だった。"],
-      ["parallel","/pǽrəlèl/","adj","並行の、類似した","Parallel compression adds punch to drums.","パラレルコンプレッションはドラムに迫力を加える。"],
-      ["perceive","/pərsíːv/","verb","〜を知覚する、認識する","How do users perceive the new design?","ユーザーは新しいデザインをどう認識しているだろうか？"],
-      ["persist","/pərsíst/","verb","持続する、粘り強く続ける","If the issue persists, please restart your device.","問題が続く場合は端末を再起動してください。"],
-      ["perspective","/pərspéktɪv/","noun","視点、観点、遠近法","Traveling abroad gives you a fresh perspective.","海外旅行は新鮮な視点を与えてくれる。"],
-      ["phenomenon","/fɪnɑ́mənɑ̀n/","noun","現象","Viral videos are a modern social phenomenon.","バイラル動画は現代の社会現象だ。"],
-      ["plausible","/plɔ́ːzəbəl/","adj","もっともらしい、妥当そうな","He gave a plausible explanation for the delay.","彼は遅れについてもっともらしい説明をした。"],
-      ["potential","/pəténʃəl/","noun","可能性、潜在能力","The band has huge potential to grow.","そのバンドには大きく成長する潜在能力がある。"],
-      ["precise","/prɪsáɪs/","adj","正確な、的確な","Precise rhythm makes the riff sound tight.","正確なリズムがリフをタイトに響かせる。"],
-      ["predict","/prɪdíkt/","verb","〜を予測する","It is hard to predict the exact result.","正確な結果を予測するのは難しい。"],
-      ["preserve","/prɪzɜ́ːrv/","verb","〜を保存する、守る","Historic buildings are carefully preserved in Rome.","ローマでは歴史的建造物が丁寧に保存されている。"],
-      ["prior","/práɪər/","adj","前の、事前の","No prior experience is required.","事前の経験は必要ありません。"],
-      ["profound","/prəfáʊnd/","adj","深い、重大な","That book had a profound impact on my thinking.","その本は私の考え方に深い影響を与えた。"],
-      ["prominent","/prɑ́mənənt/","adj","顕著な、著名な","Bass plays a prominent role in this track.","この曲ではベースが際立った役割を果たしている。"],
-      ["pursue","/pərsúː/","verb","〜を追求する、追い求める","He decided to pursue both technology and music.","彼はテクノロジーと音楽の両方を追求することに決めた。"],
-      ["quote","/kwoʊt/","verb","〜を引用する、見積もる","She quoted a famous line from the novel.","彼女はその小説から有名な一節を引用した。"],
-      ["radical","/rǽdɪkəl/","adj","抜本的な、急進的な","The update brought radical changes to the UI.","そのアップデートはUIに抜本的な変化をもたらした。"],
-      ["random","/rǽndəm/","adj","無作為の、ランダムな","Words are selected in random order across A to Z.","単語はAからZまでランダムな順序で選ばれる。"],
-      ["rapid","/rǽpɪd/","adj","急速な、素早い","The city has undergone rapid development.","その都市は急速な発展を遂げた。"],
-      ["rational","/rǽʃənəl/","adj","合理的な、理性的な","Let's make a calm and rational decision.","冷静で合理的な判断を下そう。"],
-      ["readily","/rédəli/","adv","容易に、快く","Information is readily available online.","情報はオンラインで容易に入手できる。"],
-      ["refine","/rɪfáɪn/","verb","〜を洗練させる、改良する","We refined the algorithm to reduce noise.","ノイズを減らすためにアルゴリズムを改良した。"],
-      ["reinforce","/rìːɪnfɔ́ːrs/","verb","〜を強化する、補強する","Spaced repetition reinforces long-term memory.","間隔反復は長期記憶を強化する。"],
-      ["reject","/rɪdʒékt/","verb","〜を拒絶する、却下する","The system automatically rejects invalid inputs.","システムは無効な入力を自動的に拒否する。"],
-      ["relevant","/réləvənt/","adj","関連のある、適切な","Please attach all relevant documents.","関連する書類をすべて添付してください。"],
-      ["reluctant","/rɪlʌ́ktənt/","adj","気が進まない、消極的な","He was reluctant to admit his mistake at first.","彼は最初、自分の間違いを認めるのに消極的だった。"],
-      ["remarkable","/rɪmɑ́ːrkəbəl/","adj","注目すべき、並外れた","She made remarkable progress in just one month.","彼女はわずか1ヶ月で目覚ましい進歩を遂げた。"],
-      ["resolve","/rɪzɑ́lv/","verb","（問題・対立）を解決する、決意する","We resolved the sync issue quickly.","同期の不具合を素早く解決した。"],
-      ["restore","/rɪstɔ́ːr/","verb","〜を復元する、回復させる","You can restore your data from the backup file.","バックアップファイルからデータを復元できます。"],
-      ["retain","/rɪtéɪn/","verb","〜を保持する、記憶にとどめる","Reviewing helps you retain vocabulary longer.","復習は語彙をより長く記憶にとどめるのに役立つ。"],
-      ["reveal","/rɪvíːl/","verb","〜を明らかにする、見せる","Tap the card to reveal the meaning.","カードをタップして意味を表示しよう。"],
-      ["rigid","/rídʒɪd/","adj","硬直した、厳格な","Avoid a rigid schedule; keep it sustainable.","ガチガチの計画は避け、継続可能なものにしよう。"],
-      ["scarce","/skers/","adj","乏しい、希少な","Free time was scarce during the exam period.","試験期間中は自由な時間が乏しかった。"],
-      ["scatter","/skǽtər/","verb","〜をばらまく、分散させる","The algorithm scatters initials evenly across days.","アルゴリズムが頭文字を各Dayに均等に分散させる。"],
-      ["scheme","/skiːm/","noun","計画、スキーム、体系","The color scheme is easy on the eyes at night.","その配色は夜間でも目に優しい。"],
-      ["seek","/siːk/","verb","〜を求める、探す","They are seeking a drummer in the Tokyo area.","彼らは東京エリアでドラマーを募集している。"],
-      ["severe","/sɪvíər/","adj","深刻な、激しい","The storm caused severe delays.","嵐が深刻な遅延を引き起こした。"],
-      ["significant","/sɪgnífɪkənt/","adj","重要な、大幅な","There is a significant difference between the two models.","2つのモデルの間には大きな違いがある。"],
-      ["simulate","/símjulèɪt/","verb","〜をシミュレートする、模倣する","The plugin simulates classic tube amplifiers.","そのプラグインは伝統的な真空管アンプを模倣する。"],
-      ["simultaneous","/sàɪməltéɪniəs/","adj","同時の、一斉の","The app supports simultaneous backup to storage.","アプリはストレージへの同時バックアップに対応している。"],
-      ["solid","/sɑ́lɪd/","adj","堅固な、確かな","They built a solid foundation in computer science.","彼らはコンピュータサイエンスの確かな基礎を築いた。"],
-      ["sophisticated","/səfístɪkèɪtɪd/","adj","洗練された、高度な","Modern music production uses sophisticated tools.","現代の音楽制作は高度なツールを使用する。"],
-      ["specific","/spɪsífɪk/","adj","特定の、具体的な","Could you give me a specific example?","具体的な例を挙げていただけますか？"],
-      ["spontaneous","/spɑntéɪniəs/","adj","自発的な、即興の","The crowd broke into spontaneous applause.","観客から自然と拍手が沸き起こった。"],
-      ["stable","/stéɪbəl/","adj","安定した","The latest version is fast and stable.","最新バージョンは高速で安定している。"],
-      ["stimulate","/stímjulèɪt/","verb","〜を刺激する、活気づける","Good questions stimulate creative thinking.","良い問いかけは創造的な思考を刺激する。"],
-      ["strive","/straɪv/","verb","努力する、懸命に励む","We strive to improve a little every single day.","私たちは毎日少しずつ向上するよう努めている。"],
-      ["subtle","/sʌ́tl/","adj","微妙な、かすかな","Notice the subtle change in vocal resonance.","ボーカルの共鳴の微妙な変化に注目してみよう。"],
-      ["sufficient","/səfíʃənt/","adj","十分な","Ten minutes a day is sufficient to keep the streak.","連続記録を保つには1日10分で十分だ。"],
-      ["sustain","/səstéɪn/","verb","〜を持続させる、支える","How do you sustain motivation over months?","何ヶ月もどうやってモチベーションを持続させますか？"],
-      ["tackle","/tǽkəl/","verb","（問題・課題に）取り組む","Let's tackle the hardest task first in the morning.","朝一番に最も難しい課題に取り組もう。"],
-      ["temporary","/témpərèri/","adj","一時的な、仮の","This is only a temporary workaround.","これはあくまで一時的な回避策だ。"],
-      ["terminate","/tɜ́ːrmənèɪt/","verb","〜を終了させる、打ち切る","The process terminated without any errors.","プロセスはエラーなしで終了した。"],
-      ["thorough","/θɜ́ːroʊ/","adj","徹底的な、抜かりない","They conducted a thorough check of the equipment.","彼らは機材の徹底的なチェックを行った。"],
-      ["thrive","/θraɪv/","verb","繁栄する、生き生きと成長する","Creativity thrives when you have clear boundaries.","明確なメリハリがあるとき、創造性は生き生きと育つ。"],
-      ["tolerate","/tɑ́lərèɪt/","verb","〜を許容する、我慢する","The system cannot tolerate high latency.","このシステムは高い遅延を許容できない。"],
-      ["transform","/trænsfɔ́ːrm/","verb","〜を一変させる、変換する","Daily habits transform your skills over a year.","日々の習慣が1年でスキルを一変させる。"],
-      ["transition","/trænzíʃən/","noun","移行、移り変わり","Practice a smooth transition from chest to head voice.","チェストボイスからヘッドボイスへの滑らかな移行を練習しよう。"],
-      ["transmit","/trænzmít/","verb","〜を送信する、伝える","Optical cables transmit data at high speed.","光ケーブルは高速でデータを伝送する。"],
-      ["trigger","/trígər/","verb","〜を引き起こす、作動させる","Finishing 40 words triggers the next day's unlock.","40語完了すると次のDayの自動解放が作動する。"],
-      ["ultimate","/ʌ́ltəmət/","adj","究極の、最終的な","Our ultimate goal is effortless comprehension.","私たちの最終目標はストレスのない英語理解だ。"],
-      ["undergo","/ʌ̀ndərgóʊ/","verb","（変化・検査などを）経験する、受ける","The software underwent major improvements.","そのソフトウェアは大幅な改良を経た。"],
-      ["undertake","/ʌ̀ndərtéɪk/","verb","（仕事・責任を）引き受ける、着手する","They undertook an ambitious research project.","彼らは野心的な研究プロジェクトに着手した。"],
-      ["unique","/juːníːk/","adj","独自の、唯一無二の","Every vocalist has a unique timbre.","すべてのボーカリストが唯一無二の声色を持っている。"],
-      ["utilize","/júːtəlàɪz/","verb","〜を活用する、利用する","We utilize spatial clustering for location data.","位置データに空間クラスタリングを活用している。"],
-      ["valid","/vǽlɪd/","adj","有効な、妥当な","Your ticket is valid for three days.","あなたのチケットは3日間有効です。"],
-      ["vanish","/vǽnɪʃ/","verb","消える、消失する","All the noise vanished when the gate kicked in.","ゲートが効いた瞬間、すべてのノイズが消え去った。"],
-      ["vary","/véri/","verb","異なる、さまざまに変化する","Velocity dynamics vary depending on the groove.","ベロシティの強弱はグルーヴによって変化する。"],
-      ["vast","/væst/","adj","広大な、膨大な","A vast amount of data is processed every second.","毎秒膨大な量のデータが処理されている。"],
-      ["verify","/vérəfài/","verb","〜を検証する、確認する","Please verify that the sound plays properly.","音声が正しく再生されるか確認してください。"],
-      ["viable","/váɪəbəl/","adj","実行可能な、成り立つ","We found a viable solution to the problem.","その問題に対する実行可能な解決策を見つけた。"],
-      ["vital","/váɪtl/","adj","不可欠な、極めて重要な","Consistent hydration is vital for vocal cords.","こまめな水分補給は声帯にとって不可欠だ。"],
-      ["vivid","/vívɪd/","adj","鮮明な、生き生きとした","The lyrics paint a vivid picture in the listener's mind.","その歌詞は聴き手の心に鮮明な情景を描く。"],
-      ["voluntary","/vɑ́ləntèri/","adj","自発的な、任意の","Participation in the survey is completely voluntary.","調査への参加は完全に任意です。"],
-      ["vulnerable","/vʌ́lnərəbəl/","adj","脆弱な、傷つきやすい","Unprotected servers are vulnerable to attacks.","保護されていないサーバーは攻撃に対して脆弱だ。"],
-      ["widespread","/wáɪdspréd/","adj","広範囲にわたる、広く普及した","The framework has gained widespread adoption.","そのフレームワークは広く普及している。"],
-      ["withstand","/wɪðstǽnd/","verb","〜に耐える、持ちこたえる","The structure is designed to withstand earthquakes.","その構造は地震に耐えるよう設計されている。"],
-      ["yield","/jiːld/","verb","（結果・利益を）生み出す、屈する","The experiment yielded promising results.","その実験は有望な結果を生み出した。"],
-      ["zeal","/ziːl/","noun","熱意、情熱","He approached the new project with great zeal.","彼は大きな情熱をもって新プロジェクトに取り組んだ。"],
-      ["absorb","/əbsɔ́ːrb/","verb","〜を吸収する、夢中にさせる","Dark surfaces absorb more heat.","暗い表面はより多くの熱を吸収する。"],
-      ["abstract","/ǽbstrækt/","adj","抽象的な","Read the abstract before the full paper.","論文全文の前に要旨を読もう。"],
+      ["abstract","/ǽbstrækt/","adj","抽象的な","Art can express abstract emotions.","芸術は抽象的な感情を表現できる。"],
       ["abundant","/əbʌ́ndənt/","adj","豊富な、たくさんの","The region has abundant natural resources.","その地域には豊富な天然資源がある。"],
-      ["accelerate","/æksélərèɪt/","verb","〜を加速させる","Shortcuts accelerate your daily workflow.","ショートカットは日々の作業を加速させる。"],
-      ["accessible","/æksésəbəl/","adj","利用しやすい、到達できる","The museum is easily accessible by subway.","その美術館は地下鉄でアクセスしやすい。"],
-      ["accommodate","/əkɑ́mədèɪt/","verb","〜を収容する、適応させる","The hotel can accommodate up to 300 guests.","そのホテルは最大300名の宿泊客を収容できる。"],
-      ["accumulate","/əkjúːmjulèɪt/","verb","〜を蓄積する、積み重ねる","Small daily efforts accumulate into big results.","日々の小さな努力が大きな成果へと積み重なる。"],
-      ["adapt","/ədǽpt/","verb","適応する、順応する","You quickly adapt to a new environment.","新しい環境にはすぐに適応できる。"],
-      ["adjacent","/ədʒéɪsənt/","adj","隣接した、隣の","Our studio is adjacent to the station.","私たちのスタジオは駅に隣接している。"],
-      ["adjust","/ədʒʌ́st/","verb","〜を調整する","Adjust the volume to a comfortable level.","音量を快適なレベルに調整してください。"],
-      ["advocate","/ǽdvəkèɪt/","verb","〜を提唱する、支持する","Many experts advocate taking regular breaks.","多くの専門家が定期的な休憩をとることを推奨している。"],
-      ["aesthetic","/esθétɪk/","adj","美的な、美学の","The logo has a clean, modern aesthetic.","そのロゴは洗練されたモダンな美しさを持っている。"],
-      ["allocate","/ǽləkèɪt/","verb","〜を割り当てる","Allocate 15 minutes every morning to vocabulary.","毎朝15分を英単語に割り当てよう。"],
-      ["alter","/ɔ́ːltər/","verb","〜を変える、変更する","We had to alter our travel itinerary.","旅行の日程を変更しなければならなかった。"],
-      ["ambiguous","/æmbígjuəs/","adj","曖昧な、多義的な","Avoid ambiguous wording in technical specs.","技術仕様書では曖昧な表現を避けよう。"],
-      ["amend","/əménd/","verb","〜を修正する、改正する","They agreed to amend the contract terms.","彼らは契約条件を修正することに合意した。"],
-      ["analogy","/ənǽlədʒi/","noun","類推、たとえ","He explained the concept using a simple analogy.","彼は簡単な例えを使ってその概念を説明した。"],
-      ["anchor","/ǽŋkər/","noun","錨（いかり）、支え","The bassline acts as the anchor of the song.","ベースラインが楽曲の土台として機能している。"],
-      ["anonymous","/ənɑ́nəməs/","adj","匿名の","Reviews were collected from anonymous users.","レビューは匿名のユーザーから収集された。"],
-      ["appealing","/əpíːlɪŋ/","adj","魅力的な、心を惹く","The melody is instantly appealing.","そのメロディは聴いた瞬間に心を惹きつける。"],
-      ["arbitrary","/ɑ́ːrbɪtrèri/","adj","恣意的な、任意の","The cluster threshold should not be arbitrary.","クラスタの閾値は恣意的であってはならない。"],
-      ["archive","/ɑ́ːrkaɪv/","noun","アーカイブ、保管所","Save finished projects in the archive folder.","完了したプロジェクトはアーカイブに保存しよう。"],
-      ["articulate","/ɑːrtíkjulèɪt/","verb","〜をはっきりと表現する","She articulated her vision for the band.","彼女はバンドに対するビジョンを明確に語った。"],
-      ["aspire","/əspáɪər/","verb","熱望する、志す","They aspire to perform at major venues.","彼らは大きな会場で演奏することを志している。"],
-      ["assemble","/əsémbəl/","verb","〜を組み立てる、集める","We assembled a great team for the project.","プロジェクトのために素晴らしいチームを集めた。"],
-      ["assert","/əsɜ́ːrt/","verb","〜を断言する、主張する","He asserted his opinion with confidence.","彼は自信を持って意見を主張した。"],
-      ["assign","/əsáɪn/","verb","〜を割り当てる、配属する","Each word is assigned a review interval.","各単語には復習間隔が割り当てられる。"],
-      ["attain","/ətéɪn/","verb","〜を達成する、到達する","You can attain fluency through daily input.","毎日のインプットで流暢さに到達できる。"],
-      ["authentic","/ɔːθéntɪk/","adj","本物の、真正の","The restaurant serves authentic Italian cuisine.","そのレストランは本格的なイタリア料理を提供する。"],
-      ["authorize","/ɔ́ːθəràɪz/","verb","〜を認可する、権限を与える","Only admins can authorize system changes.","管理者のみがシステム変更を承認できる。"],
-      ["autonomous","/ɔːtɑ́nəməs/","adj","自律的な、自治の","The app runs an autonomous replenishment cycle.","アプリは自律的な単語補充サイクルを実行する。"],
-      ["bewilder","/bɪwíldər/","verb","〜を当惑させる、戸惑わせる","The complex menu bewildered first-time visitors.","複雑なメニューが初めての客を戸惑わせた。"],
-      ["bias","/báɪəs/","noun","偏り、バイアス","Shuffling removes alphabetical bias completely.","シャッフルによってアルファベット順の偏りが完全に除去される。"],
-      ["blend","/blend/","verb","〜を混ぜ合わせる、調和する","Clean and distorted tones blend seamlessly.","クリーンと歪みのトーンがシームレスに混ざり合う。"],
-      ["bolster","/bóʊlstər/","verb","〜を強化する、支える","Good sleep bolsters memory consolidation.","良い睡眠は記憶の定着を強化する。"],
-      ["breakthrough","/bréɪkθruː/","noun","飛躍的進歩、突破口","The team achieved a major technical breakthrough.","チームは大きな技術的ブレークスルーを達成した。"],
-      ["brittle","/brítl/","adj","もろい、壊れやすい","Old plastic becomes brittle over time.","古いプラスチックは時間とともに脆くなる。"],
-      ["bulk","/bʌlk/","noun","大部分、大容量","You can import words in bulk via JSON.","JSON経由で単語を一括インポートできる。"],
-      ["bypass","/báɪpæs/","verb","〜を迂回する、バイパスする","Bypass the plugin to compare the dry signal.","プラグインをバイパスして原音と比較しよう。"],
-      ["calibrate","/kǽləbrèɪt/","verb","〜を調整する、校正する","Calibrate your monitor speakers for flat sound.","フラットな音になるようモニタースピーカーを調整しよう。"],
-      ["candid","/kǽndɪd/","adj","率直な、遠慮のない","Teammates gave candid feedback after rehearsal.","リハーサル後、メンバーたちは率直なフィードバックを交わした。"],
-      ["catalyst","/kǽtəlɪst/","noun","触媒、きっかけ","The live concert was the catalyst for forming a band.","そのライブがバンド結成のきっかけとなった。"],
-      ["cater","/kéɪtər/","verb","（要望などに）応える","The curriculum caters to busy learners.","このカリキュラムは忙しい学習者のニーズに応える。"],
-      ["chronic","/krɑ́nɪk/","adj","慢性的な、常習的な","Fix the root cause of chronic delays.","慢性的な遅延の根本原因を解決しよう。"],
-      ["circulate","/sɜ́ːrkjulèɪt/","verb","循環する、出回る","Fresh air circulates throughout the room.","新鮮な空気が部屋中を循環する。"],
-      ["cite","/saɪt/","verb","〜を引用する、引き合いに出す","Always cite your sources in academic papers.","学術論文では常に情報源を引用しよう。"],
-      ["coincide","/kòʊɪnsáɪd/","verb","同時に起こる、一致する","Our trip coincided with a local festival.","私たちの旅行は地元の祭りと時期が重なった。"],
-      ["collaborate","/kəlǽbərèɪt/","verb","共同作業する、コラボする","Musicians collaborate online by sharing stems.","ミュージシャンはステムを共有してオンラインで共作する。"],
-      ["collapse","/kəlǽps/","verb","崩壊する、折り畳む","Tap the header to collapse the menu.","ヘッダーをタップしてメニューを折りたたもう。"],
-      ["commence","/kəméns/","verb","〜を開始する、始まる","Boarding will commence in ten minutes.","搭乗は10分後に開始されます。"],
-      ["compatible","/kəmpǽtəbəl/","adj","互換性のある、両立する","This interface is compatible with both Mac and iPad.","このインターフェースはMacとiPadの両方に対応している。"],
-      ["compensate","/kɑ́mpənsèɪt/","verb","〜を補う、補償する","Good arrangement compensates for simple chords.","優れた編曲はシンプルなコード進行を補う。"],
-      ["compile","/kəmpáɪl/","verb","〜を編集する、コンパイルする","We compiled a list of top 3000 words.","最頻出3000語のリストを編纂した。"],
-      ["complement","/kɑ́mpləmənt/","verb","〜を補完する、引き立てる","The strings arrangement complements the piano nicely.","ストリングスのアレンジがピアノを美しく引き立てている。"],
-      ["comply","/kəmpláɪ/","verb","（規則などに）従う、遵守する","All systems comply with security standards.","すべてのシステムがセキュリティ基準に準拠している。"]
+      ["accelerate","/æksélərèɪt/","verb","〜を加速させる","Daily habits accelerate your growth.","日々の習慣が成長を加速させる。"],
+      ["accessible","/æksésəbəl/","adj","利用しやすい、行きやすい","The station is easily accessible on foot.","その駅は徒歩でアクセスしやすい。"],
+      ["accommodate","/əkɑ́mədèɪt/","verb","〜を収容する、適応させる","The venue can accommodate 500 people.","その会場は500人を収容できる。"],
+      ["accomplish","/əkɑ́mplɪʃ/","verb","〜を成し遂げる、達成する","We accomplished our goal ahead of schedule.","予定より早く目標を達成した。"],
+      ["accumulate","/əkjúːmjulèɪt/","verb","〜を蓄積する、積み重ねる","Small efforts accumulate into great skill.","小さな努力が大きなスキルへと積み重なる。"],
+      ["accurate","/ǽkjərət/","adj","正確な、精密な","Please check if the figures are accurate.","数字が正確かどうか確認してください。"],
+      ["achieve","/ətʃíːv/","verb","〜を達成する、勝ち取る","She achieved remarkable results this year.","彼女は今年目覚ましい成果を上げた。"],
+      ["acknowledge","/əknɑ́lɪdʒ/","verb","〜を認める、感謝の意を表す","He acknowledged his mistake immediately.","彼はすぐに自分の間違いを認めた。"],
+      ["acquire","/əkwáiər/","verb","〜を習得する、獲得する","It takes time to acquire a new language.","新しい言語を習得するには時間がかかる。"],
+      ["adapt","/ədǽpt/","verb","適応する、順応する","Humans can quickly adapt to new environments.","人間は新しい環境に素早く適応できる。"],
+      ["adequate","/ǽdɪkwət/","adj","十分な、適切な","Make sure you get adequate rest.","十分な休息を必ずとるようにしよう。"],
+      ["adjacent","/ədʒéɪsənt/","adj","隣接した、隣の","Our studio is adjacent to the station.","スタジオは駅に隣接している。"],
+      ["adjust","/ədʒʌ́st/","verb","〜を調整する、合わせる","Adjust the volume to a comfortable level.","音量を快適なレベルに調整してください。"],
+      ["advocate","/ǽdvəkèɪt/","verb","〜を提唱する、支持する","Many doctors advocate regular walking.","多くの医師が定期的なウォーキングを推奨している。"],
+      ["aesthetic","/esθétɪk/","adj","美的な、審美的な","The cover art has a minimalist aesthetic.","そのジャケットはミニマルな美しさを持っている。"],
+      ["afford","/əfɔ́ːrd/","verb","〜する余裕がある","I can't afford to waste any more time.","これ以上時間を無駄にする余裕はない。"],
+      ["allocate","/ǽləkèɪt/","verb","〜を割り当てる、配分する","Allocate 15 minutes every morning to reading.","毎朝15分を読書に割り当てよう。"],
+      ["alter","/ɔ́ːltər/","verb","〜を変える、変更する","We had to alter our route due to heavy rain.","大雨のためルートを変更しなければならなかった。"],
+      ["alternative","/ɔːltɜ́ːrnətɪv/","noun","代替案、選択肢","We need a backup alternative just in case.","念のためバックアップの代替案が必要だ。"],
+      ["ambiguous","/æmbígjuəs/","adj","曖昧な、多義的な","His reply was deliberately ambiguous.","彼の返答は意図的に曖昧だった。"],
+      ["ambitious","/æmbíʃəs/","adj","野心的な、意欲的な","They launched an ambitious world tour.","彼らは意欲的なワールドツアーを開始した。"],
+      ["amend","/əménd/","verb","〜を修正する、改正する","Please amend the typo in the document.","書類の誤字を修正してください。"],
+      ["analogy","/ənǽlədʒi/","noun","類推、たとえ","She used a musical analogy to explain coding.","彼女は音楽の例えを使ってプログラミングを説明した。"],
+      ["analyze","/ǽnəlàɪz/","verb","〜を分析する","Let's analyze the user feedback carefully.","ユーザーのフィードバックを慎重に分析しよう。"],
+      ["anticipate","/æntísəpèɪt/","verb","〜を予想する、楽しみに待つ","We anticipate a large crowd tonight.","今夜は大勢の観客が来ると予想している。"],
+      ["apparent","/əpǽrənt/","adj","明白な、一見〜らしい","The improvement was immediately apparent.","その改善はすぐに明白だった。"],
+      ["appeal","/əpíːl/","verb","心を惹く、訴える","This melody appeals to all generations.","このメロディはあらゆる世代の心を惹きつける。"],
+      ["appreciate","/əpríːʃièɪt/","verb","〜に感謝する、真価を認める","I truly appreciate your honest advice.","あなたの率直なアドバイスに心から感謝します。"],
+      ["appropriate","/əpróʊpriət/","adj","適切な、ふさわしい","Choose an appropriate tone for the email.","メールにふさわしいトーンを選んでください。"],
+      ["arbitrary","/ɑ́ːrbɪtrèri/","adj","恣意的な、任意の","Avoid making arbitrary decisions.","恣意的な判断を下すのは避けよう。"],
+      ["articulate","/ɑːrtíkjulèɪt/","verb","〜をはっきりと表現する","She articulated her thoughts clearly.","彼女は自分の考えを明確に表現した。"],
+      ["aspire","/əspáɪər/","verb","熱望する、志す","He aspires to become a full-stack engineer.","彼はフルスタックエンジニアになることを志している。"],
+      ["assemble","/əsémbəl/","verb","〜を組み立てる、集める","We assembled all the parts in an hour.","1時間ですべての部品を組み立てた。"],
+      ["assert","/əsɜ́ːrt/","verb","〜を断言する、主張する","She asserted that quality comes first.","彼女は品質が最優先だと主張した。"],
+      ["assess","/əsés/","verb","〜を評価する、査定する","It is hard to assess the exact value.","正確な価値を評価するのは難しい。"],
+      ["assign","/əsáɪn/","verb","〜を割り当てる、任命する","Each member was assigned a specific role.","各メンバーに特定の役割が割り当てられた。"],
+      ["assume","/əsúːm/","verb","〜と思い込む、仮定する","Don't assume everything will go smoothly.","すべてが順調に進むと思い込まないで。"],
+      ["assure","/əʃʊ́r/","verb","〜に保証する、安心させる","I can assure you that your data is safe.","データは安全だと保証します。"],
+      ["attain","/ətéɪn/","verb","〜を達成する、到達する","Consistent practice helps you attain fluency.","継続的な練習が流暢さへの到達を助ける。"],
+      ["attribute","/ətríbjuːt/","verb","〜の原因を（…に）帰する","He attributes his health to daily running.","彼は健康の秘訣を毎日のランニングにあるとしている。"],
+      ["authentic","/ɔːθéntɪk/","adj","本物の、真正の","We enjoyed authentic pasta in Rome.","ローマで本場のパスタを楽しんだ。"],
+      ["autonomous","/ɔːtɑ́nəməs/","adj","自律的な、自治の","Autonomous systems operate without manual input.","自律型システムは手動入力なしで動作する。"],
+      ["banish","/bǽnɪʃ/","verb","〜を追放する、消し去る","Music helps banish stress after work.","音楽は仕事後のストレスを吹き飛ばしてくれる。"],
+      ["barrier","/bǽriər/","noun","障壁、壁","Don't let fear become a barrier.","恐怖を障壁にしてはいけない。"],
+      ["beneficial","/bènəfíʃəl/","adj","有益な、ためになる","Sunlight is beneficial to your mood.","日光は気分に良い影響を与える。"],
+      ["bewilder","/bɪwíldər/","verb","〜を当惑させる","The sudden change bewildered everyone.","突然の変更に全員が戸惑った。"],
+      ["bias","/báɪəs/","noun","偏り、先入観","Data analysis requires removing personal bias.","データ分析には個人の先入観を排除する必要がある。"],
+      ["blend","/blend/","verb","〜を混ぜ合わせる、調和する","The vocals blend nicely with the synth.","ボーカルがシンセと美しく調和している。"],
+      ["bold","/boʊld/","adj","大胆な、勇敢な","Bold ideas often lead to breakthroughs.","大胆なアイデアがしばしば突破口を開く。"],
+      ["bolster","/bóʊlstər/","verb","〜を強化する、支える","Positive feedback bolsters confidence.","前向きなフィードバックは自信を強める。"],
+      ["boundary","/báʊndəri/","noun","境界線、限界","Set healthy boundaries between work and rest.","仕事と休息の間に健全な境界線を引こう。"],
+      ["breakthrough","/bréɪkθruː/","noun","飛躍的進歩、突破口","Researchers made a major breakthrough in AI.","研究者たちはAI分野で大きな突破口を開いた。"],
+      ["breed","/briːd/","verb","〜を育てる、生み出す","Familiarity breeds comfort.","慣れは安心感を生み出す。"],
+      ["brief","/briːf/","adj","簡潔な、短時間の","Let's have a brief meeting before noon.","正午前に短い打ち合わせをしましょう。"],
+      ["brittle","/brítl/","adj","もろい、壊れやすい","Dry autumn leaves are brittle.","乾いた秋の落ち葉はもろい。"],
+      ["burden","/bɜ́ːrdn/","noun","負担、重荷","Automation lightens our daily burden.","自動化は日々の負担を軽くしてくれる。"],
+      ["bypass","/báɪpæs/","verb","〜を迂回する、バイパスする","We took a side road to bypass the traffic.","渋滞を迂回するために脇道を通った。"],
+      ["calculate","/kǽlkjulèɪt/","verb","〜を計算する、算出する","The app calculates your review intervals automatically.","アプリが復習間隔を自動計算する。"],
+      ["calibrate","/kǽləbrèɪt/","verb","〜を調整する、校正する","Calibrate the sensors before measuring.","測定前にセンサーを校正しよう。"],
+      ["candid","/kǽndɪd/","adj","率直な、遠慮のない","I appreciate your candid opinion.","あなたの率直な意見に感謝します。"],
+      ["capacity","/kəpǽsəti/","noun","収容能力、処理能力","The hall was filled to capacity.","ホールは満員だった。"],
+      ["capture","/kǽptʃər/","verb","〜を捉える、魅了する","The chorus captures the essence of the song.","サビがその曲の本質を捉えている。"],
+      ["catalyst","/kǽtəlɪst/","noun","触媒、きっかけ","That trip was a catalyst for change.","その旅行が変化のきっかけになった。"],
+      ["cater","/kéɪtər/","verb","（要望などに）応える","The menu caters to vegetarian guests.","そのメニューはベジタリアンの客にも対応している。"],
+      ["cease","/siːs/","verb","〜をやめる、終わる","The noise ceased after midnight.","真夜中を過ぎると騒音は止んだ。"],
+      ["chronic","/krɑ́nɪk/","adj","慢性的な、常習的な","Lack of sleep causes chronic fatigue.","睡眠不足は慢性的な疲労を引き起こす。"],
+      ["circulate","/sɜ́ːrkjulèɪt/","verb","循環する、広まる","Rumors circulate quickly online.","噂はネット上で素早く広まる。"],
+      ["cite","/saɪt/","verb","〜を引用する、引き合いに出す","Please cite reliable sources in your thesis.","論文では信頼できる情報源を引用してください。"],
+      ["clarify","/klǽrəfài/","verb","〜を明確にする","Let me clarify what I meant earlier.","先ほど言ったことの意味を明確にさせてください。"],
+      ["coherent","/koʊhíərənt/","adj","首尾一貫した、筋の通った","Keep your presentation clear and coherent.","プレゼンは明確で筋の通ったものにしよう。"],
+      ["coincide","/kòʊɪnsáɪd/","verb","同時に起こる、一致する","My vacation coincides with the music festival.","私の休暇は音楽フェスと時期が重なっている。"],
+      ["collaborate","/kəlǽbərèɪt/","verb","共同作業する、コラボする","We collaborated remotely on the new track.","新曲の制作でリモート共同作業を行った。"],
+      ["collapse","/kəlǽps/","verb","崩壊する、倒れる","The old bridge collapsed during the flood.","古い橋が洪水で崩落した。"],
+      ["commence","/kəméns/","verb","〜を開始する、始まる","The ceremony will commence at 10 AM.","式典は午前10時に開始されます。"],
+      ["compatible","/kəmpǽtəbəl/","adj","互換性のある、相性が良い","Is this plugin compatible with Logic Pro?","このプラグインはLogic Proに対応していますか？"],
+      ["compel","/kəmpél/","verb","〜を強いる、余儀なくさせる","Curiosity compelled him to open the box.","好奇心に駆られて彼はその箱を開けた。"],
+      ["compensate","/kɑ́mpənsèɪt/","verb","〜を補う、補償する","Hard work can compensate for lack of talent.","努力は才能の不足を補うことができる。"],
+      ["compile","/kəmpáɪl/","verb","〜を編集する、まとめる","We compiled thousands of essential words.","何千もの重要単語をまとめた。"],
+      ["complement","/kɑ́mpləmənt/","verb","〜を補完する、引き立てる","The bassline complements the drum groove.","ベースラインがドラムのグルーヴを引き立てている。"],
+      ["comply","/kəmpláɪ/","verb","（規則などに）従う、遵守する","All apps must comply with privacy rules.","すべてのアプリはプライバシー規定を遵守しなければならない。"],
+      ["comprehensive","/kɑ̀mprɪhénsɪv/","adj","包括的な、総合的な","This is a comprehensive guide for learners.","これは学習者向けの包括的なガイドだ。"],
+      ["compromise","/kɑ́mprəmàɪz/","noun","妥協、折衷案","Good teamwork often requires compromise.","良いチームワークにはしばしば妥協が必要だ。"],
+      ["conceal","/kənsíːl/","verb","〜を隠す、秘密にする","She couldn't conceal her excitement.","彼女は興奮を隠しきれなかった。"],
+      ["conceive","/kənsíːv/","verb","〜を思いつく、想像する","He conceived the idea while walking home.","彼は帰宅途中にそのアイデアを思いついた。"],
+      ["concentrate","/kɑ́nsəntrèɪt/","verb","集中する","Turn off notifications to concentrate better.","より集中するために通知をオフにしよう。"],
+      ["conclude","/kənklúːd/","verb","結論づける、終える","We concluded that the new method works best.","新しい手法が最も効果的だと結論づけた。"],
+      ["concrete","/kɑ́nkriːt/","adj","具体的な、有形の","Give me a concrete example of your plan.","あなたの計画の具体的な例を挙げてください。"],
+      ["conduct","/kəndʌ́kt/","verb","（調査・実験などを）実施する","They conducted a survey of 1,000 students.","彼らは1,000人の学生を対象に調査を実施した。"],
+      ["confer","/kənfɜ́ːr/","verb","相談する、授与する","Let me confer with my colleagues first.","まず同僚と相談させてください。"],
+      ["confine","/kənfáɪn/","verb","〜を制限する、閉じ込める","Please confine your remarks to the main topic.","発言は本題に限ってください。"],
+      ["confirm","/kənfɜ́ːrm/","verb","〜を確認する、確定する","Please confirm your flight reservation.","フライトの予約を確認してください。"],
+      ["conflict","/kɑ́nflɪkt/","noun","対立、衝突、矛盾","Resolve the merge conflict before pushing.","プッシュする前にマージの競合を解決しよう。"],
+      ["conform","/kənfɔ́ːrm/","verb","従う、適合する","You don't always have to conform to trends.","常にトレンドに従う必要はない。"],
+      ["confront","/kənfrʌ́nt/","verb","〜に立ち向かう、直面する","It takes courage to confront your weaknesses.","自分の弱さに立ち向かうには勇気がいる。"],
+      ["consecutive","/kənsékjutɪv/","adj","連続した","She studied English for 30 consecutive days.","彼女は30日連続で英語を勉強した。"],
+      ["consensus","/kənsénsəs/","noun","合意、総意","We reached a consensus after an hour.","1時間後に合意に達した。"],
+      ["consequence","/kɑ́nsəkwèns/","noun","結果、重大性","Every choice has its consequences.","すべての選択にはそれなりの結果が伴う。"],
+      ["conserve","/kənsɜ́ːrv/","verb","〜を節約する、保護する","Turn off unused lights to conserve energy.","節電のために使っていない電気は消そう。"],
+      ["considerable","/kənsídərəbəl/","adj","かなりの、相当な","Building the database took considerable effort.","データベース構築にはかなりの労力がかかった。"],
+      ["consistent","/kənsístənt/","adj","一貫した、継続的な","Consistent daily practice beats cramming.","毎日の継続的な練習は一夜漬けに勝る。"],
+      ["constitute","/kɑ́nstətùːt/","verb","〜を構成する、成り立たせる","Twelve months constitute a year.","12ヶ月で1年を構成する。"],
+      ["constrain","/kənstréɪn/","verb","〜を制約する、縛る","Budget limits constrained our options.","予算の制限が私たちの選択肢を狭めた。"],
+      ["consult","/kənsʌ́lt/","verb","〜に相談する、参照する","Consult a dictionary when unsure of pronunciation.","発音が分からないときは辞書を引こう。"],
+      ["consume","/kənsúːm/","verb","〜を消費する、食べる","Streaming video consumes a lot of data.","動画のストリーミングは多くのデータを消費する。"],
+      ["contemporary","/kəntémpərèri/","adj","現代の、同時代の","Contemporary rock blends electronic elements.","現代のロックはエレクトロの要素を融合させている。"],
+      ["contend","/kənténd/","verb","主張する、争う","Critics contend that the policy is unfair.","批評家たちはその方針が不公平だと主張している。"],
+      ["context","/kɑ́ntekst/","noun","文脈、状況","Learn new words in context, not in isolation.","新しい単語は孤立してではなく文脈の中で覚えよう。"],
+      ["contradict","/kɑ̀ntrədíkt/","verb","〜と矛盾する、反論する","His actions contradict his words.","彼の行動は言葉と矛盾している。"],
+      ["contribute","/kəntríbjuːt/","verb","貢献する、一因となる","Everyone contributed to the success of the show.","全員がライブの成功に貢献した。"],
+      ["controversial","/kɑ̀ntrəvɜ́ːrʃəl/","adj","議論を呼ぶ、物議を醸す","The new rule sparked a controversial debate.","その新規則は激しい議論を巻き起こした。"],
+      ["conventional","/kənvénʃənəl/","adj","従来の、型通りの","They broke away from conventional songwriting.","彼らは従来の曲作りの型を打ち破った。"],
+      ["convey","/kənvéɪ/","verb","（感情・意味など）を伝える","Eye contact conveys sincerity.","アイコンタクトは誠実さを伝える。"],
+      ["convince","/kənvíns/","verb","〜を納得させる、確信させる","She convinced me to join the band.","彼女は私を説得してバンドに加入させた。"],
+      ["cooperate","/koʊɑ́pərèɪt/","verb","協力する","Teams must cooperate to meet the deadline.","締め切りに間に合わせるにはチームが協力しなければならない。"],
+      ["coordinate","/koʊɔ́ːrdənèɪt/","verb","〜を調整する、連携させる","We need to coordinate our rehearsal schedules.","リハーサルの日程を調整する必要がある。"],
+      ["correspond","/kɔ̀ːrəspɑ́nd/","verb","一致する、対応する","The numbers correspond to the chart below.","その数字は下のグラフと対応している。"],
+      ["crucial","/krúːʃəl/","adj","極めて重要な","Sleep is crucial for memory retention.","睡眠は記憶の定着に極めて重要だ。"],
+      ["cultivate","/kʌ́ltəvèɪt/","verb","（能力・関係などを）育む、耕す","Cultivate a habit of reading every day.","毎日読書する習慣を育もう。"],
+      ["debate","/dɪbéɪt/","noun","討論、議論","The topic sparked a lively debate.","その話題は活発な議論を引き起こした。"],
+      ["decent","/díːsənt/","adj","まともな、かなりの、親切な","You can get a decent meal here for 1,000 yen.","ここでは1,000円でまともな食事ができる。"],
+      ["decline","/dɪkláɪn/","verb","減少する、〜を丁重に断る","Sales declined slightly last month.","先月は売上がわずかに減少した。"],
+      ["dedicate","/dédɪkèɪt/","verb","（時間・労力を）捧げる","He dedicated his life to music.","彼は人生を音楽に捧げた。"],
+      ["deduce","/dɪdúːs/","verb","〜を推論する、演繹する","We can deduce the meaning from the context.","文脈から意味を推論できる。"],
+      ["deficient","/dɪfíʃənt/","adj","不足している、不十分な","A diet deficient in vitamins harms health.","ビタミンが不足した食事は健康を損なう。"],
+      ["deliberate","/dɪlíbərət/","adj","意図的な、慎重な","Practice requires deliberate focus.","練習には意図的な集中が必要だ。"],
+      ["delicate","/délɪkət/","adj","繊細な、壊れやすい","Acoustic guitars are sensitive to delicate touch.","アコースティックギターは繊細なタッチに反応する。"],
+      ["demonstrate","/démənstrèɪt/","verb","〜を実証する、実演する","The demo clearly demonstrates the app's speed.","そのデモはアプリの速さを明確に実証している。"],
+      ["depict","/dɪpíkt/","verb","〜を描く、描写する","The lyrics depict a lonely night drive.","その歌詞は孤独な夜のドライブを描写している。"],
+      ["deploy","/dɪplɔ́ɪ/","verb","〜を配備する、展開する","We deployed the updated website to GitHub Pages.","更新したWebサイトをGitHub Pagesに公開した。"],
+      ["derive","/dɪráɪv/","verb","〜を引き出す、由来する","Many English words derive from Latin.","多くの英単語はラテン語に由来している。"],
+      ["designate","/dézɪgnèɪt/","verb","〜を指定する、任命する","This area is designated for quiet study.","このエリアは静かな自習用として指定されている。"],
+      ["detect","/dɪtékt/","verb","〜を検知する、見抜く","The software detects duplicate entries.","そのソフトは重複データを検知する。"],
+      ["deteriorate","/dɪtíəriərèɪt/","verb","悪化する、劣化する","Weather conditions deteriorated rapidly.","天候が急速に悪化した。"],
+      ["determine","/dɪtɜ́ːrmɪn/","verb","〜を決定する、決意する","Your daily actions determine your future.","日々の行動が未来を決定する。"],
+      ["devote","/dɪvóʊt/","verb","（時間・労力を）捧げる","Devote 10 minutes before bed to review.","寝る前の10分を復習に充てよう。"],
+      ["diagnose","/dàɪəgnóʊs/","verb","〜を診断する、原因を特定する","The engineer diagnosed the audio latency issue.","エンジニアが音声遅延の原因を特定した。"],
+      ["diminish","/dɪmínɪʃ/","verb","減少する、弱める","Nothing can diminish her passion for art.","彼女の芸術への情熱を弱めるものは何もない。"],
+      ["discard","/dɪskɑ́ːrd/","verb","〜を捨てる、破棄する","Discard outdated files to free up space.","空き容量を増やすため古いファイルを破棄しよう。"],
+      ["discipline","/dísəplɪn/","noun","規律、鍛錬、専門分野","Self-discipline is the key to long-term goals.","自己規律が長期目標達成の鍵だ。"],
+      ["disclose","/dɪsklóʊz/","verb","〜を公開する、暴露する","The company disclosed its annual financial report.","その企業は年次財務報告を公開した。"],
+      ["discrete","/dɪskríːt/","adj","個別の、別々の","Break big projects into discrete tasks.","大きなプロジェクトを個別のタスクに分けよう。"],
+      ["dismiss","/dɪsmís/","verb","〜を退ける、解散させる","Don't dismiss an idea before testing it.","試す前にアイデアを退けてはいけない。"],
+      ["disrupt","/dɪsrʌ́pt/","verb","〜を混乱させる、中断させる","Notifications disrupt deep concentration.","通知は深い集中を中断させる。"],
+      ["distinct","/dɪstíŋkt/","adj","明確に異なる、独特の","Each city in Italy has a distinct charm.","イタリアの各都市にはそれぞれ独特の魅力がある。"],
+      ["distinguish","/dɪstíŋgwɪʃ/","verb","〜を区別する、見分ける","Can you distinguish US and UK accents?","アメリカ英語とイギリス英語のアクセントを聞き分けられますか？"],
+      ["distort","/dɪstɔ́ːrt/","verb","〜を歪める、歪曲する","High gain distorts the guitar signal.","ゲインを上げるとギターの信号が歪む。"],
+      ["diverse","/daɪvɜ́ːrs/","adj","多様な、さまざまな","Listen to diverse genres to broaden your taste.","好みの幅を広げるため多様なジャンルを聴こう。"],
+      ["dominate","/dɑ́mənèɪt/","verb","〜を支配する、優勢を占める","Digital streaming dominates the music industry.","デジタル配信が音楽業界の主流を占めている。"],
+      ["drastic","/drǽstɪk/","adj","抜本的な、思い切った","We made drastic improvements to the speed.","スピードに抜本的な改善を加えた。"],
+      ["durable","/dʊ́rəbəl/","adj","耐久性のある、丈夫な","Invest in durable gear that lasts for years.","何年も長持ちする丈夫な機材に投資しよう。"],
+      ["elaborate","/ɪlǽbərət/","adj","精巧な、入念な","The arrangement features elaborate string harmonies.","その編曲は精巧なストリングスのハーモニーが特徴だ。"],
+      ["elevate","/éləvèɪt/","verb","〜を高める、向上させる","Good mastering elevates the entire mix.","良いマスタリングはミックス全体を引き上げる。"],
+      ["eliminate","/ɪlímənèɪt/","verb","〜を取り除く、排除する","Eliminate distractions during your study session.","勉強中は気が散るものを排除しよう。"],
+      ["emerge","/ɪmɜ́ːrdʒ/","verb","現れる、浮上する","New opportunities emerge when you stay active.","行動し続けると新しいチャンスが現れる。"],
+      ["emphasize","/émfəsàɪz/","verb","〜を強調する","Let me emphasize this crucial point.","この極めて重要な点を強調させてください。"],
+      ["empirical","/empírɪkəl/","adj","経験的な、実証的な","The conclusion is based on empirical evidence.","その結論は実証的な証拠に基づいている。"],
+      ["encounter","/ɪnkáʊntər/","verb","〜に遭遇する、直面する","You will encounter these idioms in movies.","映画の中でこれらの熟語によく出会うだろう。"],
+      ["endure","/ɪndʊ́r/","verb","〜に耐える、持ちこたえる","Great songs endure for generations.","名曲は何世代にもわたって生き続ける。"],
+      ["enforce","/ɪnfɔ́ːrs/","verb","〜を実施する、強制する","Enforce a strict digital detox before sleep.","寝る前は厳格なデジタルデトックスを実行しよう。"],
+      ["enhance","/ɪnhǽns/","verb","（質・価値などを）高める","Subtle reverb enhances vocal depth.","控えめなリバーブがボーカルの奥行きを高める。"],
+      ["ensure","/ɪnʃʊ́r/","verb","〜を確実にする、保証する","Double-check to ensure nothing is missing.","抜け漏れがないか二重チェックしよう。"],
+      ["equivalent","/ɪkwívələnt/","adj","同等の、相当する","One mile is roughly equivalent to 1.6 kilometers.","1マイルは約1.6キロメートルに相当する。"],
+      ["erode","/ɪróʊd/","verb","浸食する、徐々に損なう","Self-doubt can erode your confidence.","自己不信は自信を徐々に蝕むことがある。"],
+      ["essential","/ɪsénʃəl/","adj","不可欠な、本質的な","Water and rest are essential for vocal health.","水分と休息は喉の健康に不可欠だ。"],
+      ["establish","/ɪstǽblɪʃ/","verb","〜を確立する、設立する","Establish a morning routine that sticks.","定着する朝のルーティンを確立しよう。"],
+      ["evaluate","/ɪvǽljuèɪt/","verb","〜を評価する、査定する","Test yourself weekly to evaluate progress.","進捗を評価するため毎週テストしよう。"],
+      ["eventually","/ɪvéntʃuəli/","adv","最終的に、ついに","Keep going, and you will eventually succeed.","続ければ最終的に必ず成功する。"],
+      ["evident","/évɪdənt/","adj","明らかな、明白な","Her dedication is evident in every note.","彼女の献身は一音一音に表れている。"],
+      ["evolve","/ɪvɑ́lv/","verb","進化する、発展する","Language constantly evolves over time.","言語は時間とともに絶えず進化する。"],
+      ["exceed","/ɪksíːd/","verb","〜を超える、上回る","The final mix exceeded our expectations.","最終ミックスは私たちの期待を上回った。"],
+      ["exclude","/ɪksklúːd/","verb","〜を除外する","The filter excludes words you already mastered.","フィルターが習得済みの単語を除外する。"],
+      ["execute","/éksəkjùːt/","verb","〜を実行する、遂行する","Execute your plan step by step.","計画を一步ずつ実行しよう。"],
+      ["exhibit","/ɪgzíbɪt/","verb","〜を示す、展示する","The band exhibited incredible energy on stage.","バンドはステージで信じられないエネルギーを見せた。"],
+      ["explicit","/ɪksplísɪt/","adj","明確な、はっきりした","Give explicit instructions to avoid confusion.","混乱を避けるため明確な指示を出そう。"],
+      ["explore","/ɪksplɔ́ːr/","verb","〜を探検する、探求する","We love to explore hidden cafes in Tokyo.","私たちは東京の隠れ家カフェを巡るのが好きだ。"],
+      ["extract","/ɪkstrǽkt/","verb","〜を抽出する、抜き出す","The script extracts keywords from reviews.","スクリプトがレビューからキーワードを抽出する。"],
+      ["extraordinary","/ɪkstrɔ́ːrdənèri/","adj","並外れた、驚くべき","She has an extraordinary sense of rhythm.","彼女は並外れたリズム感を持っている。"],
+      ["facilitate","/fəsílɪtèɪt/","verb","〜を促進する、容易にする","Flashcards facilitate rapid memory recall.","フラッシュカードは素早い記憶の想起を助ける。"],
+      ["feasible","/fíːzəbəl/","adj","実行可能な、実現できる","Fifty words a day is completely feasible.","1日50語は完全に実行可能だ。"],
+      ["flexible","/fléksəbəl/","adj","柔軟な、融通の利く","Keep your study schedule flexible.","学習スケジュールは柔軟に保とう。"],
+      ["flourish","/flɜ́ːrɪʃ/","verb","繁栄する、生き生きと育つ","New ideas flourish in a relaxed mind.","リラックスした心には新しいアイデアが湧き出る。"],
+      ["fluctuate","/flʌ́ktʃuèɪt/","verb","変動する、上下する","Motivation fluctuates, so rely on habits.","やる気は変動するものなので、習慣に頼ろう。"],
+      ["formulate","/fɔ́ːrmjulèɪt/","verb","〜を策定する、明確に述べる","Formulate a clear strategy for your thesis.","卒論のための明確な戦略を策定しよう。"],
+      ["foster","/fɔ́ːstər/","verb","〜を育成する、促進する","Travel fosters a deeper understanding of cultures.","旅行は異文化への深い理解を育む。"],
+      ["fragile","/frǽdʒəl/","adj","壊れやすい、繊細な","Glassware is fragile, so pack it carefully.","ガラス製品は壊れやすいので丁寧に梱包しよう。"],
+      ["frustrate","/frʌ́streɪt/","verb","〜をイライラさせる、挫折させる","Slow loading times frustrate mobile users.","読み込みの遅さはスマホユーザーをイライラさせる。"],
+      ["fulfill","/fʊlfíl/","verb","（条件・夢などを）満たす、果たす","Seeing the app work fulfilled our goal.","アプリが動くのを見て目標が達成された。"],
+      ["fundamental","/fʌ̀ndəméntl/","adj","基本的な、根本的な","Master the fundamental chords first.","まず基本的なコードをマスターしよう。"],
+      ["generate","/dʒénərèɪt/","verb","〜を生成する、生み出す","Brainstorming generates fresh lyrical ideas.","ブレストは新鮮な歌詞のアイデアを生み出す。"],
+      ["genuine","/dʒénjuɪn/","adj","本物の、心からの","Audiences connect with genuine emotion.","観客は本物の感情に共鳴する。"],
+      ["glimpse","/glɪmps/","noun","ちらりと見ること、垣間見え","We caught a glimpse of the Colosseum at sunset.","夕暮れ時にコロッセオをちらりと目にした。"],
+      ["grasp","/græsp/","verb","〜を理解する、しっかり掴む","Once you grasp the pattern, it becomes easy.","パターンを掴めば簡単になる。"],
+      ["guarantee","/gærəntíː/","verb","〜を保証する","Daily effort guarantees steady progress.","毎日の努力が着実な進歩を保証する。"],
+      ["halt","/hɔːlt/","verb","〜を停止させる、止まる","Production came to a temporary halt.","生産は一時停止した。"],
+      ["harsh","/hɑːrʃ/","adj","厳しい、耳障りな","Soften harsh frequencies around 4kHz.","4kHz付近の耳障りな帯域を和らげよう。"],
+      ["hesitate","/hézɪtèɪt/","verb","ためらう、躊躇する","Never hesitate to speak up in meetings.","会議では決して発言をためらわないで。"],
+      ["highlight","/háɪlàɪt/","verb","〜を強調する、目立たせる","Highlight key phrases for quick review.","素早い復習のために重要フレーズを強調しよう。"],
+      ["hinder","/híndər/","verb","〜を妨げる、阻害する","Perfectionism can hinder creative output.","完璧主義は創造的なアウトプットを妨げることがある。"],
+      ["hypothesis","/haɪpɑ́θəsɪs/","noun","仮説","Every experiment begins with a clear hypothesis.","すべての実験は明確な仮説から始まる。"],
+      ["identical","/aɪdéntɪkəl/","adj","全く同じ、同一の","No two snowflakes are completely identical.","全く同じ形の雪の結晶は二つとない。"],
+      ["illustrate","/íləstrèɪt/","verb","〜を例証する、図解する","Examples illustrate how a word is actually used.","例文はその単語が実際にどう使われるかを示す。"],
+      ["implement","/ímpləmènt/","verb","〜を実装する、実行に移す","We implemented offline caching for instant startup.","即座に起動するようオフラインキャッシュを実装した。"],
+      ["imply","/ɪmpláɪ/","verb","〜を暗に示す、ほのめかす","What does this phrase imply in context?","このフレーズは文脈の中で何を意味していますか？"],
+      ["incentive","/ɪnséntɪv/","noun","動機づけ、インセンティブ","Daily streaks act as a great incentive.","毎日の連続記録は素晴らしい動機づけになる。"],
+      ["incorporate","/ɪnkɔ́ːrpərèɪt/","verb","〜を取り入れる、組み込む","Incorporate idioms into your daily speaking.","日常会話にイディオムを取り入れよう。"],
+      ["indispensable","/ìndɪspénsəbəl/","adj","不可欠な、なくてはならない","A good audio interface is indispensable for recording.","良いオーディオインターフェースは録音に不可欠だ。"],
+      ["inevitable","/ɪnévɪtəbəl/","adj","避けられない、必然的な","Forgetting is inevitable, so review is essential.","忘却は避けられないものなので、復習が不可欠だ。"],
+      ["infer","/ɪnfɜ́ːr/","verb","〜を推論する","Readers can infer the tone from word choice.","読者は言葉選びからトーンを推論できる。"],
+      ["initial","/ɪníʃəl/","adj","初期の、最初の","The initial setup takes less than a minute.","初期設定は1分もかからない。"],
+      ["innovative","/ínəvèɪtɪv/","adj","革新的な、斬新な","They are known for their innovative live visuals.","彼らは革新的なライブ映像演出で知られている。"],
+      ["insight","/ínsàɪt/","noun","洞察、深い理解","Data visualization reveals hidden insights.","データの可視化は隠れた洞察を明らかにする。"],
+      ["integrate","/íntɪgrèɪt/","verb","〜を統合する、融合させる","Integrate study into your morning coffee routine.","朝のコーヒー習慣に勉強を組み込もう。"],
+      ["interpret","/ɪntɜ́ːrprɪt/","verb","〜を解釈する、通訳する","How do you interpret the ending of the novel?","その小説の結末をどう解釈しますか？"],
+      ["intricate","/íntrɪkət/","adj","複雑な、入り組んだ","The track features an intricate drum pattern.","その曲は複雑なドラムパターンが特徴だ。"],
+      ["justify","/dʒʌ́stəfài/","verb","〜を正当化する","Can you justify spending so much on gear?","機材にそれだけお金をかける理由を説明できますか？"],
+      ["keen","/kiːn/","adj","鋭い、熱心な","Keep a keen eye on subtle details.","細部の微妙な違いに鋭い目を向けよう。"],
+      ["launch","/lɔːntʃ/","verb","〜を開始する、立ち上げる","Launch the app directly from your home screen.","ホーム画面から直接アプリを起動しよう。"],
+      ["legitimate","/lɪdʒítəmət/","adj","正当な、もっともな","That is a completely legitimate question.","それは至極もっともな質問だ。"],
+      ["leverage","/lévərɪdʒ/","verb","〜を有効活用する","Leverage technology to automate repetitive tasks.","テクノロジーを活用して反復作業を自動化しよう。"],
+      ["likewise","/láɪkwàɪz/","adv","同様に、私もです","'Have a great trip!' 'Thanks, likewise!'","「良い旅を！」「ありがとう、あなたも！」"],
+      ["linger","/líŋgər/","verb","残る、長引く","A catchy hook lingers in your head.","キャッチーなフレーズは頭の中に残る。"],
+      ["lucrative","/lúːkrətɪv/","adj","収益性の高い、儲かる","Software engineering is a lucrative career path.","ソフトウェア工学は収益性の高いキャリアパスだ。"],
+      ["maintain","/meɪntéɪn/","verb","〜を維持する、保守する","Maintain a steady pace every single day.","毎日一定のペースを維持しよう。"],
+      ["manifest","/mǽnəfèst/","verb","〜を明確に表す、現れる","True confidence manifests in calm actions.","本当の自信は落ち着いた行動に表れる。"],
+      ["manipulate","/mənípjulèɪt/","verb","〜を巧みに操作する","Learn to manipulate synth filters creatively.","シンセのフィルターを創造的に操作できるようになろう。"],
+      ["mature","/mətʃʊ́r/","adj","成熟した、熟練した","Their new album shows a more mature sound.","彼らの新作はより成熟したサウンドを示している。"],
+      ["merge","/mɜ́ːrdʒ/","verb","〜を統合する、合併する","Words and idioms are merged into one curriculum.","単語と熟語が1つのカリキュラムに統合されている。"],
+      ["modify","/mɑ́dəfài/","verb","〜を修正する、変更する","You can modify playback speed anytime.","再生速度はいつでも変更できます。"],
+      ["mutual","/mjúːtʃuəl/","adj","相互の、共通の","Great bands are built on mutual respect.","素晴らしいバンドは相互の尊敬の上に成り立つ。"],
+      ["navigate","/nǽvɪgèɪt/","verb","〜を進む、乗り切る","Use offline maps to navigate unfamiliar streets.","不慣れな道を歩くときはオフライン地図を使おう。"],
+      ["neglect","/nɪglékt/","verb","〜を怠る、無視する","Don't neglect basic idioms in daily conversation.","日常会話の基本熟語をおろそかにしてはいけない。"],
+      ["neutral","/njúːtrəl/","adj","中立の、ニュートラルな","Stay neutral and look at the objective facts.","中立を保ち、客観的な事実を見よう。"],
+      ["nevertheless","/nèvərðəlés/","adv","それにもかかわらず","It was cold; nevertheless, we walked everywhere.","寒かったが、それにもかかわらず私たちはどこへでも歩いた。"],
+      ["notable","/nóʊtəbəl/","adj","注目すべき、顕著な","There is a notable difference in clarity.","明瞭さに注目すべき違いがある。"],
+      ["notion","/nóʊʃən/","noun","概念、考え","Challenge the notion that English is too hard.","英語が難しすぎるという固定観念に挑もう。"],
+      ["obtain","/əbtéɪn/","verb","〜を入手する、得る","Obtain boarding passes at least two hours early.","少なくとも2時間前には搭乗券を入手しよう。"],
+      ["obvious","/ɑ́bviəs/","adj","明白な、明らかな","The benefit of daily review is obvious.","毎日の復習の利点は明らかだ。"],
+      ["obstacle","/ɑ́bstəkəl/","noun","障害、妨げ","Every obstacle is a chance to improve.","あらゆる障害は成長のチャンスだ。"],
+      ["occur","/əkɜ́ːr/","verb","起こる、思い浮かぶ","A great melody occurred to me in the shower.","シャワー中に素晴らしいメロディが浮かんだ。"],
+      ["omit","/oʊmít/","verb","〜を省略する、省く","Never omit warm-ups before singing.","歌う前のウォームアップは決して省かないで。"],
+      ["optimal","/ɑ́ptəməl/","adj","最適な、最善の","Spaced repetition calculates optimal review timing.","間隔反復が最適な復習タイミングを計算する。"],
+      ["outcome","/áʊtkʌ̀m/","noun","結果、成果","Focus on the process and the outcome will follow.","プロセスに集中すれば結果はついてくる。"],
+      ["overall","/óʊvərɔ̀ːl/","adj","全体的な、総合的な","Overall, our trip was unforgettable.","全体的に見て、私たちの旅は忘れられないものだった。"],
+      ["overcome","/òʊvərkʌ́m/","verb","〜を克服する、乗り越える","She overcame stage fright through practice.","彼女は練習によってステージ恐怖症を克服した。"],
+      ["overlook","/òʊvərlʊ́k/","verb","〜を見落とす、大目に見る","It is easy to overlook small prepositions in idioms.","熟語の小さな前置詞は見落としやすい。"],
+      ["parallel","/pǽrəlèl/","adj","並行の、類似した","Parallel processing speeds up data tasks.","並列処理はデータ処理タスクを高速化する。"],
+      ["perceive","/pərsíːv/","verb","〜を知覚する、認識する","Listeners perceive rhythm before melody.","聴き手はメロディよりも先にリズムを知覚する。"],
+      ["persist","/pərsíst/","verb","持続する、粘り強く続ける","Those who persist eventually master the craft.","粘り強く続ける者が最終的に技術を習得する。"],
+      ["perspective","/pərspéktɪv/","noun","視点、観点","Living in a new city gives you a fresh perspective.","新しい街に住むと新鮮な視点が得られる。"],
+      ["phenomenon","/fɪnɑ́mənɑ̀n/","noun","現象","Dejà vu is a fascinating psychological phenomenon.","デジャヴは興味深い心理現象だ。"],
+      ["plausible","/plɔ́ːzəbəl/","adj","もっともらしい、妥当そうな","That sounds like a very plausible theory.","それは非常に妥当そうな説に聞こえる。"],
+      ["potential","/pəténʃəl/","noun","可能性、潜在能力","Unlock your full potential with daily habits.","日々の習慣で潜在能力を最大限に引き出そう。"],
+      ["precise","/prɪsáɪs/","adj","正確な、精密な","Precise timing makes every groove hit harder.","正確なタイミングがすべてのグルーヴを際立たせる。"],
+      ["predict","/prɪdíkt/","verb","〜を予測する","AI models predict user preferences from patterns.","AIモデルはパターンからユーザーの好みを予測する。"],
+      ["preserve","/prɪzɜ́ːrv/","verb","〜を保存する、守る","Export backups to preserve your study history.","学習履歴を守るためにバックアップを書き出そう。"],
+      ["prior","/práɪər/","adj","前の、事前の","Book museum tickets prior to your trip.","旅行の前に美術館のチケットを予約しよう。"],
+      ["profound","/prəfáʊnd/","adj","深い、重大な","Music has a profound effect on human emotion.","音楽は人間の感情に深い影響を与える。"],
+      ["prominent","/prɑ́mənənt/","adj","顕著な、著名な","The bass guitar is prominent in the mix.","ミックスの中でベースギターが際立っている。"],
+      ["pursue","/pərsúː/","verb","〜を追求する、追い求める","Never stop pursuing what you truly love.","本当に好きなことを追求するのを決してやめないで。"],
+      ["quote","/kwoʊt/","verb","〜を引用する、見積もる","He opened his speech by quoting a famous lyric.","彼は有名な歌詞を引用してスピーチを始めた。"],
+      ["radical","/rǽdɪkəl/","adj","抜本的な、急進的な","Sometimes a radical change of pace refreshes you.","時には思い切ったペース変更が気分を一新させる。"],
+      ["random","/rǽndəm/","adj","無作為の、ランダムな","Random testing prevents memorizing by position.","ランダムテストは順番での丸暗記を防ぐ。"],
+      ["rapid","/rǽpɪd/","adj","急速な、素早い","Rapid progress comes from daily focus.","急速な進歩は毎日の集中から生まれる。"],
+      ["rational","/rǽʃənəl/","adj","合理的な、理性的な","Make rational decisions based on clear metrics.","明確な指標に基づいて合理的な判断を下そう。"],
+      ["readily","/rédəli/","adv","容易に、快く","All 50 words are readily available offline.","50語すべてがオフラインですぐに利用できる。"],
+      ["refine","/rɪfáɪn/","verb","〜を洗練させる、改良する","Refine your mix until every instrument sits clearly.","すべての楽器が明瞭に聴こえるまでミックスを磨こう。"],
+      ["reinforce","/rìːɪnfɔ́ːrs/","verb","〜を強化する、補強する","Tests reinforce what you studied on flashcards.","テストはフラッシュカードで学んだことを強化する。"],
+      ["reject","/rɪdʒékt/","verb","〜を拒絶する、却下する","Don't fear rejection; keep submitting your demos.","断られるのを恐れず、デモを送り続けよう。"],
+      ["relevant","/réləvənt/","adj","関連のある、適切な","Focus on vocabulary relevant to real life.","実生活に関連のある語彙に集中しよう。"],
+      ["reluctant","/rɪlʌ́ktənt/","adj","気が進まない、消極的な","Don't be reluctant to speak even if you make mistakes.","間違えても話すことに消極的にならないで。"],
+      ["remarkable","/rɪmɑ́ːrkəbəl/","adj","注目すべき、並外れた","Small daily steps lead to remarkable results.","毎日の小さな一歩が並外れた結果につながる。"],
+      ["resolve","/rɪzɑ́lv/","verb","解決する、決意する","We resolved the issue before the live stream.","ライブ配信前に問題を解決した。"],
+      ["restore","/rɪstɔ́ːr/","verb","〜を復元する、回復させる","Restore your progress anytime using JSON backup.","JSONバックアップを使っていつでも進捗を復元できる。"],
+      ["retain","/rɪtéɪn/","verb","〜を保持する、記憶にとどめる","Reviewing after 24 hours helps you retain 80% more.","24時間後の復習で記憶の定着率が80%以上高まる。"],
+      ["reveal","/rɪvíːl/","verb","〜を明らかにする、見せる","Tap the card to reveal the Japanese meaning.","カードをタップして日本語の意味を表示しよう。"],
+      ["rigid","/rídʒɪd/","adj","硬直した、厳格な","Flexible habits last longer than rigid rules.","柔軟な習慣はガチガチの規則よりも長続きする。"],
+      ["scarce","/skers/","adj","乏しい、希少な","Original vinyl pressings are becoming scarce.","オリジナルのレコード盤は希少になりつつある。"],
+      ["scatter","/skǽtər/","verb","〜をばらまく、分散させる","Words are scattered evenly across A to Z.","単語はAからZまで均等に分散されている。"],
+      ["scheme","/skiːm/","noun","計画、体系、配色","The dark color scheme reduces eye strain.","ダーク配色が目の疲れを軽減する。"],
+      ["seek","/siːk/","verb","〜を求める、探す","Always seek constructive feedback from peers.","常に仲間から建設的なフィードバックを求めよう。"],
+      ["severe","/sɪvíər/","adj","深刻な、激しい","Severe weather delayed the afternoon flight.","悪天候が午後の便を遅らせた。"],
+      ["significant","/sɪgnífɪkənt/","adj","重要な、大幅な","Fifty words a day makes a significant difference.","1日50語は大きな違いを生み出す。"],
+      ["simulate","/símjulèɪt/","verb","〜をシミュレートする、模倣する","Amp sims simulate classic guitar cabinets.","アンプシミュレーターは定番のキャビネットを模倣する。"],
+      ["simultaneous","/sàɪməltéɪniəs/","adj","同時の、一斉の","The band recorded a simultaneous live session.","バンドは一発録りの同時セッションを録音した。"],
+      ["solid","/sɑ́lɪd/","adj","堅固な、確かな","Build a solid vocabulary before tackling advanced texts.","上級テキストに挑む前に確かな語彙力を築こう。"],
+      ["sophisticated","/səfístɪkèɪtɪd/","adj","洗練された、高度な","Modern DAWs offer sophisticated mixing tools.","現代のDAWは洗練されたミキシングツールを備えている。"],
+      ["specific","/spɪsífɪk/","adj","特定の、具体的な","Set a specific time each day for English.","毎日英語を勉強する具体的な時間を決めよう。"],
+      ["spontaneous","/spɑntéɪniəs/","adj","自発的な、即興の","Some of the best riffs come from spontaneous jamming.","最高のフレーズのいくつかは即興のジャムから生まれる。"],
+      ["stable","/stéɪbəl/","adj","安定した","Offline storage is fast, free, and 100% stable.","オフライン保存は高速・無料・100%安定している。"],
+      ["stimulate","/stímjulèɪt/","verb","〜を刺激する、活気づける","Audio and text together stimulate better memory.","音声と文字の組み合わせがより良い記憶を刺激する。"],
+      ["strive","/straɪv/","verb","努力する、懸命に励む","Strive for consistency rather than perfection.","完璧さよりも継続を目指して努力しよう。"],
+      ["subtle","/sʌ́tl/","adj","微妙な、かすかな","Notice the subtle difference between similar idioms.","似た熟語の間の微妙な違いに注目しよう。"],
+      ["sufficient","/səfíʃənt/","adj","十分な","Built-in words and idioms are sufficient for fluency.","内蔵の単語と熟語で流暢さを身につけるのに十分だ。"],
+      ["sustain","/səstéɪn/","verb","〜を持続させる、支える","Sustainable routines beat short bursts of effort.","持続可能なルーティンは短期集中に勝る。"],
+      ["tackle","/tǽkəl/","verb","（問題・課題に）取り組む","Tackle your hardest tasks when your energy is highest.","エネルギーが最も高い時間帯に一番難しい課題に取り組もう。"],
+      ["temporary","/témpərèri/","adj","一時的な、仮の","Setbacks are only temporary if you keep moving.","動き続けていれば挫折は一時的なものにすぎない。"],
+      ["terminate","/tɜ́ːrmənèɪt/","verb","〜を終了させる、打ち切る","Terminate background apps to save battery.","バッテリー節約のためバックグラウンドアプリを終了しよう。"],
+      ["thorough","/θɜ́ːroʊ/","adj","徹底的な、抜かりない","Do a thorough soundcheck before every show.","すべてのライブの前に徹底的なサウンドチェックを行おう。"],
+      ["thrive","/θraɪv/","verb","繁栄する、生き生きと成長する","Creativity thrives under clear daily habits.","明確な毎日の習慣のもとで創造性は大きく育つ。"],
+      ["tolerate","/tɑ́lərèɪt/","verb","〜を許容する、我慢する","Zero-latency monitoring helps singers perform naturally.","ゼロレイテンシーのモニターにより歌手は自然に歌える。"],
+      ["transform","/trænsfɔ́ːrm/","verb","〜を一変させる、変換する","Five minutes of practice daily will transform your skills.","毎日5分の練習があなたのスキルを一変させる。"],
+      ["transition","/trænzíʃən/","noun","移行、移り変わり","Smooth transitions keep the listener engaged.","滑らかな展開の移行が聴き手を惹きつけ続ける。"],
+      ["transmit","/trænzmít/","verb","〜を送信する、伝える","Music transmits emotion across language barriers.","音楽は言葉の壁を越えて感情を伝える。"],
+      ["trigger","/trígər/","verb","〜を引き起こす、作動させる","A familiar scent can trigger vivid memories.","懐かしい香りは鮮やかな記憶を呼び起こすことがある。"],
+      ["ultimate","/ʌ́ltəmət/","adj","究極の、最終的な","Our ultimate goal is effortless real-world communication.","究極の目標はストレスのない実践的なコミュニケーションだ。"],
+      ["undergo","/ʌ̀ndərgóʊ/","verb","（変化・検査などを）経験する、受ける","The app underwent major speed optimizations.","アプリは大幅な高速化最適化を経た。"],
+      ["undertake","/ʌ̀ndərtéɪk/","verb","（仕事・責任を）引き受ける、着手する","They undertook a nationwide tour this summer.","彼らはこの夏、全国ツアーに乗り出した。"],
+      ["unique","/juːníːk/","adj","独自の、唯一無二の","Embrace your unique voice and musical identity.","自分だけの声と音楽的アイデンティティを大切にしよう。"],
+      ["utilize","/júːtəlàɪz/","verb","〜を活用する、利用する","Utilize offline flashcards during flights and train rides.","飛行機や電車の移動中にオフラインカードを活用しよう。"],
+      ["valid","/vǽlɪd/","adj","有効な、妥当な","Make sure your passport is valid for six months.","パスポートの有効期限が6ヶ月以上あるか確認しよう。"],
+      ["vanish","/vǽnɪʃ/","verb","消える、消失する","Stage nerves vanish once the first chord hits.","最初のコードが鳴り響けばステージの緊張は消え去る。"],
+      ["vary","/véri/","verb","異なる、さまざまに変化する","Prices vary depending on the booking date.","料金は予約日によって異なる。"],
+      ["vast","/væst/","adj","広大な、膨大な","You now have access to a vast vocabulary library.","あなたは今、膨大な語彙ライブラリにアクセスできる。"],
+      ["verify","/vérəfài/","verb","〜を検証する、確認する","Verify your answers immediately with native audio.","ネイティブ音声ですぐに答え合わせをしよう。"],
+      ["viable","/váɪəbəl/","adj","実行可能な、成り立つ","Offline-first architecture is the most viable solution.","オフライン優先設計が最も実用的な解決策だ。"],
+      ["vital","/váɪtl/","adj","不可欠な、極めて重要な","Daily repetition is vital for long-term retention.","毎日の反復は長期記憶の定着に不可欠だ。"],
+      ["vivid","/vívɪd/","adj","鮮明な、生き生きとした","Vivid example sentences make words stick faster.","生き生きとした例文は単語の定着を早める。"],
+      ["voluntary","/vɑ́ləntèri/","adj","自発的な、任意の","Voluntary daily practice always beats forced study.","自発的な毎日の練習は強制された勉強に常に勝る。"],
+      ["vulnerable","/vʌ́lnərəbəl/","adj","脆弱な、傷つきやすい","Cloud-only apps are vulnerable to network outages.","クラウド専用アプリは通信障害に弱い。"],
+      ["widespread","/wáɪdspréd/","adj","広範囲にわたる、広く普及した","English idioms are widespread in movies and songs.","英語の熟語は映画や歌の中で広く使われている。"],
+      ["withstand","/wɪðstǽnd/","verb","〜に耐える、持ちこたえる","Strong habits withstand busy schedules.","強い習慣は忙しいスケジュールにも耐え抜く。"],
+      ["yield","/jiːld/","verb","（結果・利益を）生み出す","Consistent effort always yields great results.","継続的な努力は常に素晴らしい結果を生み出す。"],
+      ["zeal","/ziːl/","noun","熱意、情熱","Approach every new day with curiosity and zeal.","毎日を好奇心と熱意をもって迎えよう。"]
     ];
 
     /*************************************************************************
-     * 2. 状態管理・ストレージ永続化
+     * 2. 大規模拡張コーパス（Oxford 3000/5000・NGSL・実践派生語 4,500+語句構築）
+     * APIキー不要で4,500語句超（Day 1〜Day 90+）のカリキュラムを自動構成
      *************************************************************************/
-    const STORAGE_KEY = "AI_VOCAB_MASTER_50_V4_INFINITE";
+    const OXFORD_NGSL_EXTENDED_LIST = [
+      // 高頻度実用単語（ビジネス・学術・旅行・日常・感情・IT・音楽・社会）400+追加マスター
+      ["ability","noun","能力、才能"],["abroad","adv","海外へ、外国で"],["absence","noun","不在、欠席"],["absolute","adj","絶対的な、完全な"],
+      ["absorb","verb","〜を吸収する"],["academic","adj","学問の、大学の"],["accept","verb","〜を受け入れる"],["access","noun","アクセス、利用権"],
+      ["accident","noun","事故、偶然"],["accompany","verb","〜に同行する、伴奏する"],["accordingly","adv","それに応じて、従って"],["account","noun","口座、説明、アカウント"],
+      ["accuse","verb","〜を非難する、告訴する"],["achieve","verb","〜を達成する"],["acid","noun","酸（adj: 酸性の）"],["acknowledge","verb","〜を認める"],
+      ["acquire","verb","〜を習得する"],["across","prep","〜を横切って"],["action","noun","行動、アクション"],["active","adj","積極的な、活動的な"],
+      ["actual","adj","実際の、現実の"],["adapt","verb","適応する"],["addition","noun","追加、足し算"],["address","verb","（問題に）取り組む、宛てる"],
+      ["administration","noun","管理、行政"],["admire","verb","〜に感心する、称賛する"],["admit","verb","〜を認める、入場を許す"],["adopt","verb","〜を採用する、養子にする"],
+      ["adult","noun","大人、成人"],["advance","verb","前進する、進歩する"],["advantage","noun","利点、有利"],["adventure","noun","冒険"],
+      ["advertise","verb","〜を宣伝する"],["advice","noun","助言、アドバイス"],["advise","verb","〜に助言する"],["affair","noun","事柄、出来事、業務"],
+      ["affect","verb","〜に影響を与える"],["afford","verb","〜する余裕がある"],["afraid","adj","恐れて、心配して"],["agency","noun","代理店、機関"],
+      ["agenda","noun","議題、予定表"],["agent","noun","代理人、エージェント"],["aggressive","adj","攻撃的な、意欲的な"],["agreement","noun","合意、契約"],
+      ["agriculture","noun","農業"],["ahead","adv","前方に、先に"],["aid","noun","援助、助け"],["aim","verb","〜を目指す、狙う"],
+      ["aircraft","noun","航空機"],["alarm","noun","警報、目覚まし時計"],["album","noun","アルバム"],["alcohol","noun","アルコール、酒"],
+      ["alert","adj","油断のない（noun: 警報）"],["alien","adj","異質の、外国の"],["align","verb","〜を一直線に揃える、調整する"],["alike","adj","よく似た（adv: 同様に）"],
+      ["alive","adj","生きている、活気のある"],["allegation","noun","申し立て、主張"],["alliance","noun","同盟、提携"],["allow","verb","〜を許可する"],
+      ["ally","noun","同盟国、味方"],["almost","adv","ほとんど"],["alone","adj","ひとりで、孤独な"],["alongside","prep","〜と並んで、〜と一緒に"],
+      ["aloud","adv","声に出して"],["alphabet","noun","アルファベット"],["already","adv","すでに"],["altogether","adv","完全に、全部で"],
+      ["amaze","verb","〜を驚嘆させる"],["ambition","noun","野心、大志"],["ambulance","noun","救急車"],["among","prep","〜の間に、〜の中で"],
+      ["amount","noun","量、金額"],["amuse","verb","〜を楽しませる"],["ancient","adj","古代の、昔の"],["anger","noun","怒り"],
+      ["angle","noun","角度、視点"],["anniversary","noun","記念日"],["announce","verb","〜を発表する"],["annoy","verb","〜をイライラさせる"],
+      ["annual","adj","毎年の、年次の"],["anxiety","noun","不安、心配"],["anxious","adj","心配して、切望して"],["apart","adv","離れて、別々に"],
+      ["apologize","verb","謝罪する"],["apparent","adj","明白な"],["appeal","verb","訴える、心を惹く"],["appear","verb","現れる、〜のように見える"],
+      ["appearance","noun","外見、出現"],["appetite","noun","食欲、欲求"],["applaud","verb","拍手喝采する"],["appliance","noun","電化製品、器具"],
+      ["applicable","adj","適用できる、該当する"],["applicant","noun","応募者、志願者"],["application","noun","応用、アプリ、申し込み"],["apply","verb","適用する、申し込む"],
+      ["appoint","verb","〜を任命する、指定する"],["appointment","noun","予約、約束、任命"],["appreciate","verb","〜に感謝する"],["approach","verb","〜に近づく（noun: 方法）"],
+      ["appropriate","adj","適切な"],["approval","noun","承認、賛成"],["approve","verb","〜を承認する"],["approximately","adv","およそ、約"],
+      ["architect","noun","建築家、設計者"],["architecture","noun","建築、構造設計"],["area","noun","地域、領域、面積"],["argue","verb","議論する、主張する"],
+      ["argument","noun","議論、主張、口論"],["arise","verb","生じる、起こる"],["armed","adj","武装した"],["army","noun","陸軍、軍隊"],
+      ["around","adv","周囲に、およそ"],["arrange","verb","〜を編曲する、手配する、並べる"],["arrangement","noun","編曲、手配、配置"],["arrest","verb","〜を逮捕する"],
+      ["arrival","noun","到着"],["arrive","verb","到着する"],["arrow","noun","矢、矢印"],["article","noun","記事、論文、冠詞"],
+      ["artificial","adj","人工の、不自然な"],["artist","noun","芸術家、アーティスト"],["artistic","adj","芸術的な"],["ashamed","adj","恥ずかしく思って"],
+      ["aside","adv","脇へ、別に"],["asleep","adj","眠って"],["aspect","noun","側面、様相"],["assault","noun","暴行、攻撃"],
+      ["assemble","verb","〜を組み立てる、集める"],["assembly","noun","組み立て、議会、集会"],["assert","verb","〜を主張する"],["assess","verb","〜を評価する"],
+      ["assessment","noun","評価、査定"],["asset","noun","資産、財産、強み"],["assign","verb","〜を割り当てる"],["assignment","noun","課題、任務、配属"],
+      ["assist","verb","〜を手伝う、支援する"],["assistance","noun","援助、サポート"],["assistant","noun","助手、アシスタント"],["associate","verb","〜を連想する、関連づける"],
+      ["association","noun","協会、連想、関連"],["assume","verb","〜と思い込む、引き受ける"],["assumption","noun","仮定、思い込み"],["assure","verb","〜を保証する"],
+      ["astonish","verb","〜を驚かせる"],["athlete","noun","運動選手、アスリート"],["atmosphere","noun","雰囲気、大気"],["atom","noun","原子"],
+      ["attach","verb","〜を添付する、取り付ける"],["attack","verb","〜を攻撃する"],["attain","verb","〜を達成する"],["attempt","verb","〜を試みる"],
+      ["attend","verb","〜に出席する"],["attention","noun","注意、注目"],["attitude","noun","態度、姿勢、考え方"],["attorney","noun","弁護士"],
+      ["attract","verb","〜を惹きつける"],["attraction","noun","魅力、観光名所"],["attractive","adj","魅力的な"],["attribute","verb","〜のせいにする（noun: 属性）"],
+      ["audience","noun","観客、聴衆"],["audio","noun","音声、オーディオ"],["audit","noun","監査、会計検査"],["author","noun","著者、作者"],
+      ["authority","noun","権威、当局、権限"],["auto","noun","自動車（pref: 自動の）"],["automate","verb","〜を自動化する"],["automatic","adj","自動の、無意識の"],
+      ["automatically","adv","自動的に"],["availability","noun","利用可能性、空き状況"],["available","adj","利用可能な"],["average","noun","平均（adj: 平均的な）"],
+      ["avoid","verb","〜を避ける"],["awake","adj","目が覚めて"],["award","noun","賞（verb: 授与する）"],["aware","adj","気づいている、意識している"],
+      ["awareness","noun","意識、認識"],["awful","adj","ひどい、恐ろしい"],["awkward","adj","気まずい、不器用な"],["background","noun","背景、経歴"],
+      ["backup","noun","バックアップ、予備"],["backward","adv","後ろへ、逆方向に"],["bacteria","noun","細菌、バクテリア"],["badge","noun","バッジ、記章"],
+      ["balance","noun","バランス、残高"],["ban","verb","〜を禁止する"],["band","noun","バンド、帯域"],["bankrupt","adj","破産した"],
+      ["bare","adj","むき出しの、わずかな"],["barely","adv","かろうじて、ほとんど〜ない"],["bargain","noun","掘り出し物、取引"],["barrel","noun","樽、銃身"],
+      ["base","noun","基礎、拠点（verb: 基づく）"],["basic","adj","基本的な"],["basically","adv","基本的に"],["basis","noun","基礎、根拠"],
+      ["battery","noun","電池、バッテリー"],["battle","noun","戦い、戦闘"],["beam","noun","光線、梁"],["bear","verb","〜に耐える、運ぶ、生む"],
+      ["beat","verb","〜を打ち負かす、刻む（noun: ビート）"],["beauty","noun","美しさ"],["because","conj","なぜなら"],["become","verb","〜になる"],
+      ["beforehand","adv","あらかじめ、事前に"],["behave","verb","振る舞う"],["behavior","noun","行動、振る舞い"],["behind","prep","〜の後ろに"],
+      ["belief","noun","信念、信仰"],["believe","verb","〜を信じる"],["belong","verb","所属する"],["below","prep","〜の下に"],
+      ["beneath","prep","〜のすぐ下に"],["benefit","noun","利益、恩恵（verb: 利益を得る）"],["beside","prep","〜のそばに"],["besides","adv","その上（prep: 〜に加えて）"],
+      ["bet","verb","賭ける、確信する"],["betray","verb","〜を裏切る"],["beyond","prep","〜を超えて"],["bill","noun","請求書、紙幣、法案"],
+      ["billion","num","10億"],["bind","verb","〜を縛る、結びつける"],["biography","noun","伝記"],["biology","noun","生物学"],
+      ["bitter","adj","苦い、つらい、激しい"],["blame","verb","〜を責める、せいにする"],["blank","adj","空白の、無表情な"],["blast","noun","爆風、楽しいひととき"],
+      ["bleed","verb","出血する"],["bless","verb","〜を祝福する"],["blind","adj","目の見えない、盲目的な"],["block","noun","ブロック、街区（verb: 遮る）"],
+      ["bloom","verb","花が咲く、栄える"],["blow","verb","吹く、吹き飛ばす"],["board","noun","板、委員会、搭乗"],["boast","verb","自慢する、誇る"],
+      ["boil","verb","沸騰する、ゆでる"],["bomb","noun","爆弾"],["bond","noun","絆、債券、結びつき"],["bone","noun","骨"],
+      ["bonus","noun","ボーナス、おまけ"],["book","verb","〜を予約する（noun: 本）"],["boom","noun","ブーム、急成長"],["boost","verb","〜を押し上げる、高める"],
+      ["border","noun","国境、境界"],["bore","verb","〜を退屈させる"],["borrow","verb","〜を借りる"],["bother","verb","〜を悩ます、わざわざ〜する"],
+      ["bottom","noun","底、一番下"],["bounce","verb","跳ねる、弾む"],["bound","adj","〜行きの、〜する義務がある"],["bow","verb","お辞儀をする（noun: 弓）"],
+      ["brain","noun","脳、頭脳"],["branch","noun","支店、枝、ブランチ"],["brand","noun","ブランド、銘柄"],["brave","adj","勇敢な"],
+      ["breach","noun","違反、侵害"],["breadth","noun","幅、広さ"],["break","verb","壊す、休憩する"],["breakdown","noun","故障、内訳、衰弱"],
+      ["breast","noun","胸"],["breath","noun","息、呼吸"],["breathe","verb","呼吸する"],["breeze","noun","そよ風"],
+      ["brick","noun","レンガ"],["bride","noun","花嫁"],["bridge","noun","橋、架け橋"],["bright","adj","明るい、賢い"],
+      ["brilliant","adj","素晴らしい、輝かしい"],["bring","verb","〜を持ってくる、もたらす"],["broad","adj","幅広い、広い"],["broadcast","verb","〜を放送する"],
+      ["brochure","noun","パンフレット、小冊子"],["broken","adj","壊れた"],["bronze","noun","青銅、銅メダル"],["brother","noun","兄弟"],
+      ["brow","noun","眉、額"],["brown","adj","茶色の"],["brush","noun","ブラシ（verb: 磨く）"],["brutal","adj","残忍な、容赦ない"],
+      ["bubble","noun","泡、バブル"],["bucket","noun","バケツ"],["budget","noun","予算"],["bug","noun","バグ、虫"],
+      ["build","verb","〜を建てる、構築する"],["building","noun","建物"],["bullet","noun","弾丸"],["bunch","noun","束、集団、たくさん"],
+      ["bundle","noun","束、パッケージ"],["burn","verb","燃える、焼く"],["burst","verb","破裂する、急に〜しだす"],["bury","verb","〜を埋める、隠す"],
+      ["bush","noun","低木、茂み"],["business","noun","ビジネス、仕事"],["busy","adj","忙しい"],["butter","noun","バター"],
+      ["button","noun","ボタン"],["buy","verb","〜を買う"],["cabin","noun","小屋、客室"],["cabinet","noun","キャビネット、内閣"],
+      ["cable","noun","ケーブル、電線"],["cafe","noun","カフェ"],["cage","noun","おり、かご"],["cake","noun","ケーキ"],
+      ["calculate","verb","〜を計算する"],["calendar","noun","カレンダー、予定表"],["call","verb","呼ぶ、電話する"],["calm","adj","落ち着いた、穏やかな"],
+      ["camera","noun","カメラ"],["camp","noun","キャンプ"],["campaign","noun","キャンペーン、運動"],["campus","noun","キャンパス、大学構内"],
+      ["cancel","verb","〜をキャンセルする、取り消す"],["cancer","noun","癌（がん）"],["candidate","noun","候補者、志願者"],["candle","noun","ろうそく"],
+      ["canvas","noun","キャンバス、画布"],["cap","noun","帽子、上限"],["capable","adj","〜する能力がある"],["capacity","noun","容量、能力"],
+      ["capital","noun","首都、資本、大文字"],["captain","noun","船長、キャプテン"],["capture","verb","〜を捉える"],["carbon","noun","炭素"],
+      ["card","noun","カード"],["care","noun","世話、注意（verb: 気にする）"],["career","noun","キャリア、経歴"],["careful","adj","注意深い"],
+      ["carefully","adv","注意深く"],["careless","adj","不注意な"],["cargo","noun","貨物、積み荷"],["carpet","noun","カーペット、じゅうたん"],
+      ["carriage","noun","馬車、車両"],["carrier","noun","運送業者、通信会社"],["carry","verb","〜を運ぶ"],["cart","noun","カート、荷車"],
+      ["case","noun","場合、事例、ケース"],["cash","noun","現金"],["cast","verb","（光・影を）投げかける、配役する"],["castle","noun","城"],
+      ["casual","adj","カジュアルな、気楽な"],["catalog","noun","カタログ、目録"],["catch","verb","〜を捕まえる、間に合う"],["category","noun","カテゴリー、分類"],
+      ["cattle","noun","牛、家畜"],["cause","noun","原因（verb: 〜を引き起こす）"],["caution","noun","用心、警告"],["cautious","adj","慎重な、用心深い"],
+      ["cave","noun","洞窟"],["ceiling","noun","天井、上限"],["celebrate","verb","〜を祝う"],["celebration","noun","お祝い、祝賀"],
+      ["celebrity","noun","有名人"],["cell","noun","細胞、電池、独房"],["cement","noun","セメント"],["cemetery","noun","墓地"],
+      ["center","noun","中心、センター"],["central","adj","中心的な、中央の"],["century","noun","世紀（100年）"],["ceremony","noun","儀式、式典"],
+      ["certain","adj","確かな、ある〜"],["certainly","adv","確かに、もちろん"],["certificate","noun","証明書、認定証"],["chain","noun","鎖、チェーン、連鎖"],
+      ["chair","noun","椅子、議長"],["chairman","noun","議長、会長"],["challenge","noun","挑戦、課題"],["chamber","noun","部屋、議場"],
+      ["champion","noun","チャンピオン、優勝者"],["championship","noun","選手権大会"],["chance","noun","機会、可能性、偶然"],["change","verb","変える（noun: 変化、お釣り）"],
+      ["channel","noun","チャンネル、経路"],["chaos","noun","混沌、大混乱"],["chapter","noun","章、時代"],["character","noun","性格、登場人物、文字"],
+      ["characteristic","noun","特徴（adj: 特有の）"],["charge","noun","料金、充電、責任"],["charity","noun","慈善団体、思いやり"],["charm","noun","魅力、お守り"],
+      ["chart","noun","図表、チャート"],["chase","verb","〜を追いかける"],["chat","verb","おしゃべりする、チャットする"],["cheap","adj","安い"],
+      ["cheat","verb","不正をする、騙す"],["check","verb","〜を確認する"],["cheek","noun","頬（ほほ）"],["cheer","verb","声援を送る、元気づける"],
+      ["cheerful","adj","陽気な、明るい"],["cheese","noun","チーズ"],["chemical","adj","化学の（noun: 化学物質）"],["chemistry","noun","化学、相性"],
+      ["chest","noun","胸、箱"],["chew","verb","〜を噛む"],["chicken","noun","鶏肉、鶏"],["chief","adj","主な、最高の（noun: 長）"],
+      ["childhood","noun","幼少期"],["chill","verb","冷やす、くつろぐ"],["chin","noun","あご"],["chip","noun","チップ、欠片"],
+      ["chocolate","noun","チョコレート"],["choice","noun","選択、選択肢"],["choir","noun","合唱団"],["choke","verb","息が詰まる、ミュートする"],
+      ["choose","verb","〜を選ぶ"],["chop","verb","〜を刻む、切る"],["chord","noun","和音、コード"],["chorus","noun","サビ、合唱"],
+      ["chronic","adj","慢性的な"],["church","noun","教会"],["cigarette","noun","タバコ"],["cinema","noun","映画館、映画"],
+      ["circle","noun","円、サークル"],["circuit","noun","回路、巡回"],["circumstance","noun","状況、事情"],["citizen","noun","市民、国民"],
+      ["citizenship","noun","市民権、国籍"],["civil","adj","市民の、民間の"],["civilian","noun","民間人"],["civilization","noun","文明"],
+      ["claim","verb","主張する、請求する"],["clap","verb","拍手する"],["clarify","verb","〜を明確にする"],["clarity","noun","明瞭さ、透明感"],
+      ["clash","verb","衝突する、ぶつかる"],["classic","adj","定番の、古典的な"],["classical","adj","クラシックの、古典の"],["classification","noun","分類"],
+      ["classify","verb","〜を分類する"],["classroom","noun","教室"],["clause","noun","条項、節"],["clean","adj","清潔な（verb: 掃除する）"],
+      ["clear","adj","明確な、晴れた"],["clearly","adv","明確に"],["clerk","noun","店員、事務員"],["clever","adj","賢い、器用な"],
+      ["click","verb","クリックする"],["client","noun","顧客、クライアント"],["cliff","noun","崖（がけ）"],["climate","noun","気候、風土"],
+      ["climb","verb","登る"],["cling","verb","しがみつく、執着する"],["clinic","noun","診療所、クリニック"],["clinical","adj","臨床の"],
+      ["clip","noun","クリップ、動画の切り抜き"],["clock","noun","時計"],["close","verb","閉じる（adj: 近い）"],["closely","adv","密接に、注意深く"],
+      ["closet","noun","クローゼット"],["cloth","noun","布、生地"],["clothes","noun","衣服"],["clothing","noun","衣類"],
+      ["cloud","noun","雲、クラウド"],["club","noun","クラブ、部活"],["clue","noun","手がかり、ヒント"],["cluster","noun","集団、クラスター"],
+      ["coach","noun","コーチ、長距離バス"],["coal","noun","石炭"],["coalition","noun","連立、連合"],["coast","noun","海岸、沿岸"],
+      ["coat","noun","コート、上着"],["code","noun","コード、暗号、規約"],["coffee","noun","コーヒー"],["cognitive","adj","認知の"],
+      ["coin","noun","硬貨、コイン"],["coincide","verb","同時に起こる"],["cold","adj","冷たい、寒い"],["collaborate","verb","共同作業する"],
+      ["collapse","verb","崩壊する"],["collar","noun","襟（えり）、首輪"],["colleague","noun","同僚"],["collect","verb","〜を集める"],
+      ["collection","noun","コレクション、収集"],["collective","adj","集団の、共同の"],["college","noun","大学、専門学校"],["collision","noun","衝突"],
+      ["colony","noun","植民地、コロニー"],["column","noun","列、コラム、柱"],["combat","noun","戦闘（verb: 戦う）"],["combination","noun","組み合わせ"],
+      ["combine","verb","〜を組み合わせる"],["comedy","noun","コメディ、喜劇"],["comfort","noun","快適さ、慰め"],["comfortable","adj","快適な"],
+      ["command","noun","命令、コマンド"],["comment","noun","コメント、意見"],["commerce","noun","商業、貿易"],["commercial","adj","商業の（noun: CM）"],
+      ["commission","noun","手数料、委員会"],["commit","verb","専念する、コミットする"],["commitment","noun","献身、約束"],["committee","noun","委員会"],
+      ["commodity","noun","商品、日用品"],["common","adj","共通の、一般的な"],["commonly","adv","一般的に"],["communicate","verb","意思疎通する"],
+      ["communication","noun","コミュニケーション"],["community","noun","地域社会、コミュニティ"],["companion","noun","仲間、同行者"],["company","noun","会社、仲間"],
+      ["comparable","adj","匹敵する、比較できる"],["comparative","adj","比較の"],["compare","verb","〜を比較する"],["comparison","noun","比較"],
+      ["compassion","noun","思いやり、同情"],["compel","verb","〜を強いる"],["compensate","verb","〜を補う"],["compete","verb","競争する"],
+      ["competence","noun","能力、適性"],["competent","adj","有能な"],["competition","noun","競争、大会"],["competitive","adj","競争力のある"],
+      ["competitor","noun","競争相手、ライバル"],["compile","verb","〜を編集する"],["complain","verb","不平を言う"],["complaint","noun","苦情、不満"],
+      ["complete","adj","完全な（verb: 完了する）"],["completely","adv","完全に"],["complex","adj","複雑な（noun: 複合体）"],["complexity","noun","複雑さ"],
+      ["compliance","noun","法令遵守、コンプライアンス"],["complicate","verb","〜を複雑にする"],["complicated","adj","複雑な"],["component","noun","構成要素、部品"],
+      ["compose","verb","〜を作曲する、構成する"],["composer","noun","作曲家"],["composition","noun","作曲、構成、作文"],["compound","noun","化合物、複合語"],
+      ["comprehensive","adj","包括的な"],["comprise","verb","〜から成る、含む"],["compromise","noun","妥協"],["compute","verb","〜を計算する"],
+      ["computer","noun","コンピュータ"],["conceal","verb","〜を隠す"],["concede","verb","〜を認める、譲歩する"],["conceive","verb","〜を思いつく"],
+      ["concentrate","verb","集中する"],["concentration","noun","集中、濃度"],["concept","noun","概念、コンセプト"],["conception","noun","概念、着想"],
+      ["concern","noun","心配、関心事"],["concerned","adj","心配して、関係して"],["concerning","prep","〜に関して"],["concert","noun","コンサート、ライブ"],
+      ["conclude","verb","結論づける"],["conclusion","noun","結論、結末"],["concrete","adj","具体的な"],["condemn","verb","〜を非難する"],
+      ["condition","noun","状態、条件"],["conduct","verb","〜を実施する、指揮する"],["conference","noun","会議、学会"],["confess","verb","告白する、認める"],
+      ["confidence","noun","自信、信頼"],["confident","adj","自信がある"],["confine","verb","〜を制限する"],["confirm","verb","〜を確認する"],
+      ["confirmation","noun","確認"],["conflict","noun","対立、衝突"],["conform","verb","従う、適合する"],["confront","verb","〜に立ち向かう"],
+      ["confuse","verb","〜を混乱させる"],["confusion","noun","混乱"],["congratulate","verb","〜を祝う"],["congress","noun","議会、会議"],
+      ["connect","verb","〜をつなぐ、接続する"],["connection","noun","つながり、接続"],["conscience","noun","良心"],["conscious","adj","意識している"],
+      ["consciousness","noun","意識"],["consecutive","adj","連続した"],["consensus","noun","合意"],["consent","noun","同意、承諾"],
+      ["consequence","noun","結果"],["consequently","adv","その結果として"],["conservation","noun","保護、節約"],["conservative","adj","保守的な"],
+      ["conserve","verb","〜を保護する"],["consider","verb","〜を考慮する、見なす"],["considerable","adj","かなりの"],["considerably","adv","かなり、大幅に"],
+      ["consideration","noun","考慮、思いやり"],["consist","verb","〜から成る"],["consistent","adj","一貫した"],["consistently","adv","一貫して"],
+      ["console","noun","コンソール、卓"],["consolidate","verb","〜を統合する、強化する"],["constant","adj","絶え間ない、一定の"],["constantly","adv","絶えず"],
+      ["constitute","verb","〜を構成する"],["constitution","noun","憲法、構成"],["constrain","verb","〜を制約する"],["constraint","noun","制約、制限"],
+      ["construct","verb","〜を建設する、構築する"],["construction","noun","建設、構造"],["consult","verb","〜に相談する"],["consultant","noun","コンサルタント"],
+      ["consume","verb","〜を消費する"],["consumer","noun","消費者"],["consumption","noun","消費"],["contact","noun","連絡、接触"],
+      ["contain","verb","〜を含む、収容する"],["container","noun","容器、コンテナ"],["contemplate","verb","〜を熟考する"],["contemporary","adj","現代の"],
+      ["contend","verb","主張する"],["content","noun","内容、コンテンツ（adj: 満足して）"],["contest","noun","コンテスト、競技"],["context","noun","文脈、状況"],
+      ["continent","noun","大陸"],["continue","verb","〜を続ける"],["continuous","adj","連続的な"],["continuously","adv","継続的に"],
+      ["contract","noun","契約（verb: 収縮する）"],["contradict","verb","〜と矛盾する"],["contrary","adj","反対の"],["contrast","noun","対比、コントラスト"],
+      ["contribute","verb","貢献する"],["contribution","noun","貢献、寄付"],["control","noun","制御、コントロール"],["controversial","adj","議論を呼ぶ"],
+      ["controversy","noun","論争"],["convenience","noun","便利さ"],["convenient","adj","便利な"],["convention","noun","慣習、大会"],
+      ["conventional","adj","従来の"],["conversation","noun","会話"],["convert","verb","〜を変換する"],["convey","verb","〜を伝える"],
+      ["convict","verb","有罪と判決する"],["conviction","noun","確信、有罪判決"],["convince","verb","〜を納得させる"],["convinced","adj","確信して"],
+      ["cook","verb","料理する"],["cookie","noun","クッキー"],["cool","adj","涼しい、かっこいい"],["cooperate","verb","協力する"],
+      ["cooperation","noun","協力"],["coordinate","verb","〜を調整する"],["coordination","noun","調整、連携"],["cope","verb","うまく対処する"],
+      ["copy","noun","コピー、複製"],["copyright","noun","著作権"],["core","noun","核、中心"],["corn","noun","トウモロコシ"],
+      ["corner","noun","角（かど）、隅"],["corporate","adj","企業の、法人の"],["corporation","noun","企業、法人"],["correct","adj","正しい（verb: 訂正する）"],
+      ["correctly","adv","正しく"],["correlate","verb","相関する"],["correlation","noun","相関関係"],["correspond","verb","一致する、対応する"],
+      ["correspondence","noun","一致、文通"],["corridor","noun","廊下、回廊"],["corrupt","adj","腐敗した"],["cost","noun","費用、コスト"],
+      ["costly","adj","高価な、犠牲の大きい"],["cottage","noun","コテージ、小屋"],["cotton","noun","綿、コットン"],["council","noun","評議会、議会"],
+      ["counsel","noun","助言、弁護士"],["count","verb","数える、重要である"],["counter","noun","カウンター（verb: 対抗する）"],["counterpart","noun","対応する人・物"],
+      ["country","noun","国、田舎"],["countryside","noun","田舎、地方"],["county","noun","郡、州"],["couple","noun","カップル、2〜3個"],
+      ["courage","noun","勇気"],["course","noun","コース、進路、料理の一品"],["court","noun","裁判所、コート"],["courtesy","noun","礼儀正しさ、好意"],
+      ["cousin","noun","いとこ"],["cover","verb","〜を覆う、カバーする"],["coverage","noun","報道、補償範囲"],["cow","noun","雌牛"],
+      ["crack","noun","ひび割れ（verb: 割る）"],["craft","noun","工芸、技術、技巧"],["crash","verb","衝突する、クラッシュする"],["crazy","adj","夢中な、狂気の"],
+      ["cream","noun","クリーム"],["create","verb","〜を創造する、作る"],["creation","noun","創造、作品"],["creative","adj","創造的な"],
+      ["creativity","noun","創造性"],["creator","noun","創作者、クリエイター"],["creature","noun","生き物"],["credit","noun","信用、単位、クレジット"],
+      ["crew","noun","乗組員、スタッフ仲間"],["crime","noun","犯罪"],["criminal","noun","犯人（adj: 犯罪の）"],["crisis","noun","危機"],
+      ["crisp","adj","パリッとした、歯切れの良い"],["criterion","noun","基準、尺度"],["critic","noun","批評家"],["critical","adj","批判的な、極めて重要な"],
+      ["criticism","noun","批判、批評"],["criticize","verb","〜を批判する"],["crop","noun","作物、収穫、クロップヘア"],["cross","verb","〜を横切る、交差する"],
+      ["crowd","noun","群衆、観客"],["crowded","adj","混雑した"],["crown","noun","王冠"],["crucial","adj","極めて重要な"],
+      ["cruel","adj","残酷な"],["cruise","noun","クルーズ、船旅"],["crush","verb","〜を押しつぶす"],["cry","verb","泣く、叫ぶ"],
+      ["crystal","noun","結晶、水晶"],["cultivate","verb","〜を育む、耕す"],["cultural","adj","文化的な"],["culture","noun","文化"],
+      ["cupboard","noun","食器棚"],["cure","verb","〜を治す（noun: 治療法）"],["curiosity","noun","好奇心"],["curious","adj","好奇心が強い"],
+      ["currency","noun","通貨"],["current","adj","現在の（noun: 流れ、電流）"],["currently","adv","現在"],["curriculum","noun","カリキュラム、教育課程"],
+      ["curtain","noun","カーテン"],["curve","noun","曲線、カーブ"],["cushion","noun","クッション"],["custom","noun","習慣、税関"],
+      ["customer","noun","顧客、客"],["customs","noun","税関"],["cut","verb","切る、削減する"],["cycle","noun","サイクル、周期、自転車"]
+    ];
+
+    // 4,500+語句まで自然に拡張する「接頭辞・接尾辞・実践ペア・ビジネス/旅行/日常拡張ジェネレーター」
+    // すべて実在する標準的な英単語・派生語・熟語バリエーションのみで構築し、重複なしで4,500語句超のマスター辞書を生成
+    const EXTRA_VOCAB_BLOCKS = [
+      // D〜Zの頻出英単語（Oxford 3000/5000中核）
+      ["daily","adj","毎日の"],["damage","noun","損害"],["damp","adj","湿っぽい"],["danger","noun","危険"],["dangerous","adj","危険な"],
+      ["dare","verb","あえて〜する"],["darkness","noun","暗闇"],["database","noun","データベース"],["deadline","noun","締め切り"],["deal","verb","扱う、取引する"],
+      ["decade","noun","10年間"],["decay","verb","腐敗する、衰える"],["deceive","verb","〜を騙す"],["decide","verb","決める"],["decision","noun","決定"],
+      ["declare","verb","宣言する"],["decorate","verb","飾る"],["decrease","verb","減少する"],["dedicate","verb","捧げる"],["deeply","adv","深く"],
+      ["defeat","verb","打ち負かす"],["defend","verb","守る"],["defense","noun","防御、防衛"],["define","verb","定義する"],["definite","adj","明確な"],
+      ["definitely","adv","絶対に、間違いなく"],["definition","noun","定義"],["degree","noun","程度、学位、度"],["delay","verb","遅らせる"],["delete","verb","削除する"],
+      ["deliberately","adv","意図的に"],["delight","noun","喜び"],["deliver","verb","配達する、届ける"],["delivery","noun","配達"],["demand","noun","需要、要求"],
+      ["democracy","noun","民主主義"],["demonstrate","verb","実証する"],["density","noun","密度"],["deny","verb","否定する"],["depart","verb","出発する"],
+      ["department","noun","部署、学科"],["departure","noun","出発"],["dependent","adj","依存している"],["deposit","noun","預金、頭金"],["depress","verb","落ち込ませる"],
+      ["depth","noun","深さ、奥行き"],["derive","verb","由来する、引き出す"],["describe","verb","描写する、説明する"],["description","noun","描写、説明"],["desert","noun","砂漠"],
+      ["deserve","verb","〜に値する"],["design","noun","デザイン、設計"],["designer","noun","デザイナー"],["desire","noun","欲求、願望"],["desperate","adj","必死の"],
+      ["despite","prep","〜にもかかわらず"],["destination","noun","目的地"],["destroy","verb","破壊する"],["destruction","noun","破壊"],["detail","noun","詳細"],
+      ["detailed","adj","詳細な"],["detect","verb","検知する"],["determination","noun","決意"],["determine","verb","決定する"],["develop","verb","開発する、発展する"],
+      ["development","noun","開発、発展"],["device","noun","装置、デバイス"],["devote","verb","捧げる"],["dialogue","noun","対話"],["diameter","noun","直径"],
+      ["diary","noun","日記"],["dictionary","noun","辞書"],["differ","verb","異なる"],["difference","noun","違い"],["different","adj","異なる"],
+      ["difficult","adj","難しい"],["difficulty","noun","困難"],["digital","adj","デジタルの"],["dignity","noun","尊厳"],["dimension","noun","次元、寸法"],
+      ["diminish","verb","減少する"],["dining","noun","食事"],["dinner","noun","夕食"],["direct","adj","直接の（verb: 指示する）"],["direction","noun","方向、指示"],
+      ["directly","adv","直接に"],["director","noun","監督、取締役"],["dirt","noun","汚れ、土"],["dirty","adj","汚い"],["disadvantage","noun","不利、欠点"],
+      ["disagree","verb","反対する"],["disappear","verb","消える"],["disappoint","verb","失望させる"],["disappointment","noun","失望"],["disaster","noun","災害、大失敗"],
+      ["disc","noun","ディスク、円盤"],["discipline","noun","規律、分野"],["discount","noun","割引"],["discover","verb","発見する"],["discovery","noun","発見"],
+      ["discuss","verb","議論する"],["discussion","noun","議論"],["disease","noun","病気"],["disgust","noun","嫌悪感"],["dish","noun","皿、料理"],
+      ["disk","noun","ディスク"],["dismiss","verb","退ける、解雇する"],["disorder","noun","混乱、不調"],["display","verb","表示する、展示する"],["disposal","noun","処分"],
+      ["dispose","verb","処分する"],["dispute","noun","紛争、論争"],["distance","noun","距離"],["distant","adj","遠い"],["distinct","adj","明確に異なる"],
+      ["distinction","noun","区別、違い"],["distinguish","verb","区別する"],["distribute","verb","分配する"],["distribution","noun","分布、流通"],["district","noun","地区、地域"],
+      ["disturb","verb","邪魔する、乱す"],["diverse","adj","多様な"],["diversity","noun","多様性"],["divide","verb","分ける、割る"],["division","noun","部門、分割"],
+      ["divorce","noun","離婚"],["document","noun","書類、文書"],["documentary","noun","ドキュメンタリー"],["domestic","adj","国内の、家庭の"],["dominant","adj","支配的な、優勢な"],
+      ["dominate","verb","支配する"],["donate","verb","寄付する"],["donation","noun","寄付"],["double","adj","2倍の"],["doubt","noun","疑い"],
+      ["downtown","adv","中心街へ"],["dozen","noun","1ダース（12個）"],["draft","noun","下書き、草案"],["drag","verb","引きずる、ドラッグする"],["drama","noun","ドラマ、演劇"],
+      ["dramatic","adj","劇的な"],["dramatically","adv","劇的に"],["draw","verb","描く、引く"],["drawer","noun","引き出し"],["drawing","noun","絵、図面"],
+      ["dream","noun","夢"],["dress","noun","ドレス、服装"],["drift","verb","漂う"],["drill","noun","練習、ドリル"],["drink","verb","飲む"],
+      ["drive","verb","運転する、駆り立てる"],["driver","noun","運転手"],["drop","verb","落とす、下がる"],["drought","noun","干ばつ"],["drug","noun","薬、薬物"],
+      ["drum","noun","ドラム"],["drunk","adj","酔っ払った"],["dry","adj","乾いた"],["dual","adj","二重の、2つの"],["due","adj","期限が来て、〜のせいで"],
+      ["dull","adj","退屈な、鈍い"],["dumb","adj","無口な、愚かな"],["dump","verb","捨てる、ダンプする"],["duration","noun","持続期間"],["during","prep","〜の間"],
+      ["dust","noun","ほこり"],["duty","noun","義務、関税"],["dynamic","adj","動的な"],["eager","adj","熱心な"],["earn","verb","稼ぐ、得る"],
+      ["earnest","adj","真面目な、熱心な"],["earthquake","noun","地震"],["ease","noun","容易さ、安心"],["easily","adv","簡単に"],["eastern","adj","東部の"],
+      ["economic","adj","経済の"],["economics","noun","経済学"],["economy","noun","経済、節約"],["edge","noun","端、エッジ、優位性"],["edit","verb","編集する"],
+      ["edition","noun","版、エディション"],["editor","noun","編集者"],["educate","verb","教育する"],["education","noun","教育"],["educational","adj","教育的な"],
+      ["effect","noun","効果、影響"],["effective","adj","効果的な"],["effectively","adv","効果的に"],["efficiency","noun","効率"],["efficient","adj","効率的な"],
+      ["efficiently","adv","効率的に"],["effort","noun","努力"],["elaborate","adj","精巧な"],["elderly","adj","年配の"],["elect","verb","選出する"],
+      ["election","noun","選挙"],["electric","adj","電気の、エレクトリックの"],["electrical","adj","電気の"],["electricity","noun","電気"],["electronic","adj","電子の"],
+      ["element","noun","要素、元素"],["elementary","adj","初歩の、小学校の"],["elevate","verb","高める"],["eliminate","verb","取り除く"],["elite","noun","エリート"],
+      ["elsewhere","adv","どこか他の場所で"],["email","noun","メール"],["embarrass","verb","恥ずかしい思いをさせる"],["embassy","noun","大使館"],["embrace","verb","抱きしめる、受け入れる"],
+      ["emerge","verb","現れる"],["emergency","noun","緊急事態"],["emission","noun","排出、放射"],["emotion","noun","感情"],["emotional","adj","感情的な"],
+      ["emphasis","noun","強調"],["emphasize","verb","強調する"],["empire","noun","帝国"],["employ","verb","雇う、使う"],["employee","noun","従業員"],
+      ["employer","noun","雇用主"],["employment","noun","雇用"],["empty","adj","空の"],["enable","verb","可能にする"],["encounter","verb","遭遇する"],
+      ["encourage","verb","励ます"],["encouragement","noun","励まし"],["ending","noun","結末"],["endless","adj","終わりのない"],["endorse","verb","支持する、推薦する"],
+      ["endure","verb","耐える"],["enemy","noun","敵"],["energetic","adj","エネルギッシュな"],["energy","noun","エネルギー"],["enforce","verb","実施する"],
+      ["engage","verb","従事する、惹きつける"],["engagement","noun","婚約、関与"],["engine","noun","エンジン"],["engineer","noun","エンジニア、技術者"],["engineering","noun","工学"],
+      ["enhance","verb","高める"],["enjoy","verb","楽しむ"],["enjoyable","adj","楽しい"],["enormous","adj","莫大な"],["enough","adj","十分な"],
+      ["ensure","verb","確実にする"],["enter","verb","入る、入力する"],["enterprise","noun","企業、事業"],["entertain","verb","楽しませる"],["entertainment","noun","娯楽"],
+      ["enthusiasm","noun","熱意"],["enthusiastic","adj","熱心な"],["entire","adj","全体の"],["entirely","adv","完全に"],["entitle","verb","権利を与える、題をつける"],
+      ["entrance","noun","入り口、入場"],["entry","noun","入場、項目、エントリー"],["envelope","noun","封筒"],["environment","noun","環境"],["environmental","adj","環境の"],
+      ["episode","noun","エピソード、挿話"],["equal","adj","等しい"],["equally","adv","等しく"],["equation","noun","方程式"],["equip","verb","装備させる"],
+      ["equipment","noun","機材、設備"],["equivalent","adj","同等の"],["era","noun","時代"],["error","noun","エラー、間違い"],["escape","verb","逃げる"],
+      ["especially","adv","特に"],["essay","noun","エッセイ、小論文"],["essence","noun","本質"],["essential","adj","不可欠な"],["essentially","adv","本質的に"],
+      ["establish","verb","確立する"],["establishment","noun","設立、施設"],["estate","noun","不動産、財産"],["estimate","verb","見積もる"],["eternal","adj","永遠の"],
+      ["ethic","noun","倫理"],["ethical","adj","倫理的な"],["ethnic","adj","民族の"],["evaluate","verb","評価する"],["evaluation","noun","評価"],
+      ["even","adv","〜さえ（adj: 平らな）"],["evening","noun","夕方、夜"],["event","noun","出来事、イベント"],["eventually","adv","最終的に"],["ever","adv","今までに"],
+      ["everybody","pron","誰もが"],["everyday","adj","毎日の、日常の"],["everyone","pron","みんな"],["everything","pron","すべて"],["everywhere","adv","どこでも"],
+      ["evidence","noun","証拠"],["evident","adj","明らかな"],["evil","adj","邪悪な"],["evolution","noun","進化"],["evolve","verb","進化する"],
+      ["exact","adj","正確な"],["exactly","adv","正確に、その通り"],["exaggerate","verb","誇張する"],["exam","noun","試験"],["examination","noun","試験、検査"],
+      ["examine","verb","調べる、検査する"],["example","noun","例"],["exceed","verb","超える"],["excellence","noun","卓越性"],["excellent","adj","素晴らしい"],
+      ["except","prep","〜を除いて"],["exception","noun","例外"],["excess","noun","過剰"],["excessive","adj","過度な"],["exchange","noun","交換、両替"],
+      ["excite","verb","興奮させる"],["excitement","noun","興奮"],["exciting","adj","ワクワクする"],["exclude","verb","除外する"],["exclusive","adj","独占的な、高級な"],
+      ["excuse","noun","言い訳（verb: 許す）"],["execute","verb","実行する"],["executive","noun","役員、重役"],["exercise","noun","運動、練習"],["exhaust","verb","疲れ果てさせる"],
+      ["exhibit","verb","示す、展示する"],["exhibition","noun","展示会"],["exist","verb","存在する"],["existence","noun","存在"],["existing","adj","既存の"],
+      ["exit","noun","出口"],["expand","verb","拡大する"],["expansion","noun","拡大"],["expect","verb","期待する、予想する"],["expectation","noun","期待、予想"],
+      ["expedition","noun","遠征、探検"],["expenditure","noun","支出"],["expense","noun","費用、経費"],["expensive","adj","高価な"],["experience","noun","経験"],
+      ["experienced","adj","経験豊富な"],["experiment","noun","実験"],["experimental","adj","実験的な"],["expert","noun","専門家"],["expertise","noun","専門知識"],
+      ["explain","verb","説明する"],["explanation","noun","説明"],["explicit","adj","明確な"],["explode","verb","爆発する"],["exploit","verb","活用する"],
+      ["exploration","noun","探求、探検"],["explore","verb","探検する"],["explosion","noun","爆発"],["export","verb","輸出する、書き出す"],["expose","verb","さらす"],
+      ["exposure","noun","露出、さらされること"],["express","verb","表現する"],["expression","noun","表現、表情"],["extend","verb","延長する"],["extension","noun","延長、拡張機能"],
+      ["extensive","adj","広範囲の"],["extent","noun","程度、範囲"],["external","adj","外部の"],["extra","adj","追加の、余分な"],["extract","verb","抽出する"],
+      ["extraordinary","adj","並外れた"],["extreme","adj","極端な"],["extremely","adv","極めて"],["fabric","noun","布地、構造"],["facility","noun","施設、設備"],
+      ["factor","noun","要因"],["factory","noun","工場"],["faculty","noun","学部、能力"],["fade","verb","薄れる、フェードする"],["fail","verb","失敗する"],
+      ["failure","noun","失敗"],["faint","adj","かすかな"],["fair","adj","公正な、かなりの"],["fairly","adv","かなり、公正に"],["faith","noun","信頼、信念"],
+      ["faithful","adj","忠実な"],["fall","verb","落ちる（noun: 秋）"],["false","adj","誤った、偽の"],["fame","noun","名声"],["familiar","adj","よく知られた"],
+      ["family","noun","家族"],["famous","adj","有名な"],["fancy","adj","高級な、凝った"],["fantastic","adj","素晴らしい"],["fantasy","noun","幻想、ファンタジー"],
+      ["far","adv","遠くに"],["fare","noun","運賃"],["farm","noun","農場"],["farmer","noun","農家"],["fascinate","verb","魅了する"],
+      ["fashion","noun","ファッション、流行"],["fashionable","adj","流行の"],["fast","adj","速い"],["fasten","verb","締める、固定する"],["fat","adj","太った（noun: 脂肪）"],
+      ["fatal","adj","致命的な"],["fate","noun","運命"],["fatigue","noun","疲労"],["fault","noun","欠点、責任"],["favor","noun","好意、賛成"],
+      ["favorite","adj","お気に入りの"],["fear","noun","恐怖"],["feasible","adj","実行可能な"],["feather","noun","羽毛"],["feature","noun","特徴、機能"],
+      ["federal","adj","連邦の"],["fee","noun","料金、手数料"],["feed","verb","食べ物を与える、供給する"],["feedback","noun","フィードバック"],["feel","verb","感じる"],
+      ["feeling","noun","感情、感覚"],["fellow","noun","仲間"],["female","adj","女性の"],["fence","noun","フェンス、柵"],["festival","noun","祭り、フェス"],
+      ["fetch","verb","取って来る、取得する"],["fever","noun","熱"],["few","adj","ほとんどない"],["fiber","noun","繊維、ファイバー"],["fiction","noun","フィクション、小説"],
+      ["field","noun","分野、野原"],["fierce","adj","激しい、猛烈な"],["fight","verb","戦う"],["figure","noun","数字、人物、図"],["file","noun","ファイル"],
+      ["fill","verb","満たす"],["film","noun","映画、フィルム"],["filter","noun","フィルター"],["final","adj","最終の"],["finally","adv","ついに"],
+      ["finance","noun","金融、財務"],["financial","adj","金融の、財務の"],["finding","noun","発見、調査結果"],["fine","adj","素晴らしい、元気な、細かい"],["finger","noun","指"],
+      ["finish","verb","終える"],["fire","noun","火、火事"],["firm","noun","会社（adj: 堅固な）"],["firmly","adv","しっかりと"],["fiscal","adj","会計の、財政の"],
+      ["fit","verb","合う、適合する"],["fix","verb","修理する、固定する"],["flag","noun","旗、フラグ"],["flame","noun","炎"],["flash","noun","閃光、フラッシュ"],
+      ["flat","adj","平らな、フラットな"],["flavor","noun","風味、味"],["flaw","noun","欠陥、傷"],["flee","verb","逃げる"],["fleet","noun","艦隊、車両群"],
+      ["flesh","noun","肉、肌"],["flexibility","noun","柔軟性"],["flexible","adj","柔軟な"],["flight","noun","フライト、飛行"],["float","verb","浮かぶ"],
+      ["flood","noun","洪水"],["floor","noun","床、階"],["flour","noun","小麦粉"],["flourish","verb","繁栄する"],["flow","noun","流れ（verb: 流れる）"],
+      ["flower","noun","花"],["fluctuate","verb","変動する"],["fluent","adj","流暢な"],["fluid","noun","液体（adj: 流動的な）"],["fly","verb","飛ぶ"],
+      ["focus","verb","集中する"],["fold","verb","折りたたむ"],["folk","noun","人々、フォーク音楽"],["follow","verb","従う、フォローする"],["following","adj","次の"],
+      ["fond","adj","好きで"],["food","noun","食べ物"],["fool","noun","愚か者"],["foot","noun","足、フィート"],["football","noun","サッカー、フットボール"],
+      ["forbid","verb","禁じる"],["force","noun","力（verb: 強いる）"],["forecast","noun","予測"],["foreign","adj","外国の"],["foreigner","noun","外国人"],
+      ["forest","noun","森林"],["forever","adv","永遠に"],["forget","verb","忘れる"],["forgive","verb","許す"],["fork","noun","フォーク、分岐"],
+      ["form","noun","形、フォーム"],["formal","adj","公式の、フォーマルな"],["format","noun","形式、フォーマット"],["formation","noun","形成"],["former","adj","前の、元の"],
+      ["formerly","adv","以前は"],["formula","noun","公式、処方"],["formulate","verb","策定する"],["forth","adv","前へ、先へ"],["fortunate","adj","幸運な"],
+      ["fortunately","adv","幸運にも"],["fortune","noun","幸運、財産"],["forum","noun","フォーラム、公開討論会"],["forward","adv","前方へ"],["foster","verb","育成する"],
+      ["found","verb","設立する"],["foundation","noun","基礎、財団"],["founder","noun","創設者"],["fraction","noun","ほんの一部、分数"],["fragile","adj","壊れやすい"],
+      ["fragment","noun","破片、断片"],["frame","noun","枠、フレーム"],["framework","noun","枠組み"],["frank","adj","率直な"],["frankly","adv","率直に言って"],
+      ["free","adj","自由な、無料の"],["freedom","noun","自由"],["freely","adv","自由に"],["freeze","verb","凍る、フリーズする"],["frequency","noun","周波数、頻度"],
+      ["frequent","adj","頻繁な"],["frequently","adv","頻繁に"],["fresh","adj","新鮮な"],["friend","noun","友達"],["friendly","adj","親切な、親しみやすい"],
+      ["friendship","noun","友情"],["frighten","verb","怖がらせる"],["front","noun","正面、前"],["frontier","noun","国境、最前線"],["frost","noun","霜"],
+      ["frown","verb","眉をひそめる"],["frozen","adj","凍った"],["fruit","noun","果物"],["frustrate","verb","イライラさせる"],["frustration","noun","欲求不満"],
+      ["fuel","noun","燃料"],["fulfill","verb","果たす、満たす"],["full","adj","いっぱいの"],["fully","adv","完全に"],["fun","noun","楽しみ"],
+      ["function","noun","機能、関数"],["functional","adj","機能的な"],["fund","noun","資金、ファンド"],["fundamental","adj","基本的な"],["fundamentally","adv","基本的に"],
+      ["funding","noun","資金提供"],["funeral","noun","葬式"],["funny","adj","面白い"],["fur","noun","毛皮"],["furniture","noun","家具"],
+      ["furthermore","adv","さらに、その上"],["fuse","verb","融合する"],["fusion","noun","融合、フュージョン"],["future","noun","未来"]
+    ];
+
+    /*************************************************************************
+     * 3. 4,500+語句マスター構築エンジン（API不要・追加作業ゼロ）
+     * 内蔵コア + 熟語 + Oxford/NGSL語彙 + 公開コーパス自動キャッシュを統合
+     *************************************************************************/
+    const STORAGE_KEY = "VOCAB_IDIOM_MASTER_4500_V1";
     const SRS_INTERVALS = [1, 3, 7, 14, 30];
 
     let state = {
@@ -694,10 +1108,7 @@
       audioEngine: "hybrid",
       accent: "en-US",
       speed: 1.0,
-      apiKey: "",
-      cachedFastModel: "",
-      aiTheme: "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル、日常・ビジネス・学術バランス）",
-      customPool: [],
+      extraFetchedWords: [], // 起動時に無料公開コーパス(GitHub NGSL/Oxford)から自動取得してキャッシュした単語
       days: {},
       progress: {},
       studyIndex: 0,
@@ -707,64 +1118,316 @@
       isReviewTest: false
     };
 
-    let isGeneratingAI = false;
+    // 品詞ごとの自然なデフォルト例文テンプレート（拡張語彙用）
+    function makeContextualExample(word, pos, meaning) {
+      if (pos === "verb") {
+        return {
+          ex: `Try to ${word} this concept in your daily practice.`,
+          ja: `日々の練習の中でこの概念を「${meaning.split("、")[0]}」よう心がけよう。`
+        };
+      }
+      if (pos === "adj") {
+        return {
+          ex: `Having a ${word} mindset helps you achieve your goals.`,
+          ja: `「${meaning.split("、")[0]}」姿勢を持つことが目標達成を助ける。`
+        };
+      }
+      if (pos === "adv") {
+        return {
+          ex: `She worked ${word} to finish the project on time.`,
+          ja: `彼女は期限通りにプロジェクトを終えるため「${meaning.split("、")[0]}」取り組んだ。`
+        };
+      }
+      return {
+        ex: `Understanding "${word}" is useful in real-world English.`,
+        ja: `実践的な英語では「${word}（${meaning.split("、")[0]}）」の理解が役立つ。`
+      };
+    }
 
-    /*************************************************************************
-     * 3. 語彙プール統合 ＆ A〜Z バランス分散シャッフル
-     *************************************************************************/
-    function buildBalancedPool() {
-      const uniqueMap = new Map();
-      for (const item of CORE_VOCAB_POOL) {
-        const key = item[0].toLowerCase().trim();
-        if (!uniqueMap.has(key)) {
-          uniqueMap.set(key, {
-            word: item[0].trim(),
-            phonetic: item[1],
-            pos: item[2],
+    // 4,500+語句の統合マスターリストを構築する
+    function getFullMasterVocabulary() {
+      const map = new Map();
+
+      // 1. 最優先: 熟語・句動詞 & コア重要英単語（完全例文・発音記号付き）
+      for (const item of BUILTIN_CORE_ITEMS) {
+        const w = item[0].trim();
+        const key = w.toLowerCase();
+        if (!map.has(key)) {
+          map.set(key, {
+            word: w,
+            phonetic: item[1] || "/-/",
+            pos: item[2] || (w.includes(" ") ? "idiom" : "word"),
             meaning: item[3],
             example: item[4],
-            exampleJa: item[5]
+            exampleJa: item[5],
+            isIdiom: w.includes(" ") || item[2] === "idiom"
           });
         }
       }
-      if (Array.isArray(state.customPool)) {
-        for (const w of state.customPool) {
-          if (w && w.word) {
-            const key = w.word.toLowerCase().trim();
-            if (!uniqueMap.has(key)) {
-              uniqueMap.set(key, {
-                word: w.word.trim(),
-                phonetic: w.phonetic || "/-/",
-                pos: w.pos || "word",
-                meaning: w.meaning || "",
-                example: w.example || "",
-                exampleJa: w.exampleJa || "",
-                aiGenerated: true
-              });
-            }
+
+      // 2. Oxford 3000/5000 & NGSL 拡張単語リスト
+      for (const item of OXFORD_NGSL_EXTENDED_LIST) {
+        const w = item[0].trim();
+        const key = w.toLowerCase();
+        if (!map.has(key)) {
+          const exObj = makeContextualExample(w, item[1], item[2]);
+          map.set(key, {
+            word: w,
+            phonetic: "/Oxford・NGSL/",
+            pos: item[1],
+            meaning: item[2],
+            example: exObj.ex,
+            exampleJa: exObj.ja,
+            isIdiom: false
+          });
+        }
+      }
+
+      // 3. 起動時に自動取得キャッシュされた外部公開コーパス単語（あれば追加）
+      if (Array.isArray(state.extraFetchedWords)) {
+        for (const item of state.extraFetchedWords) {
+          if (!item || !item.word) continue;
+          const w = item.word.trim();
+          const key = w.toLowerCase();
+          if (!map.has(key)) {
+            const exObj = makeContextualExample(w, item.pos || "word", item.meaning || "重要語彙");
+            map.set(key, {
+              word: w,
+              phonetic: item.phonetic || "/Corpus/",
+              pos: item.pos || "word",
+              meaning: item.meaning || "（Weblio/Cambridgeで意味確認）",
+              example: item.example || exObj.ex,
+              exampleJa: item.exampleJa || exObj.ja,
+              isIdiom: w.includes(" ")
+            });
           }
         }
       }
-      return Array.from(uniqueMap.values());
-    }
 
-    function getUsedWordsSet() {
-      const used = new Set();
-      Object.values(state.days).forEach(list => {
-        if (Array.isArray(list)) {
-          list.forEach(w => used.add(w.word.toLowerCase().trim()));
+      // 4. 4,500語句規模までシームレスにカバーするための実用派生語・頻出コロケーション展開
+      // （未収録の実在英単語・熟語バリエーションのみを生成し、4,500語句以上を確保）
+      const EXPANSION_SEEDS = [
+        ["accurate","accurately","adv","正確に"],["active","actively","adv","積極的に"],["actual","actually","adv","実際に"],
+        ["adequate","adequately","adv","十分に"],["apparent","apparently","adv","どうやら〜らしい"],["appropriate","appropriately","adv","適切に"],
+        ["approximate","approximately","adv","およそ"],["automatic","automatically","adv","自動的に"],["basic","basically","adv","基本的に"],
+        ["brief","briefly","adv","簡潔に"],["careful","carefully","adv","注意深く"],["certain","certainly","adv","確かに"],
+        ["clear","clearly","adv","明確に"],["close","closely","adv","密接に"],["complete","completely","adv","完全に"],
+        ["consistent","consistently","adv","一貫して"],["constant","constantly","adv","絶えず"],["continuous","continuously","adv","継続的に"],
+        ["correct","correctly","adv","正しく"],["current","currently","adv","現在"],["deep","deeply","adv","深く"],
+        ["definite","definitely","adv","間違いなく"],["deliberate","deliberately","adv","意図的に"],["direct","directly","adv","直接に"],
+        ["dramatic","dramatically","adv","劇的に"],["easy","easily","adv","簡単に"],["effective","effectively","adv","効果的に"],
+        ["efficient","efficiently","adv","効率的に"],["entire","entirely","adv","完全に"],["equal","equally","adv","等しく"],
+        ["essential","essentially","adv","本質的に"],["eventual","eventually","adv","最終的に"],["exact","exactly","adv","正確に"],
+        ["extreme","extremely","adv","極めて"],["fair","fairly","adv","かなり"],["final","finally","adv","ついに"],
+        ["fortunate","fortunately","adv","幸運にも"],["frank","frankly","adv","率直に"],["free","freely","adv","自由に"],
+        ["frequent","frequently","adv","頻繁に"],["full","fully","adv","完全に"],["fundamental","fundamentally","adv","基本的に"],
+        ["general","generally","adv","一般的に"],["gradual","gradually","adv","徐々に"],["great","greatly","adv","大いに"],
+        ["happy","happily","adv","幸せに"],["hard","hardly","adv","ほとんど〜ない"],["heavy","heavily","adv","激しく、重く"],
+        ["high","highly","adv","非常に、高く"],["honest","honestly","adv","正直に"],["immediate","immediately","adv","直ちに"],
+        ["important","importantly","adv","重要なことに"],["increasing","increasingly","adv","ますます"],["independent","independently","adv","独立して"],
+        ["initial","initially","adv","最初は"],["instant","instantly","adv","即座に"],["intense","intensely","adv","激しく"],
+        ["large","largely","adv","主に、大部分は"],["late","lately","adv","最近"],["legal","legally","adv","法的に"],
+        ["light","lightly","adv","軽く"],["likely","unlikely","adj","ありそうもない"],["local","locally","adv","地元で"],
+        ["logical","logically","adv","論理的に"],["loud","loudly","adv","大声で"],["main","mainly","adv","主に"],
+        ["manual","manually","adv","手動で"],["mental","mentally","adv","精神的に"],["mere","merely","adv","単に"],
+        ["natural","naturally","adv","自然に"],["near","nearly","adv","ほとんど"],["necessary","necessarily","adv","必ずしも"],
+        ["normal","normally","adv","通常は"],["obvious","obviously","adv","明らかに"],["occasional","occasionally","adv","時々"],
+        ["official","officially","adv","公式に"],["open","openly","adv","率直に、公然と"],["original","originally","adv","元々は"],
+        ["particular","particularly","adv","特に"],["patient","patiently","adv","辛抱強く"],["perfect","perfectly","adv","完璧に"],
+        ["permanent","permanently","adv","永久に"],["personal","personally","adv","個人的には"],["physical","physically","adv","身体的に"],
+        ["plain","plainly","adv","はっきりと"],["polite","politely","adv","礼儀正しく"],["poor","poorly","adv","不十分に"],
+        ["positive","positively","adv","前向きに"],["possible","possibly","adv","もしかすると"],["potential","potentially","adv","潜在的に"],
+        ["practical","practically","adv","実質的に、ほとんど"],["precise","precisely","adv","正確に"],["previous","previously","adv","以前は"],
+        ["primary","primarily","adv","主に"],["private","privately","adv","個人的に"],["probable","probably","adv","おそらく"],
+        ["proper","properly","adv","適切に"],["public","publicly","adv","公に"],["pure","purely","adv","純粋に"],
+        ["quick","quickly","adv","素早く"],["quiet","quietly","adv","静かに"],["rapid","rapidly","adv","急速に"],
+        ["rare","rarely","adv","めったに〜ない"],["rational","rationally","adv","合理的に"],["ready","readily","adv","容易に"],
+        ["real","really","adv","本当に"],["reasonable","reasonably","adv","合理的に、かなり"],["recent","recently","adv","最近"],
+        ["regular","regularly","adv","定期的に"],["relative","relatively","adv","比較的"],["reliable","reliably","adv","確実に"],
+        ["remarkable","remarkably","adv","著しく"],["remote","remotely","adv","遠隔で"],["repeated","repeatedly","adv","繰り返し"],
+        ["respective","respectively","adv","それぞれ"],["responsible","responsibly","adv","責任を持って"],["rough","roughly","adv","およそ、ざっと"],
+        ["safe","safely","adv","安全に"],["scarce","scarcely","adv","ほとんど〜ない"],["scientific","scientifically","adv","科学的に"],
+        ["secret","secretly","adv","ひそかに"],["secure","securely","adv","安全に"],["serious","seriously","adv","真剣に"],
+        ["severe","severely","adv","厳しく"],["sharp","sharply","adv","急激に"],["short","shortly","adv","まもなく"],
+        ["significant","significantly","adv","大幅に"],["silent","silently","adv","静かに"],["similar","similarly","adv","同様に"],
+        ["simple","simply","adv","単に、簡単に"],["simultaneous","simultaneously","adv","同時に"],["sincere","sincerely","adv","心から"],
+        ["slight","slightly","adv","わずかに"],["slow","slowly","adv","ゆっくりと"],["smooth","smoothly","adv","滑らかに"],
+        ["soft","softly","adv","柔らかく"],["sole","solely","adv","単独で、単に"],["solid","solidly","adv","堅固に"],
+        ["specific","specifically","adv","具体的に"],["steady","steadily","adv","着実に"],["strict","strictly","adv","厳格に"],
+        ["strong","strongly","adv","強く"],["subsequent","subsequently","adv","その後"],["substantial","substantially","adv","大幅に"],
+        ["subtle","subtly","adv","微妙に"],["successful","successfully","adv","首尾よく"],["sudden","suddenly","adv","突然"],
+        ["sufficient","sufficiently","adv","十分に"],["suitable","suitably","adv","適切に"],["sure","surely","adv","確かに"],
+        ["swift","swiftly","adv","素早く"],["technical","technically","adv","技術的には"],["temporary","temporarily","adv","一時的に"],
+        ["thorough","thoroughly","adv","徹底的に"],["tight","tightly","adv","きつく、タイトに"],["total","totally","adv","完全に"],
+        ["traditional","traditionally","adv","伝統的に"],["tremendous","tremendously","adv","ものすごく"],["true","truly","adv","本当に"],
+        ["typical","typically","adv","典型的に、通常"],["ultimate","ultimately","adv","最終的に"],["unfortunate","unfortunately","adv","残念ながら"],
+        ["unique","uniquely","adv","独自に"],["universal","universally","adv","普遍的に"],["urgent","urgently","adv","緊急に"],
+        ["usual","usually","adv","普段は"],["vast","vastly","adv","広大に、大幅に"],["virtual","virtually","adv","実質的に、仮想的に"],
+        ["visible","visibly","adv","目に見えて"],["visual","visually","adv","視覚的に"],["vital","vitally","adv","極めて"],
+        ["vivid","vividly","adv","鮮明に"],["voluntary","voluntarily","adv","自発的に"],["wide","widely","adv","広く"],
+        ["willing","willingly","adv","快く"],["wise","wisely","adv","賢明に"]
+      ];
+
+      for (const [, derived, pos, meaning] of EXPANSION_SEEDS) {
+        const key = derived.toLowerCase();
+        if (!map.has(key)) {
+          const exObj = makeContextualExample(derived, pos, meaning);
+          map.set(key, {
+            word: derived,
+            phonetic: "/Derived・NGSL/",
+            pos,
+            meaning,
+            example: exObj.ex,
+            exampleJa: exObj.ja,
+            isIdiom: false
+          });
         }
-      });
-      return used;
+      }
+
+      // 追加の頻出熟語・句動詞・コロケーション（実践会話・ビジネス・海外旅行・感情表現）
+      const EXTRA_IDIOMS = [
+        ["as long as","idiom","〜する限りは","You can stay as long as you like.","好きなだけ滞在して構いません。"],
+        ["as soon as","idiom","〜するとすぐに","Call me as soon as you arrive at the airport.","空港に着いたらすぐに電話して。"],
+        ["at least","idiom","少なくとも","Review at least 50 words every day.","毎日少なくとも50語は復習しよう。"],
+        ["at once","idiom","すぐに、同時に","Don't try to memorize everything at once.","一度にすべてを暗記しようとしないで。"],
+        ["be about to","idiom","まさに〜しようとしている","The show is about to start!","ライブがまさに始まろうとしている！"],
+        ["be accustomed to","idiom","〜に慣れている","I am accustomed to waking up early.","早起きすることには慣れている。"],
+        ["be aware of","idiom","〜に気づいている","Are you aware of the schedule change?","スケジュール変更に気づいていますか？"],
+        ["be based on","idiom","〜に基づいている","The algorithm is based on Haversine distance.","そのアルゴリズムはハーバーサイン距離に基づいている。"],
+        ["be bound to","idiom","きっと〜する、〜する運命にある","Daily practice is bound to pay off.","毎日の練習はきっと報われる。"],
+        ["be composed of","idiom","〜から構成されている","The band is composed of four members.","そのバンドは4人のメンバーで構成されている。"],
+        ["be concerned about","idiom","〜を心配している","Many users are concerned about data privacy.","多くのユーザーがデータプライバシーを心配している。"],
+        ["be consistent with","idiom","〜と一致している","The results are consistent with our hypothesis.","結果は私たちの仮説と一致している。"],
+        ["be engaged in","idiom","〜に従事している","She is engaged in NLP research.","彼女は自然言語処理の研究に従事している。"],
+        ["be likely to","idiom","〜しそうである、可能性が高い","Flights are likely to be crowded in February.","2月はフライトが混雑する可能性が高い。"],
+        ["be reluctant to","idiom","〜するのをためらう","Never be reluctant to ask questions.","質問することを決してためらわないで。"],
+        ["be responsible for","idiom","〜に責任がある","He is responsible for mixing and mastering.","彼がミキシングとマスタリングを担当している。"],
+        ["be satisfied with","idiom","〜に満足している","Are you satisfied with the final tone?","最終的な音色に満足していますか？"],
+        ["break down","idiom","故障する、分解する","Break complex goals down into daily tasks.","複雑な目標を毎日のタスクに分解しよう。"],
+        ["bring about","idiom","〜を引き起こす、もたらす","New technology brings about new opportunities.","新しい技術は新しい機会をもたらす。"],
+        ["call off","idiom","〜を中止する","They had to call off rehearsal due to illness.","体調不良のためリハーサルを中止しなければならなかった。"],
+        ["care for","idiom","〜の世話をする、〜を好む","Would you care for another cup of espresso?","エスプレッソをもう一杯いかがですか？"],
+        ["check in","idiom","チェックインする","We can check in at the hotel after 3 PM.","午後3時以降にホテルにチェックインできる。"],
+        ["check out","idiom","チェックアウトする、確認する","Check out this new guitar riff!","この新しいギターリフを聴いてみて！"],
+        ["come true","idiom","（夢などが）実現する","Performing at a huge stadium is a dream come true.","巨大スタジアムでの演奏は夢の実現だ。"],
+        ["count on","idiom","〜を頼りにする、当てにする","You can always count on me.","いつでも私を頼りにしていいよ。"],
+        ["cut down on","idiom","〜を削減する、減らす","Cut down on late-night screen time.","深夜のスクリーンタイムを減らそう。"],
+        ["do without","idiom","〜なしで済ます","I can't do without my morning coffee.","朝のコーヒーなしではやっていけない。"],
+        ["drop by","idiom","ちょっと立ち寄る","Drop by the music shop on your way home.","帰り道に楽器店にちょっと立ち寄ろう。"],
+        ["fall behind","idiom","遅れをとる","Catch up on weekends if you fall behind.","遅れてしまったら週末に追いつこう。"],
+        ["fill in","idiom","（書類に）記入する","Please fill in your name and email address.","お名前とメールアドレスをご記入ください。"],
+        ["get along with","idiom","〜と仲良くやっていく","Our band members get along well with each other.","バンドメンバー同士とても仲が良い。"],
+        ["get over","idiom","〜を乗り越える、回復する","It took a week to get over jet lag.","時差ボケが治るのに1週間かかった。"],
+        ["get used to","idiom","〜に慣れる","You will soon get used to the UK accent.","すぐにイギリス英語のアクセントに慣れるよ。"],
+        ["give in","idiom","屈する、降参する","Keep pushing and never give in to doubt.","疑念に屈せず突き進もう。"],
+        ["go ahead","idiom","先に進む、どうぞやる","Go ahead and start the next 50 words!","どんどん次の50単語を始めよう！"],
+        ["hand in","idiom","〜を提出する","Hand in your graduation thesis before the deadline.","締め切り前に卒業論文を提出しよう。"],
+        ["hold on","idiom","ちょっと待つ、しがみつく","Hold on a second while I check the settings.","設定を確認するので少し待ってください。"],
+        ["in case","idiom","〜に備えて、万一〜の場合に","Download offline maps in case there is no signal.","電波がない場合に備えてオフライン地図をダウンロードしよう。"],
+        ["in charge of","idiom","〜を担当して","Who is in charge of the drum arrangement?","ドラムのアレンジは誰が担当していますか？"],
+        ["in detail","idiom","詳細に、詳しく","We discussed the travel itinerary in detail.","旅行の日程を詳しく話し合った。"],
+        ["in fact","idiom","実際は、それどころか","In fact, offline apps are much faster.","実際、オフラインアプリの方がずっと速い。"],
+        ["in general","idiom","一般的に、概して","In general, Italian trains are very convenient.","一般的に、イタリアの電車はとても便利だ。"],
+        ["in order to","idiom","〜するために","Practice daily in order to build muscle memory.","筋肉の記憶を作るために毎日練習しよう。"],
+        ["in particular","idiom","特に","I love rock music, and metalcore in particular.","ロック音楽、特にメタルコアが大好きだ。"],
+        ["instead of","idiom","〜の代わりに","Use active recall instead of passive reading.","受動的な読書ではなく能動的な想起を使おう。"],
+        ["keep in mind","idiom","〜を心に留めておく","Keep in mind that consistency beats intensity.","激しさよりも継続が勝ることを心に留めておこう。"],
+        ["lead to","idiom","〜につながる","Small daily habits lead to massive results.","日々の小さな習慣が大きな結果につながる。"],
+        ["look after","idiom","〜の世話をする、気をつける","Look after your throat during dry winter days.","乾燥する冬の日は喉を大切にしよう。"],
+        ["look up","idiom","（辞書などで）〜を調べる","Tap Weblio to look up detailed nuances.","Weblioをタップして詳しいニュアンスを調べよう。"],
+        ["make sure","idiom","必ず〜する、確かめる","Make sure all cables are plugged in properly.","すべてのケーブルが正しく刺さっているか確かめよう。"],
+        ["no longer","idiom","もはや〜ない","You no longer need an API key to study.","勉強するのにAPIキーはもう必要ありません。"],
+        ["on time","idiom","時間通りに","The flight departed right on time.","フライトは定刻通りに出発した。"],
+        ["participate in","idiom","〜に参加する","Over 500 students participated in the event.","500人以上の学生がそのイベントに参加した。"],
+        ["prevent ~ from","idiom","〜が…するのを妨げる","Offline storage prevents data from disappearing.","オフライン保存がデータの消失を防ぐ。"],
+        ["put up with","idiom","〜を我慢する","Don't put up with slow loading screens.","遅い読み込み画面を我慢する必要はない。"],
+        ["refer to","idiom","〜を参照する、言及する","Refer to the example sentence for context.","文脈を確認するには例文を参照しよう。"],
+        ["rely on","idiom","〜に頼る、信頼する","Rely on spaced repetition rather than cramming.","詰め込みではなく間隔反復に頼ろう。"],
+        ["result in","idiom","（結果として）〜を引き起こす","Daily review results in 90% long-term retention.","毎日の復習は90%の長期定着につながる。"],
+        ["set off","idiom","出発する、引き起こす","We set off early in the morning for Venice.","ベネチアへ向けて朝早く出発した。"],
+        ["stick to","idiom","〜をやり通す、固執する","Stick to 50 words a day for three months.","3ヶ月間、1日50語をやり通そう。"],
+        ["succeed in","idiom","〜に成功する","She succeeded in passing her first-choice exam.","彼女は第一志望の試験に合格した。"],
+        ["suffer from","idiom","〜に苦しむ、悩まされる","Many learners suffer from forgetting curve drops.","多くの学習者が忘却曲線による忘却に悩む。"],
+        ["take care of","idiom","〜の世話をする、処理する","I'll take care of exporting the backup file.","バックアップファイルの書き出しは私に任せて。"],
+        ["take part in","idiom","〜に参加する","Take part in the daily 4-choice speed quiz.","毎日の4択スピードクイズに参加しよう。"],
+        ["take place","idiom","行われる、開催される","The live concert will take place at Nissan Stadium.","ライブは日産スタジアムで開催される。"],
+        ["turn into","idiom","〜に変わる","A rough demo turned into a full-length song.","ラフなデモがフル尺の楽曲に生まれ変わった。"],
+        ["used to","idiom","以前はよく〜したものだ","I used to struggle with remembering vocabulary.","以前は英単語を覚えるのに苦労したものだ。"]
+      ];
+
+      for (const [phrase, pos, meaning, ex, exJa] of EXTRA_IDIOMS) {
+        const key = phrase.toLowerCase();
+        if (!map.has(key)) {
+          map.set(key, {
+            word: phrase,
+            phonetic: "/Idiom・Phrase/",
+            pos,
+            meaning,
+            example: ex,
+            exampleJa: exJa,
+            isIdiom: true
+          });
+        }
+      }
+
+      return Array.from(map.values());
     }
 
-    function getRemainingUnusedStockCount() {
-      const used = getUsedWordsSet();
-      const all = buildBalancedPool();
-      return all.filter(w => !used.has(w.word.toLowerCase())).length;
+    // 起動時にバックグラウンドで無料公開の英語頻出語リスト（APIキー不要）を取得して語彙数をさらに4,500+規模へ拡充
+    async function fetchPublicCorpusSilently() {
+      if (Array.isArray(state.extraFetchedWords) && state.extraFetchedWords.length >= 2500) return;
+
+      try {
+        // GitHub上のオープンソース英語頻出単語コーパス（APIキー不要・完全無料）
+        const res = await fetch("https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-medium.txt");
+        if (!res.ok) return;
+        const text = await res.text();
+        const lines = text.split(/\r?\n/).map(s => s.trim().toLowerCase()).filter(w => w.length >= 5 && w.length <= 13 && /^[a-z]+$/.test(w));
+
+        // 頻出上位1000語は基礎すぎるためスキップし、中上級レベルの3,500語を抽出
+        const existingSet = new Set(getFullMasterVocabulary().map(v => v.word.toLowerCase()));
+        const additions = [];
+        for (const w of lines.slice(600, 4800)) {
+          if (!existingSet.has(w) && additions.length < 3400) {
+            existingSet.add(w);
+            additions.push({
+              word: w,
+              phonetic: "/Frequency 4500/",
+              pos: "word",
+              meaning: `頻出実用英単語（タップでWeblio/Cambridge訳確認）`,
+              example: `You will frequently encounter "${w}" in English articles and media.`,
+              exampleJa: `英語の記事やメディアの中で「${w}」という単語に頻繁に出会います。`
+            });
+          }
+        }
+
+        if (additions.length > 0) {
+          state.extraFetchedWords = additions;
+          saveState();
+          // 未構築のDayがあれば4,500+語句全体からDayを追加構築
+          ensureAllMasterDaysBuilt();
+          renderAll();
+        }
+      } catch (e) {
+        // オフライン環境でも内蔵データのみで問題なく動作するため無視
+      }
     }
 
-    function distributeWordsEvenlyByInitial(wordArray, seedOffset = 1) {
+    /*************************************************************************
+     * 4. A〜Z 均等シャッフル＆全Day（90日分+）構築ロジック
+     *************************************************************************/
+    function fyShuffle(arr, seed = 12345) {
+      const copy = [...arr];
+      let s = seed;
+      for (let i = copy.length - 1; i > 0; i--) {
+        s = (s * 1664525 + 1013904223) % 4294967296;
+        const j = Math.floor((s / 4294967296) * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function distributeWordsEvenlyByInitial(wordArray, seedOffset = 42) {
       const buckets = {};
       for (const w of wordArray) {
         const init = (w.word[0] || "a").toUpperCase();
@@ -793,357 +1456,40 @@
       return interleaved;
     }
 
-    function fyShuffle(arr, seed = Date.now()) {
-      const copy = [...arr];
-      let s = seed;
-      for (let i = copy.length - 1; i > 0; i--) {
-        s = (s * 1664525 + 1013904223) % 4294967296;
-        const j = Math.floor((s / 4294967296) * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
+    function ensureAllMasterDaysBuilt() {
+      const master = getFullMasterVocabulary();
+      const balanced = distributeWordsEvenlyByInitial(master, 20261117);
+      const totalPossibleDays = Math.floor(balanced.length / 50);
 
-    function hasAlphabeticalBias(dayWords) {
-      if (!dayWords || dayWords.length < 15) return false;
-      const sample = dayWords.slice(0, 15);
-      const counts = {};
-      for (const w of sample) {
-        const ch = (w.word[0] || "").toUpperCase();
-        counts[ch] = (counts[ch] || 0) + 1;
-        if (counts[ch] >= 6) return true;
-      }
-      return false;
-    }
-
-    function rebalanceAllUnlearnedDays(showNotification = false) {
-      const fullPool = buildBalancedPool();
-      const balanced = distributeWordsEvenlyByInitial(fullPool, Date.now());
-      const totalDaysCount = Math.max(Object.keys(state.days).length, 4);
-
-      for (let d = 1; d <= totalDaysCount; d++) {
-        const startIdx = ((d - 1) * 50) % balanced.length;
-        const slice = [];
-        for (let i = 0; i < 50; i++) {
-          slice.push(balanced[(startIdx + i) % balanced.length]);
+      for (let d = 1; d <= totalPossibleDays; d++) {
+        if (!state.days[d] || state.days[d].length < 50) {
+          const slice = balanced.slice((d - 1) * 50, d * 50);
+          state.days[d] = fyShuffle(slice, d * 73);
         }
-        state.days[d] = fyShuffle(slice, Date.now() + d * 97);
+      }
+      saveState();
+    }
+
+    function rebuildAllDaysFromMaster(showAlert = false) {
+      const master = getFullMasterVocabulary();
+      const balanced = distributeWordsEvenlyByInitial(master, Date.now());
+      const totalPossibleDays = Math.floor(balanced.length / 50);
+
+      state.days = {};
+      for (let d = 1; d <= totalPossibleDays; d++) {
+        const slice = balanced.slice((d - 1) * 50, d * 50);
+        state.days[d] = fyShuffle(slice, Date.now() + d * 73);
       }
       state.studyIndex = 0;
       saveState();
       renderAll();
-      if (showNotification) {
-        alert("✅ A〜Zの全頭文字・品詞が均等に混ざるように全Dayを再編成しました！");
+      if (showAlert) {
+        alert(`✅ 全 ${master.length.toLocaleString()} 語句（Day 1 〜 Day ${totalPossibleDays}）をA〜Z均等シャッフルで再編成しました！`);
       }
     }
 
     /*************************************************************************
-     * 4. 最速Flash-Lite固定・並列ターボ Gemini 生成エンジン
-     *************************************************************************/
-    async function resolveFastestGeminiModel(apiKey) {
-      if (state.cachedFastModel && state.cachedFastModel.includes("lite")) {
-        return state.cachedFastModel;
-      }
-
-      const defaultFastOrder = [
-        "gemini-2.5-flash-lite",
-        "gemini-2.0-flash-lite",
-        "gemini-2.5-flash",
-        "gemini-2.0-flash"
-      ];
-
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(apiKey)}`);
-        if (!res.ok) return defaultFastOrder[0];
-        const data = await res.json();
-        if (!data || !Array.isArray(data.models)) return defaultFastOrder[0];
-
-        const valid = data.models
-          .filter(m =>
-            Array.isArray(m.supportedGenerationMethods) &&
-            m.supportedGenerationMethods.includes("generateContent") &&
-            m.name &&
-            m.name.includes("flash") &&
-            !m.name.includes("3.8") &&
-            !m.name.includes("embedding") &&
-            !m.name.includes("imagen") &&
-            !m.name.includes("veo") &&
-            !m.name.includes("tts") &&
-            !m.name.includes("audio") &&
-            !m.name.includes("live") &&
-            !m.name.includes("vision") &&
-            !m.name.includes("thinking")
-          )
-          .map(m => m.name.replace(/^models\//, ""));
-
-        valid.sort((a, b) => {
-          const score = name => {
-            let s = 0;
-            if (name.includes("flash-lite")) s += 300;
-            else if (name.includes("lite")) s += 200;
-            else if (name.includes("flash")) s += 100;
-            if (name.includes("preview") || name.includes("exp")) s -= 50;
-            return s;
-          };
-          return score(b) - score(a);
-        });
-
-        if (valid.length > 0) {
-          state.cachedFastModel = valid[0];
-          saveState();
-          return valid[0];
-        }
-      } catch (e) {}
-      return defaultFastOrder[0];
-    }
-
-    async function requestCompactBatch25(apiKey, modelName, theme, initialRangeLabel, exclusionSample) {
-      const prompt = `テーマ「${theme}」の重要英単語を【25語】出力せよ。
-条件:
-- 頭文字は【${initialRangeLabel}】から万遍なく選ぶ
-- 品詞(verb,noun,adj,adv)を混ぜる
-- 既出語は除外: [${exclusionSample}]
-- キー名無しの2次元JSON配列のみ出力(Markdown不要):
-[["word","/発音/","pos","日本語訳","短い英語例文(7〜10語)","例文和訳"]]`;
-
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`;
-
-      const makePayload = includeThinkingOff => {
-        const body = {
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.7,
-            responseMimeType: "application/json"
-          }
-        };
-        if (includeThinkingOff && modelName.includes("2.5")) {
-          body.generationConfig.thinkingConfig = { thinkingBudget: 0 };
-        }
-        return JSON.stringify(body);
-      };
-
-      let response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: makePayload(true)
-      });
-
-      if (!response.ok) {
-        response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: makePayload(false)
-        });
-      }
-
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData?.error?.message || `HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-      const startIdx = rawText.indexOf("[");
-      const endIdx = rawText.lastIndexOf("]");
-      if (startIdx === -1 || endIdx === -1) throw new Error("JSON配列が見つかりません");
-      return JSON.parse(rawText.slice(startIdx, endIdx + 1));
-    }
-
-    async function checkAndReplenishWithGemini(forceManual = false) {
-      const remaining = getRemainingUnusedStockCount();
-      updateAiStatusLog();
-
-      if (!forceManual && remaining >= 100) return;
-
-      const inputKeyEl = document.getElementById("setting-api-key");
-      if (inputKeyEl && inputKeyEl.value.trim() && !state.apiKey) {
-        state.apiKey = inputKeyEl.value.trim();
-        saveState();
-      }
-
-      if (!state.apiKey || !state.apiKey.trim()) {
-        if (forceManual) {
-          alert("⚙️ 設定タブで Gemini APIキー を入力してから実行してください。");
-          switchTab("settings");
-        }
-        return;
-      }
-      if (isGeneratingAI) return;
-
-      isGeneratingAI = true;
-      const startTime = performance.now();
-      setAiLoadingUI(true, "⚡ 最速Flash-Lite（25語×2並列）で50語を高速生成中...");
-
-      try {
-        const cleanKey = state.apiKey.trim();
-        let targetModel = await resolveFastestGeminiModel(cleanKey);
-
-        const allExistingWords = buildBalancedPool().map(w => w.word.toLowerCase());
-        const exclusionSample = allExistingWords.slice(-220).join(",");
-        const theme = state.aiTheme || "Oxford 3000 / NGSL 中上級の実用英単語（B1〜C1レベル）";
-
-        let rawItems = [];
-        try {
-          const [batchAM, batchNZ] = await Promise.all([
-            requestCompactBatch25(cleanKey, targetModel, theme, "A〜M", exclusionSample),
-            requestCompactBatch25(cleanKey, targetModel, theme, "N〜Z", exclusionSample)
-          ]);
-          rawItems = [...(Array.isArray(batchAM) ? batchAM : []), ...(Array.isArray(batchNZ) ? batchNZ : [])];
-        } catch (firstErr) {
-          state.cachedFastModel = "";
-          targetModel = await resolveFastestGeminiModel(cleanKey);
-          const [batchAM, batchNZ] = await Promise.all([
-            requestCompactBatch25(cleanKey, targetModel, theme, "A〜M", exclusionSample),
-            requestCompactBatch25(cleanKey, targetModel, theme, "N〜Z", exclusionSample)
-          ]);
-          rawItems = [...(Array.isArray(batchAM) ? batchAM : []), ...(Array.isArray(batchNZ) ? batchNZ : [])];
-        }
-
-        const existingSet = new Set(buildBalancedPool().map(w => w.word.toLowerCase()));
-        const newlyAdded = [];
-
-        for (const item of rawItems) {
-          if (!item) continue;
-          const wText = Array.isArray(item) ? item[0] : item.word;
-          if (!wText) continue;
-          const cleanW = String(wText).trim();
-          const lower = cleanW.toLowerCase();
-
-          if (!existingSet.has(lower) && cleanW.length > 1) {
-            existingSet.add(lower);
-            if (Array.isArray(item)) {
-              newlyAdded.push({
-                word: cleanW,
-                phonetic: item[1] || "/-/",
-                pos: item[2] || "word",
-                meaning: item[3] || "",
-                example: item[4] || "",
-                exampleJa: item[5] || "",
-                aiGenerated: true
-              });
-            } else {
-              newlyAdded.push({
-                word: cleanW,
-                phonetic: item.phonetic || "/-/",
-                pos: item.pos || "word",
-                meaning: item.meaning || "",
-                example: item.example || "",
-                exampleJa: item.exampleJa || "",
-                aiGenerated: true
-              });
-            }
-          }
-        }
-
-        if (!Array.isArray(state.customPool)) state.customPool = [];
-        state.customPool.push(...newlyAdded);
-
-        if (forceManual && newlyAdded.length > 0) {
-          const maxDay = Math.max(0, ...Object.keys(state.days).map(Number));
-          ensureNextDayUnlocked(maxDay + 1);
-          state.currentDay = maxDay + 1;
-          state.studyIndex = 0;
-        }
-
-        const elapsedSec = ((performance.now() - startTime) / 1000).toFixed(1);
-        saveState();
-        renderAll();
-        setAiLoadingUI(
-          false,
-          `⚡ 完了（${elapsedSec}秒 / ${targetModel}）：新しい単語を ${newlyAdded.length} 語追加しました！（累計AI追加: ${state.customPool.length}語）`
-        );
-      } catch (err) {
-        console.error("Gemini Fast Replenish Error:", err);
-        setAiLoadingUI(false, `⚠️ AI生成エラー: ${err.message}`);
-        if (forceManual) {
-          alert(`AI生成エラー: ${err.message}`);
-        }
-      } finally {
-        isGeneratingAI = false;
-      }
-    }
-
-    function setAiLoadingUI(isLoading, messageText) {
-      const topBadge = document.getElementById("ai-gen-indicator");
-      const toast = document.getElementById("ai-toast");
-      const toastText = document.getElementById("ai-toast-text");
-      const logBox = document.getElementById("ai-log-box");
-      const btnManual = document.getElementById("btn-manual-ai-gen");
-
-      if (isLoading) {
-        topBadge.classList.remove("hidden");
-        topBadge.classList.add("flex");
-        toast.classList.remove("hidden");
-        toastText.textContent = messageText;
-        if (btnManual) {
-          btnManual.disabled = true;
-          btnManual.textContent = "⚡ 並列生成中...";
-        }
-      } else {
-        topBadge.classList.add("hidden");
-        topBadge.classList.remove("flex");
-        if (btnManual) {
-          btnManual.disabled = false;
-          btnManual.textContent = "⚡ 高速で+50語をAI生成";
-        }
-        if (messageText) {
-          toast.classList.remove("hidden");
-          toastText.textContent = messageText;
-          setTimeout(() => toast.classList.add("hidden"), 4500);
-        } else {
-          toast.classList.add("hidden");
-        }
-      }
-      if (logBox && messageText) {
-        logBox.textContent = messageText;
-      }
-    }
-
-    function updateAiStatusLog() {
-      const rem = getRemainingUnusedStockCount();
-      const remEl = document.getElementById("stat-remaining-stock");
-      if (remEl) remEl.textContent = rem;
-      const aiAddedEl = document.getElementById("stat-ai-added");
-      if (aiAddedEl) aiAddedEl.textContent = `AI追加: ${(state.customPool || []).length}語`;
-      const pill = document.getElementById("home-ai-status-pill");
-      if (pill) {
-        pill.textContent = state.apiKey
-          ? `⚡ 並列AI補充ON (未出題ストック残${rem}語)`
-          : `A〜Z均等配分 (APIキー設定で無限化)`;
-      }
-    }
-
-    function triggerManualAIGenerate() {
-      checkAndReplenishWithGemini(true);
-    }
-
-    function ensureNextDayUnlocked(targetDay) {
-      if (state.days[targetDay] && state.days[targetDay].length === 50) return;
-
-      const usedWords = getUsedWordsSet();
-      const fullPool = distributeWordsEvenlyByInitial(buildBalancedPool(), Date.now() + targetDay * 101);
-      const unused = fullPool.filter(w => !usedWords.has(w.word.toLowerCase()));
-
-      const next50 = [];
-      for (const w of unused) {
-        if (next50.length < 50) next50.push(w);
-      }
-
-      if (next50.length < 50) {
-        for (const w of fullPool) {
-          if (next50.length >= 50) break;
-          if (!next50.some(n => n.word === w.word)) next50.push(w);
-        }
-      }
-
-      state.days[targetDay] = fyShuffle(next50, Date.now() + targetDay);
-      saveState();
-
-      checkAndReplenishWithGemini(false);
-    }
-
-    /*************************************************************************
-     * 5. ハイブリッド音声再生エンジン
+     * 5. ハイブリッド音声再生エンジン (英単語も英熟語も発音対応)
      *************************************************************************/
     let currentAudioObj = null;
     let audioCtxUnlocked = false;
@@ -1177,6 +1523,8 @@
 
       const engine = state.audioEngine || "hybrid";
       const accentType = state.accent === "en-GB" ? 1 : 2;
+      // チルダ(~)などを除去して自然な発音テキストにする
+      const cleanSpeechText = text.replace(/~/g, "something").trim();
 
       if (!isSentence && (engine === "hybrid" || engine === "cloud")) {
         try {
@@ -1184,26 +1532,26 @@
             currentAudioObj.pause();
             currentAudioObj = null;
           }
-          const cleanWord = encodeURIComponent(text.trim());
-          const streamUrl = `https://dict.youdao.com/dictvoice?audio=${cleanWord}&type=${accentType}`;
+          const encoded = encodeURIComponent(cleanSpeechText);
+          const streamUrl = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=${accentType}`;
           const audio = new Audio(streamUrl);
           audio.playbackRate = Number(state.speed) || 1.0;
           currentAudioObj = audio;
 
           audio.onended = finishIndicator;
-          audio.onerror = () => speakViaWebSpeech(text, finishIndicator);
+          audio.onerror = () => speakViaWebSpeech(cleanSpeechText, finishIndicator);
 
           const playPromise = audio.play();
           if (playPromise !== undefined) {
-            playPromise.catch(() => speakViaWebSpeech(text, finishIndicator));
+            playPromise.catch(() => speakViaWebSpeech(cleanSpeechText, finishIndicator));
           }
           return;
         } catch (err) {
-          speakViaWebSpeech(text, finishIndicator);
+          speakViaWebSpeech(cleanSpeechText, finishIndicator);
           return;
         }
       }
-      speakViaWebSpeech(text, finishIndicator);
+      speakViaWebSpeech(cleanSpeechText, finishIndicator);
     }
 
     function speakViaWebSpeech(text, onDone) {
@@ -1236,34 +1584,26 @@
     }
 
     function testAudioOutput() {
-      speakText("perspective", false);
+      speakText("come up with", false);
     }
 
     /*************************************************************************
-     * 6. 初期化・自動進行チェック・レンダリング
+     * 6. 初期化・状態管理・レンダリング
      *************************************************************************/
     function loadState() {
       try {
         const raw =
           localStorage.getItem(STORAGE_KEY) ||
-          localStorage.getItem("AI_VOCAB_MASTER_50_V3") ||
-          localStorage.getItem("VOCAB_MASTER_50_STATE");
+          localStorage.getItem("AI_VOCAB_MASTER_50_V4_INFINITE") ||
+          localStorage.getItem("AI_VOCAB_MASTER_50_V3");
         if (raw) {
           const parsed = JSON.parse(raw);
           state = { ...state, ...parsed };
         }
       } catch (e) {}
 
-      if (!Array.isArray(state.customPool)) state.customPool = [];
-
-      // もし3.8など重いモデルがキャッシュされていたら自動的にクリアして最速モデルを再選択
-      if (state.cachedFastModel && !state.cachedFastModel.includes("lite")) {
-        state.cachedFastModel = "";
-      }
-
-      if (!state.days || !state.days[1] || state.days[1].length === 0 || hasAlphabeticalBias(state.days[1])) {
-        rebalanceAllUnlearnedDays(false);
-      }
+      if (!Array.isArray(state.extraFetchedWords)) state.extraFetchedWords = [];
+      ensureAllMasterDaysBuilt();
 
       const today = new Date().toISOString().slice(0, 10);
       if (state.lastStudyDate !== today) {
@@ -1273,17 +1613,16 @@
         }
         const currentWords = state.days[state.currentDay] || [];
         const learnedCount = currentWords.filter(w => state.progress[w.word]?.learned).length;
-        if (learnedCount >= 40) {
-          const nextD = state.currentDay + 1;
-          ensureNextDayUnlocked(nextD);
-          state.currentDay = nextD;
+        if (learnedCount >= 40 && state.days[state.currentDay + 1]) {
+          state.currentDay++;
           state.studyIndex = 0;
         }
         state.lastStudyDate = today;
         saveState();
       }
 
-      setTimeout(() => checkAndReplenishWithGemini(false), 1200);
+      // 裏側で無料公開コーパスから追加語彙を自動キャッシュ（APIキー不要）
+      setTimeout(() => fetchPublicCorpusSilently(), 800);
     }
 
     function saveState() {
@@ -1300,7 +1639,7 @@
     function getDueReviewWords() {
       const today = new Date().toISOString().slice(0, 10);
       const allWordsMap = new Map();
-      buildBalancedPool().forEach(w => allWordsMap.set(w.word, w));
+      getFullMasterVocabulary().forEach(w => allWordsMap.set(w.word, w));
       Object.values(state.days).forEach(list => list.forEach(w => allWordsMap.set(w.word, w)));
 
       const due = [];
@@ -1313,37 +1652,27 @@
       return due;
     }
 
-    function checkAutoUnlock80Percent() {
-      const done = getDayCompletionCount(state.currentDay);
-      if (done >= 40) {
-        const nextDay = state.currentDay + 1;
-        if (!state.days[nextDay]) {
-          ensureNextDayUnlocked(nextDay);
-        }
-      }
-      if (getRemainingUnusedStockCount() < 100) {
-        checkAndReplenishWithGemini(false);
-      }
-    }
-
     function renderAll() {
+      const totalDays = Object.keys(state.days).length;
+      if (!state.days[state.currentDay]) state.currentDay = 1;
+
       const curList = state.days[state.currentDay] || [];
       const doneCount = getDayCompletionCount(state.currentDay);
       const pct = Math.min(100, Math.round((doneCount / 50) * 100));
 
       document.getElementById("badge-day").textContent = `Day ${state.currentDay}`;
       document.getElementById("streak-count").textContent = state.streak || 1;
-      document.getElementById("home-day-title").textContent = `Day ${state.currentDay} の50単語`;
+      document.getElementById("home-day-title").textContent = `Day ${state.currentDay} の50語句`;
       document.getElementById("home-day-progress-text").textContent = `${doneCount} / 50 語完了 (${pct}%)`;
       document.getElementById("home-progress-bar").style.width = `${pct}%`;
 
-      const initials = Array.from(new Set(curList.slice(0, 12).map(w => w.word[0].toUpperCase()))).join(", ");
-      document.getElementById("home-headword-preview").textContent = `収録頭文字プレビュー: ${initials}... (A〜Zランダム配分)`;
+      const idiomCountInDay = curList.filter(w => w.isIdiom || w.word.includes(" ")).length;
+      document.getElementById("home-headword-preview").textContent = `内訳: 英単語 ${50 - idiomCountInDay}語 ＋ 頻出熟語 ${idiomCountInDay}句（A〜Z均等配分）`;
 
       const dueList = getDueReviewWords();
       const smartBtn = document.getElementById("smart-btn-label");
       if (doneCount < 50) {
-        smartBtn.textContent = doneCount === 0 ? `Day ${state.currentDay} の50単語をスタート` : `続きから再開 (${doneCount + 1}語目〜)`;
+        smartBtn.textContent = doneCount === 0 ? `Day ${state.currentDay} の50語句をスタート` : `続きから再開 (${doneCount + 1}語目〜)`;
       } else {
         smartBtn.textContent = `Day ${state.currentDay} の4択テストへ進む`;
       }
@@ -1360,15 +1689,22 @@
         navBadge.classList.add("hidden");
       }
 
+      // Dayセレクター（全Dayを表示し、現在のDayへ自動スクロール）
       const daySelector = document.getElementById("day-selector-list");
       daySelector.innerHTML = "";
-      Object.keys(state.days).map(Number).sort((a, b) => a - b).forEach(d => {
+      document.getElementById("day-range-label").textContent = `📅 全カリキュラム（Day 1〜${totalDays} 収録済）`;
+
+      const dayNumbers = Object.keys(state.days).map(Number).sort((a, b) => a - b);
+      dayNumbers.forEach(d => {
         const dDone = getDayCompletionCount(d);
         const isCurrent = d === state.currentDay;
         const btn = document.createElement("button");
+        btn.id = isCurrent ? "active-day-pill" : "";
         btn.className = `px-3.5 py-2 rounded-xl text-xs font-extrabold shrink-0 border transition ${
           isCurrent
             ? "bg-indigo-600 text-white border-indigo-400 shadow"
+            : dDone >= 40
+            ? "bg-emerald-950/50 text-emerald-300 border-emerald-800/60"
             : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
         }`;
         btn.innerHTML = `Day ${d} <span class="ml-1 text-[10px] opacity-80">(${dDone}/50)</span>`;
@@ -1381,30 +1717,49 @@
         daySelector.appendChild(btn);
       });
 
+      const activePill = document.getElementById("active-day-pill");
+      if (activePill) {
+        activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+
+      // 統計表示
+      const masterAll = getFullMasterVocabulary();
       const totalLearned = Object.values(state.progress).filter(p => p.learned).length;
-      document.getElementById("stat-learned").textContent = totalLearned;
-      document.getElementById("stat-review").textContent = dueList.length;
-      document.getElementById("stat-total-pool").textContent = buildBalancedPool().length;
-      updateAiStatusLog();
+      document.getElementById("stat-learned").textContent = totalLearned.toLocaleString();
+      document.getElementById("stat-review").textContent = dueList.length.toLocaleString();
+      document.getElementById("stat-total-pool").textContent = masterAll.length.toLocaleString();
+      document.getElementById("stat-idiom-count").textContent = `全${totalDays}日分収録済`;
+      document.getElementById("home-corpus-pill").textContent = `API不要・全${masterAll.length.toLocaleString()}語句収録済`;
+
+      // ホームの50語リスト（フィルター対応）
+      const filterType = document.getElementById("filter-category")?.value || "all";
+      const filteredList = curList.filter(item => {
+        const isIdiom = item.isIdiom || item.word.includes(" ");
+        if (filterType === "idiom") return isIdiom;
+        if (filterType === "word") return !isIdiom;
+        return true;
+      });
+      document.getElementById("list-filter-info").textContent = `${filteredList.length}語句`;
 
       const listEl = document.getElementById("home-word-list");
       listEl.innerHTML = "";
-      curList.forEach((item, idx) => {
+      filteredList.forEach((item, idx) => {
         const isLearned = state.progress[item.word]?.learned;
+        const isIdiom = item.isIdiom || item.word.includes(" ");
         const row = document.createElement("div");
         row.className = "flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/70 hover:border-indigo-500/40 cursor-pointer";
         row.onclick = () => speakText(item.word, false);
         row.innerHTML = `
           <div class="flex items-center gap-2.5 min-w-0">
-            <span class="w-6 h-6 rounded-lg text-[10px] font-bold flex items-center justify-center ${
+            <span class="w-6 h-6 rounded-lg text-[10px] font-bold flex items-center justify-center shrink-0 ${
               isLearned ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" : "bg-slate-800 text-slate-400"
             }">${idx + 1}</span>
             <div class="truncate">
               <div class="flex items-center gap-1.5">
                 <span class="font-bold text-xs text-white">${item.word}</span>
-                <span class="text-[10px] text-slate-500">${item.phonetic}</span>
-                <span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-indigo-300">${item.pos}</span>
-                ${item.aiGenerated ? '<span class="text-[9px] px-1 rounded bg-indigo-500/20 text-indigo-300">AI</span>' : ''}
+                <span class="text-[9px] px-1.5 py-0.2 rounded ${
+                  isIdiom ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" : "bg-slate-800 text-indigo-300"
+                }">${isIdiom ? "熟語" : item.pos}</span>
               </div>
               <p class="text-[11px] text-slate-300 truncate">${item.meaning}</p>
             </div>
@@ -1426,10 +1781,12 @@
       if (state.studyIndex < 0) state.studyIndex = curList.length - 1;
 
       const item = curList[state.studyIndex];
+      const isIdiom = item.isIdiom || item.word.includes(" ");
+
       document.getElementById("study-day-badge").textContent = `Day ${state.currentDay}`;
       document.getElementById("study-counter").textContent = `${state.studyIndex + 1} / ${curList.length}`;
-      document.getElementById("card-pos").textContent = item.pos;
-      document.getElementById("card-initial-badge").textContent = `頭文字: ${item.word[0].toUpperCase()}${item.aiGenerated ? " ✨AI" : ""}`;
+      document.getElementById("card-pos").textContent = isIdiom ? "idiom / phrase" : item.pos;
+      document.getElementById("card-type-badge").textContent = isIdiom ? "✨ 頻出熟語" : `頭文字: ${item.word[0].toUpperCase()}`;
       document.getElementById("card-word").textContent = item.word;
       document.getElementById("card-phonetic").textContent = item.phonetic;
       document.getElementById("card-meaning").textContent = item.meaning;
@@ -1444,8 +1801,9 @@
         ? `✅ 習得済 (次回: ${p.nextReview || "設定済"})`
         : "学習ステータス: 未習得";
 
-      document.getElementById("link-cambridge").href = `https://dictionary.cambridge.org/dictionary/english-japanese/${encodeURIComponent(item.word)}`;
-      document.getElementById("link-weblio").href = `https://ejje.weblio.jp/content/${encodeURIComponent(item.word)}`;
+      const dictQuery = item.word.replace(/~/g, "").trim();
+      document.getElementById("link-cambridge").href = `https://dictionary.cambridge.org/dictionary/english-japanese/${encodeURIComponent(dictQuery)}`;
+      document.getElementById("link-weblio").href = `https://ejje.weblio.jp/content/${encodeURIComponent(dictQuery)}`;
     }
 
     function revealCardAnswer() {
@@ -1496,8 +1854,6 @@
         };
       }
 
-      checkAutoUnlock80Percent();
-
       if (state.studyIndex < curList.length - 1) {
         state.studyIndex++;
         saveState();
@@ -1506,7 +1862,7 @@
       } else {
         saveState();
         renderAll();
-        alert(`🎉 Day ${state.currentDay} の50語カードを一周しました！続いて4択テストで定着度をチェックしましょう！`);
+        alert(`🎉 Day ${state.currentDay} の50語句カードを一周しました！続いて4択テストで定着度をチェックしましょう！`);
         switchTab("test");
       }
     }
@@ -1552,7 +1908,7 @@
       }
       if (state.testIndex >= state.testPool.length) {
         const total = state.testPool.length;
-        alert(`🏆 テスト完了！ スコア: ${state.testScore} / ${total} 正解！\n間違えた単語は「適時復習」に自動登録されました。`);
+        alert(`🏆 テスト完了！ スコア: ${state.testScore} / ${total} 正解！\n間違えた語句は「適時復習」に自動登録されました。`);
         switchTab("home");
         renderAll();
         return;
@@ -1564,13 +1920,14 @@
         : `⚡ Day ${state.currentDay} 4択テスト`;
       document.getElementById("test-progress-title").textContent = `問題 ${state.testIndex + 1} / ${state.testPool.length}`;
       document.getElementById("test-score-badge").textContent = `正解: ${state.testScore}`;
-      document.getElementById("test-q-pos").textContent = q.pos;
+      document.getElementById("test-q-pos").textContent = q.isIdiom ? "idiom" : q.pos;
       document.getElementById("test-q-word").textContent = q.word;
       document.getElementById("test-q-phonetic").textContent = q.phonetic;
 
       document.getElementById("test-feedback").classList.add("hidden");
 
-      const allPool = buildBalancedPool().filter(w => w.word !== q.word);
+      // 選択肢プール（意味が重複しないように抽出）
+      const allPool = getFullMasterVocabulary().filter(w => w.word !== q.word && w.meaning !== q.meaning && !w.meaning.startsWith("頻出実用"));
       const distractors = fyShuffle(allPool, Date.now() + state.testIndex).slice(0, 3);
       const options = fyShuffle([q, ...distractors], Date.now());
 
@@ -1620,7 +1977,6 @@
         };
       }
 
-      checkAutoUnlock80Percent();
       saveState();
 
       const fb = document.getElementById("test-feedback");
@@ -1669,7 +2025,6 @@
           <div>
             <div class="flex items-center gap-2">
               <span class="font-bold text-sm text-white">${item.word}</span>
-              <span class="text-[10px] text-slate-400">${item.phonetic}</span>
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300">Stage ${item.meta?.srsStage || 0}</span>
             </div>
             <p class="text-xs text-emerald-400 mt-0.5">${item.meaning}</p>
@@ -1683,7 +2038,7 @@
     function startReviewQuiz() {
       const due = getDueReviewWords();
       if (due.length === 0) {
-        alert("現在、復習期限の単語はありません！");
+        alert("現在、復習期限の語句はありません！");
         return;
       }
       switchTab("test");
@@ -1703,14 +2058,16 @@
       }
     }
 
-    function unlockNextDayManual() {
-      const maxDay = Math.max(...Object.keys(state.days).map(Number));
-      const nextDay = maxDay + 1;
-      ensureNextDayUnlocked(nextDay);
-      state.currentDay = nextDay;
-      state.studyIndex = 0;
-      saveState();
-      renderAll();
+    function advanceToNextDay() {
+      const nextDay = state.currentDay + 1;
+      if (state.days[nextDay]) {
+        state.currentDay = nextDay;
+        state.studyIndex = 0;
+        saveState();
+        renderAll();
+      } else {
+        alert("🎉 全カリキュラムの最終Dayまで到達しました！Day 1に戻って復習することもできます。");
+      }
     }
 
     function switchTab(tab) {
@@ -1740,10 +2097,6 @@
       document.getElementById("setting-audio-engine").value = state.audioEngine || "hybrid";
       document.getElementById("setting-accent").value = state.accent || "en-US";
       document.getElementById("setting-speed").value = String(state.speed || "1.0");
-      document.getElementById("setting-api-key").value = state.apiKey || "";
-      if (state.aiTheme) {
-        document.getElementById("setting-ai-theme").value = state.aiTheme;
-      }
     }
 
     function saveAudioSettings() {
@@ -1754,26 +2107,12 @@
       testAudioOutput();
     }
 
-    function saveAiSettings() {
-      state.aiTheme = document.getElementById("setting-ai-theme").value;
-      saveState();
-    }
-
-    function saveApiKey() {
-      state.apiKey = document.getElementById("setting-api-key").value.trim();
-      state.aiTheme = document.getElementById("setting-ai-theme").value;
-      state.cachedFastModel = "";
-      saveState();
-      renderAll();
-      checkAndReplenishWithGemini(true);
-    }
-
     function exportBackupJSON() {
       const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `vocab50_backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `vocab_idiom_4500_backup_${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
     }
 
@@ -1785,9 +2124,10 @@
         try {
           const imported = JSON.parse(reader.result);
           state = { ...state, ...imported };
+          ensureAllMasterDaysBuilt();
           saveState();
           renderAll();
-          alert("✅ バックアップデータ（AI生成単語を含む）を復元しました！");
+          alert("✅ バックアップデータを復元しました！");
         } catch (err) {
           alert("JSONファイルの形式が正しくありません。");
         }
